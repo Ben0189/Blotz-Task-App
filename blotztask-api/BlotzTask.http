@@ -1,0 +1,6 @@
+@BlotzTask_HostAddress = http://localhost:5027
+
+GET {{BlotzTask_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
