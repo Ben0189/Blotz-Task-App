@@ -27,13 +27,13 @@ jobs:
 
       - name: dotnet publish
         working-directory: ./blotztask-api
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/blotztask-api
+        run: dotnet publish -c Release -o ${{ runner.temp }}/blotztask-api
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{ runner.temp }}/blotztask-api
 
   deploy:
     runs-on: windows-latest
