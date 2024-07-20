@@ -1,14 +1,12 @@
-name: Deploy .NET Web API Backend to Azure
+name: Build, test and run project 
 
 on:
-    push:
-      paths:
-        - 'blotztask-api/**'
-      branches:
-        - main
-    pull_request:
-      paths:
-        - 'blotztask-api/**'
+  pull_request:
+    branches:
+      - 'main'
+    types:
+      - opened
+      - synchronize
   
 jobs:
     build-and-deploy:
@@ -34,11 +32,3 @@ jobs:
         - name: Publish the project
           run: dotnet publish --configuration Release --output ./blotztask-api/publish --no-build
           working-directory: ./blotztask-api
-
-        # - name: Deploy to Azure Web App
-        #   uses: azure/webapps-deploy@v2
-        #   with:
-        #     app-name: <your-backend-app-service-name>
-        #     slot-name: 'production'
-        #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        #     package: ./blotztask-api/publish
