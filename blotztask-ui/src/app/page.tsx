@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex flex-col gap-5 p-12 md:items-center md:p-28">
-      <H1>Blotz Task Test Vercel Deployment</H1>
+      <H1>Blotz Task</H1>
       <H3 className="text-lg font-light text-muted-foreground sm:text-xl">
         Designed to help users efficiently organize and track their tasks providing functionality for task creation, management, and completion tracking.
       </H3>
