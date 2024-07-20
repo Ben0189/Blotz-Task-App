@@ -1,4 +1,4 @@
-name: Deploy .NET Web API Backend to Azure
+name: Build, test and run project 
 
 on:
   pull_request:
