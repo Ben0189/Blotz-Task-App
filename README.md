@@ -1,4 +1,3 @@
-# Smart-Task-App
 # BlotzTaskApp
 
 BlotzTaskApp is a comprehensive task management application designed to help users efficiently organize and track their tasks. The application leverages modern web technologies to deliver a seamless and responsive user experience, providing robust functionality for task creation, management, and completion tracking.
