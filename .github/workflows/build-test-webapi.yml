@@ -9,7 +9,7 @@ on:
       - synchronize
   
 jobs:
-    build-and-deploy:
+    build-and-test-backend:
         runs-on: ubuntu-latest
 
         steps:
