@@ -17,17 +17,17 @@ export default function Home() {
             </span>
           </Button>
         </Link>
-        <Link href="https://ui.shadcn.com/" target="_blank">
+        <Link href="coming-soon">
           <Button variant="outline" asChild>
             <span>
-              Add Task
+              My Profile
             </span>
           </Button>
         </Link>
-        <Link href="https://github.com/hsuanyi-chou/shadcn-ui-expansions" target="_blank">
+        <Link href="/coming-soon">
           <Button variant="outline" asChild>
             <span>
-              Track Task
+              Log out
             </span>
           </Button>
         </Link>
