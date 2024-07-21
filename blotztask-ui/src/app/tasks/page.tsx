@@ -1,6 +1,5 @@
 import { promises as fs } from "fs"
 import { Metadata } from "next"
-import Image from "next/image"
 import path from "path"
 import { z } from "zod"
 
