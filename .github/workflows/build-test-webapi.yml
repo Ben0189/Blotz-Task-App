@@ -21,6 +21,9 @@ jobs:
           with:
             dotnet-version: '8.0.x'
 
+        - name: Install dependencies
+          run: dotnet restore
+          
         - name: .Net - Tool restore
           working-directory: ./blotztask-api
           run: |
