@@ -35,7 +35,7 @@ jobs:
           working-directory: ./blotztask-api
 
         - name: Publish the project
-          run: dotnet publish --configuration Release --output ./blotztask-api/publish --no-build
+          run: dotnet publish -c Release -o ${{ runner.temp }}/blotztask-api
           working-directory: ./blotztask-api
 
         - name: Generate EF Core migration script
