@@ -21,16 +21,13 @@ jobs:
           with:
             dotnet-version: '8.0.x'
 
-        - name: Restore dependencies
-          run: dotnet restore
-          working-directory: ./blotztask-api
+        - name: .Net - Tool restore
+          run: |
+            dotnet tool restore
 
         - name: Build the project
           run: dotnet build --configuration Release --no-restore
           working-directory: ./blotztask-api
-
-        - name: .Net - Tool restore
-          run: dotnet tool restore
 
         - name: Publish the project
           run: dotnet publish --configuration Release --output ./blotztask-api/publish --no-build
