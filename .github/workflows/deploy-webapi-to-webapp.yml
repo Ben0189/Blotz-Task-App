@@ -34,8 +34,8 @@ jobs:
       - name: dotnet publish
         working-directory: ./blotztask-api
         run: dotnet publish -c Release -o ${{ runner.temp }}/blotztask-api
-
-      - name: Upload artifact for deployment job
+      
+      - name: Upload artifacts for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
@@ -44,12 +44,6 @@ jobs:
       - name: Generate EF Core migration script
         working-directory: ./blotztask-api
         run: dotnet ef migrations script -o ${{ runner.temp }}/migrations.sql
-  
-      - name: Upload artifacts for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: .net-app
-          path: ${{ runner.temp }}/blotztask-api
 
       - name: Upload migration script for deployment job
         uses: actions/upload-artifact@v4
