@@ -80,10 +80,11 @@ jobs:
         #       az sql db update --server <your_server_name> --resource-group <your_resource_group> --name <your_db_name> --service-objective S0
 
         - name: EF - Apply Migration SQL Script
-          uses: azure/sql-action@v2.2.1
+          uses: azure/sql-action@v2.3
           with:
-            connection-string: Server=tcp:blotztask.database.windows.net,1433;Initial Catalog=BlotzTaskDatabase;Persist Security Info=False;User ID=azureuser;Password=@BlotzTask;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-            path: ./migrations.sql       
+            connection-string: ${{ secrets.AZURE_SQL_SERVER_CONNECTION_STRING }}
+            path: ./migrations.sql    
+            skip-firewall-check: true   
 
         # - name: Run migrations on Azure SQL Database
         #   run: |
