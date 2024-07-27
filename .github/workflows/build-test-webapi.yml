@@ -7,7 +7,7 @@ on:
     types:
       - opened
       - synchronize
-  
+  #  rename the job to build and test
 jobs:
     build-and-test-backend:
         runs-on: ubuntu-latest
@@ -21,14 +21,35 @@ jobs:
           with:
             dotnet-version: '8.0.x'
 
-        - name: Restore dependencies
+        - name: Install dependencies
           run: dotnet restore
           working-directory: ./blotztask-api
+
+        - name: .Net - Tool restore
+          working-directory: ./blotztask-api
+          run: |
+            dotnet tool restore
 
         - name: Build the project
           run: dotnet build --configuration Release --no-restore
           working-directory: ./blotztask-api
 
         - name: Publish the project
-          run: dotnet publish --configuration Release --output ./blotztask-api/publish --no-build
+          run: dotnet publish -c Release -o ${{ runner.temp }}/blotztask-api
           working-directory: ./blotztask-api
+
+        - name: Generate EF Core migration script
+          working-directory: ./blotztask-api
+          run: dotnet ef migrations script -o ${{ runner.temp }}/migrations.sql
+    
+        - name: Upload artifacts for deployment job
+          uses: actions/upload-artifact@v4
+          with:
+            name: .net-app
+            path: ${{ runner.temp }}/blotztask-api
+  
+        - name: Upload migration script for deployment job
+          uses: actions/upload-artifact@v4
+          with:
+            name: db-migrations
+            path: ${{ runner.temp }}/migrations.sql 
