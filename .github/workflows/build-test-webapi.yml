@@ -7,7 +7,7 @@ on:
     types:
       - opened
       - synchronize
-  
+  #  rename the job to build and test
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -66,6 +66,11 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: .net-app
+  
+        - name: Download artifact from build job
+          uses: actions/download-artifact@v4
+          with:
+            name: db-migrations
 
         # - name: Set up Azure SQL CLI
         #   uses: Azure/cli@v1
