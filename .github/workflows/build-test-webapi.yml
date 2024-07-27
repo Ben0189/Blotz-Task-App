@@ -9,7 +9,7 @@ on:
       - synchronize
   
 jobs:
-    build-and-test-backend:
+    build:
         runs-on: ubuntu-latest
 
         steps:
@@ -53,3 +53,48 @@ jobs:
           with:
             name: db-migrations
             path: ${{ runner.temp }}/migrations.sql 
+
+    deploy:
+      runs-on: windows-latest
+      needs: build
+      environment:
+        name: 'Production'
+        url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      
+      steps:
+        - name: Download artifact from build job
+          uses: actions/download-artifact@v4
+          with:
+            name: .net-app
+
+        # - name: Set up Azure SQL CLI
+        #   uses: Azure/cli@v1
+        #   with:
+        #     inlineScript: |
+        #       az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+        #       az sql db update --server <your_server_name> --resource-group <your_resource_group> --name <your_db_name> --service-objective S0
+
+        - name: EF - Apply Migration SQL Script
+          uses: azure/sql-action@v2.2.1
+          with:
+            connection-string: Server=tcp:blotztask.database.windows.net,1433;Initial Catalog=BlotzTaskDatabase;Persist Security Info=False;User ID=azureuser;Password=@BlotzTask;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+            path: ./migrations.sql       
+
+        # - name: Run migrations on Azure SQL Database
+        #   run: |
+        #     sqlcmd -S <your_server_name>.database.windows.net -d <your_db_name> -U <your_username> -P <your_password> -i ${{ runner.temp }}/migrations.sql
+        #   env:
+        #     AZURE_SQL_SERVER: ${{ secrets.AZURE_SQL_SERVER }}
+        #     AZURE_SQL_DATABASE: ${{ secrets.AZURE_SQL_DATABASE }}
+        #     AZURE_SQL_USER: ${{ secrets.AZURE_SQL_USER }}
+        #     AZURE_SQL_PASSWORD: ${{ secrets.AZURE_SQL_PASSWORD }}    
+        
+        - name: Deploy to Azure Web App
+          id: deploy-to-webapp
+          uses: azure/webapps-deploy@v3
+          with:
+            app-name: 'BlotzTaskApp'
+            slot-name: 'Production'
+            package: .
+            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_24EFDD1C5E6C4F14AAE5D492645AE57E }}
+            
