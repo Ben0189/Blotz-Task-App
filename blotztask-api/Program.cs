@@ -1,6 +1,7 @@
 using BlotzTask.Data;
 using BlotzTask.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,16 @@ builder.Services.AddScoped<ITaskService, TaskService>();
 var databaseConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BlotzTaskDbContext>(options => options.UseSqlServer(databaseConnectionString));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 
@@ -29,6 +40,7 @@ app.UseSwagger();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseCors("AllowSpecificOrigin");
 
 app.MapControllers();
 

@@ -31,6 +31,14 @@ export default function Home() {
             </span>
           </Button>
         </Link>
+        <Link href="/test-connection">
+          <Button asChild>
+            <span>
+              Test Server Connection
+            </span>
+          </Button>
+        </Link>
+
       </div>
     </main>
   );
