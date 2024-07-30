@@ -1,7 +1,6 @@
 using BlotzTask.Data;
 using BlotzTask.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
