@@ -2,9 +2,10 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import { taskDTOSchema } from "../tasks/data/schema";
 import { z } from "zod";
 import { taskDto } from "./models/taskDto";
+import { TaskDTO, taskDTOSchema } from "./schema/schema";
+import { ProfileForm } from "./components/form";
 
 // Define mock data
 const mockTasks : taskDto[] = [
@@ -31,7 +32,7 @@ const validatedTasks = z.array(taskDTOSchema).parse(mockTasks);
 // Simulate a database read for tasks.
 export default function Dayview() {
 
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<TaskDTO[]>(validatedTasks);
 
   useEffect(() => {
     // Simulate fetching tasks
@@ -65,9 +66,21 @@ export default function Dayview() {
                 </CardContent>
               </Card>
             ))}
+
+            <div className="w-1/2">
+              <Card>
+                <CardHeader className="pb-1">
+                </CardHeader>
+                <CardContent className="grid gap-1">
+                  <ProfileForm setTasks={setTasks}/>
+                </CardContent>
+              </Card>
+            </div>
+
           </div>
         </div>
       </div>
+
     </>
   );
 }
