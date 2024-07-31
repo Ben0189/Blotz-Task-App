@@ -24,30 +24,6 @@ const mockTasks : taskDto[] = [
     createdAt: "2024-07-21T10:00:00Z",
     updatedAt: "2024-07-21T10:00:00Z",
   },
-  {
-    id: 3,
-    title: "Code review",
-    description: "Review the code for the new feature and provide feedback.",
-    isDone: true,
-    createdAt: "2024-07-22T14:00:00Z",
-    updatedAt: "2024-07-22T14:30:00Z",
-  },
-  {
-    id: 4,
-    title: "Client presentation",
-    description: "Prepare and present the project updates to the client.",
-    isDone: false,
-    createdAt: "2024-07-23T16:00:00Z",
-    updatedAt: "2024-07-23T16:00:00Z",
-  },
-  {
-    id: 5,
-    title: "Update documentation",
-    description: "Update the project documentation with the latest changes.",
-    isDone: false,
-    createdAt: "2024-07-24T09:00:00Z",
-    updatedAt: "2024-07-24T09:00:00Z",
-  },
 ];
 
 const validatedTasks = z.array(taskDTOSchema).parse(mockTasks);
