@@ -1,27 +1,18 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { de } from "@faker-js/faker"
-
-const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required",
-  }),
-  description: z.string() 
-})
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { formSchema } from "../schema/schema"
 
 export function ProfileForm({ setTasks }) {
   // 1. Define your form.
