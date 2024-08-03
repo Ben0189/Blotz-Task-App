@@ -10,6 +10,13 @@ export default function Home() {
         Designed to help users efficiently organize and track their tasks providing functionality for task creation, management, and completion tracking.
       </H3>
       <div className="mt-16 flex flex-col gap-3 md:flex-row">
+        <Link href="/task-dayview">
+          <Button asChild>
+            <span>
+              Day View
+            </span>
+          </Button>
+        </Link>
         <Link href="/tasks">
           <Button asChild>
             <span>
