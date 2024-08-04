@@ -13,7 +13,7 @@ export default function Home() {
         <Link href="/">
           <Button asChild>
             <span>
-              Return Home Page
+              Return Home
             </span>
           </Button>
         </Link>
