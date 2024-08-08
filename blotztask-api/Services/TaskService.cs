@@ -2,6 +2,7 @@
 using BlotzTask.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace BlotzTask.Services;
 
 public interface ITaskService
@@ -37,7 +38,7 @@ public class TaskService : ITaskService
             throw;
         }
     }
-    public async Task<TaskItemDTO> GetBtID(int id) 
+    public async Task<TaskItemDTO> GetBtID(int id)
     {
         try
         {
@@ -45,8 +46,12 @@ public class TaskService : ITaskService
                 .Where(x => x.Id == id)
                 .Select(x => new TaskItemDTO
                 {
-                    DisplayId = $"Task-{x.Id}",
-                    Title = x.Title
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    IsDone = x.IsDone,
+                    CreatedAt = x.CreatedAt,
+                    UpdatedAt = x.UpdatedAt
                 })
                 .FirstOrDefaultAsync();
 
@@ -54,10 +59,11 @@ public class TaskService : ITaskService
         }
         catch (Exception ex)
         {
-            //TODO: Add some error log throw (haven't created PBI)
+            // TODO: Add some error logging here
             throw;
         }
     }
+
 
 }
 
