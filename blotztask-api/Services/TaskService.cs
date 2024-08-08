@@ -7,6 +7,7 @@ namespace BlotzTask.Services;
 public interface ITaskService
 {
     public Task<List<TaskItemDTO>> GetTodoItems();
+    public Task<TaskItemDTO> GetBtID(int id);
 }
 
 public class TaskService : ITaskService
@@ -36,5 +37,27 @@ public class TaskService : ITaskService
             throw;
         }
     }
+    public async Task<TaskItemDTO> GetBtID(int id) 
+    {
+        try
+        {
+            var taskItem = await _dbContext.TaskItems
+                .Where(x => x.Id == id)
+                .Select(x => new TaskItemDTO
+                {
+                    DisplayId = $"Task-{x.Id}",
+                    Title = x.Title
+                })
+                .FirstOrDefaultAsync();
+
+            return taskItem;
+        }
+        catch (Exception ex)
+        {
+            //TODO: Add some error log throw (haven't created PBI)
+            throw;
+        }
+    }
+
 }
 
