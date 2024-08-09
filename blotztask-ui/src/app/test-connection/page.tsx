@@ -29,8 +29,8 @@ export default function Home() {
   };
   
   return (
-    <main className="flex flex-col gap-5 p-12 md:items-center md:p-28">
-    <H1>⚒️ Test Backend Connection</H1>
+    <main className="flex flex-col gap-6 p-6 md:items-center md:p-16 bg-[#f7f7f7]">
+    <H1>📡 Test Server Connection</H1>
     <H3 className="text-lg font-light text-muted-foreground sm:text-xl">
       Click the button to fetch the current list of todo items.
     </H3>
