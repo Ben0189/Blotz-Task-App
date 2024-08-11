@@ -42,9 +42,9 @@ public class TaskService : ITaskService
         
         var taskItems = new List<TaskItemDTO>
     {
-        new TaskItemDTO { Id = 1, Title = "Task 1", Description = "Description for Task 1", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
-        new TaskItemDTO { Id = 2, Title = "Task 2", Description = "Description for Task 2", IsDone = true, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
-        new TaskItemDTO { Id = 3, Title = "Task 3", Description = "Description for Task 3", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
+        new TaskItemDTO { Id = 0, Title = "Task 0", Description = "Description for Task 1", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+        new TaskItemDTO { Id = 1, Title = "Task 1", Description = "Description for Task 2", IsDone = true, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+        new TaskItemDTO { Id = 2, Title = "Task 2", Description = "Description for Task 3", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
     };
 
         return await Task.FromResult(taskItems[ID]);
