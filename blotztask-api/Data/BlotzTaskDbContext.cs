@@ -27,7 +27,7 @@ namespace BlotzTask.Data
                     Id = 2,
                     Title = "Initial Task 2",
                     Description = "Description for Task 2",
-                    IsDone = false,
+                    IsDone = true,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 },
