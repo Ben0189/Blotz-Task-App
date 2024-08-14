@@ -3,7 +3,7 @@ name: Deploy Bicep file
 on:
     push:
       branches:
-        - main
+        - azure-resource-deployment-pipeline
     workflow_dispatch:
 
 jobs:
