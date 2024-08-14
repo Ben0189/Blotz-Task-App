@@ -31,8 +31,4 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   }
 }
 
-
-output location string = location
 output name string = kv.name
-output resourceGroupName string = resourceGroup().name
-output resourceId string = kv.id
