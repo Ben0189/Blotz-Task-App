@@ -1,32 +1,32 @@
-name: Deploy Bicep file
+
+name: Deploy Azure resource with OIDC
 
 on:
     push:
       branches:
-        - main
-    workflow_dispatch:
+        - azure-resource-deployment-pipeline
+    workflow_dispatch: 
 
+permissions:
+  id-token: write
+  contents: read
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Checkout code
-      uses: actions/checkout@main
-
-    - name: Log into Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Deploy Bicep file
-      uses: azure/arm-deploy@v1
-      with:
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: ${{ secrets.AZURE_RG }}
-        template: ./main.bicep
-        scope: resourcegroup
-        parameters: | 
-          sqlAdminUsername: ${{ secrets.AZURE_SQL_USERNAME }}
-          sqlAdminPassword: ${{ secrets.AZURE_SQL_PASSWORD }}
-        failOnStdErr: false
+      - name: Deploy Azure resources
+        uses: azure/arm-deploy@v1
+        with:
+          template: ./main.bicep
+          scope: resourcegroup
+          parameters: | 
+            sqlAdminUsername: ${{ secrets.AZURE_SQL_USERNAME }}
+            sqlAdminPassword: ${{ secrets.AZURE_SQL_PASSWORD }}
+          failOnStdErr: false
