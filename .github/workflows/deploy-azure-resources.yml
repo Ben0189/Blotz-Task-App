@@ -2,9 +2,9 @@
 name: Deploy Azure resource with OIDC
 
 on:
-    push:
-      branches:
-        - azure-resource-deployment-pipeline
+    # push:
+    #   branches:
+    #     - main
     workflow_dispatch: 
 
 permissions:
