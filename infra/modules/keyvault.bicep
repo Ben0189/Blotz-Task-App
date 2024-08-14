@@ -9,7 +9,7 @@ param location string = resourceGroup().location
 param skuName string = 'standard'
 
 var name = toLower('kv-blotztask-prod') // Replace with environment variable or parameter
-var validatedName = length(name) > 24 ? substring(name, 0, 24) : name
+var validatedName = length(name) > 24 ?  substring(name, 0, min(24, length(name))) : name
 
 resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: validatedName
