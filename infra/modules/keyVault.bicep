@@ -31,24 +31,4 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   }
 }
 
-resource kv2 'Microsoft.KeyVault/vaults@2023-07-01' = {
-  name: 'test-create-key-vault'
-  location: location
-  properties: {
-    sku: {
-      family: 'A'
-      name: skuName
-    }
-    tenantId: subscription().tenantId
-    softDeleteRetentionInDays: 90
-    enabledForTemplateDeployment: true
-    enableSoftDelete: true
-    enableRbacAuthorization: true
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Allow'
-    }
-  }
-}
-
 output name string = kv.name
