@@ -9,7 +9,7 @@ param location string = resourceGroup().location
 param skuName string = 'standard'
 
 var name = toLower('kv-blotztask-prod') // Replace with environment variable or parameter
-var validatedName = length(name) > 24 ? substring(name, 0, 24) : name
+var validatedName = length(name) > 24 ?  substring(name, 0, min(24, length(name))) : name
 
 resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: validatedName
@@ -31,8 +31,24 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   }
 }
 
+resource kv2 'Microsoft.KeyVault/vaults@2023-07-01' = {
+  name: 'test-create-key-vault'
+  location: location
+  properties: {
+    sku: {
+      family: 'A'
+      name: skuName
+    }
+    tenantId: subscription().tenantId
+    softDeleteRetentionInDays: 90
+    enabledForTemplateDeployment: true
+    enableSoftDelete: true
+    enableRbacAuthorization: true
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Allow'
+    }
+  }
+}
 
-output location string = location
 output name string = kv.name
-output resourceGroupName string = resourceGroup().name
-output resourceId string = kv.id
