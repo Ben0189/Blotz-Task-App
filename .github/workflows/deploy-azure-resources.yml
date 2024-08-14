@@ -26,7 +26,4 @@ jobs:
         with:
           template: ./main.bicep
           scope: resourcegroup
-          parameters: | 
-            sqlAdminUsername: ${{ secrets.AZURE_SQL_USERNAME }}
-            sqlAdminPassword: ${{ secrets.AZURE_SQL_PASSWORD }}
           failOnStdErr: false
