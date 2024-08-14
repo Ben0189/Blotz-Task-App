@@ -18,5 +18,10 @@ namespace BlotzTask.Controllers
         {
             return Ok(await _taskService.GetTodoItems());
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTaskByID(int id)
+        {
+            return Ok(await _taskService.GetTaskByID(id));
+        }
     }
 }
