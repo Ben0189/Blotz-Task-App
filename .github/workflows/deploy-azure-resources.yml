@@ -24,6 +24,7 @@ jobs:
       - name: Deploy Azure resources
         uses: azure/arm-deploy@v1
         with:
+          resourceGroupName: ${{ vars.AZURE_RESOURCE_GROUP }}
           template: ./main.bicep
           scope: resourcegroup
           failOnStdErr: false
