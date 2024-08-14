@@ -4,7 +4,7 @@ name: Run Azure Login with OIDC
 on:
     push:
       branches:
-        - main  
+        - azure-resource-deployment-pipeline
     workflow_dispatch: 
 
 permissions:
