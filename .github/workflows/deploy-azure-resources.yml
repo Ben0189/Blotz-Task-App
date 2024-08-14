@@ -24,7 +24,7 @@ jobs:
       - name: Deploy Azure resources
         uses: azure/arm-deploy@v1
         with:
-          resourceGroupName: ${{ vars.AZURE_RESOURCE_GROUP }}
-          template: ./main.bicep
+          resourceGroupName: ${{ vars.AZURE_RESOURCE_GROUP }} #TODO: Do i need resource group here? do i need deploy resources group as well ?
+          template: ./infra/main.bicep
           scope: resourcegroup
           failOnStdErr: false
