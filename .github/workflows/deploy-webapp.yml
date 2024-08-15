@@ -85,8 +85,8 @@ jobs:
         
         - uses: Azure/get-keyvault-secrets@v1
           with:
-            keyvault: "kv-blotztask-prod"
-            secrets: 'db-connection-string'  # comma separated list of secret keys that need to be fetched from the Key Vault 
+            keyvault: "kv-blotztask-prod" #fix this later to not use kv
+            secrets: 'db-connection-string'  
           id: get-secret-connection-string
 
         # Set output (within the deploy job)
