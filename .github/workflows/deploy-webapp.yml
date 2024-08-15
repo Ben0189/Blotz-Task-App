@@ -92,7 +92,7 @@ jobs:
         - name: EF - Apply Migration SQL Script 
           uses: azure/sql-action@v2.3
           with:
-            connection-string: ${{ steps.get-secret-connection-strings.outputs.db-connection-string }}
+            connection-string: ${{ steps.get-secret-connection-strings.outputs.db-connection-strings }}
             path: ./migrations.sql    
             skip-firewall-check: true   
 
@@ -101,6 +101,8 @@ jobs:
           uses: azure/webapps-deploy@v3
           with:
             app-name: 'BlotzTaskApp'
-            slot-name: 'Production'
-            package: .
-            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_24EFDD1C5E6C4F14AAE5D492645AE57E }} #how to improve this ?
+            package: 'blotztask-api'
+
+        - name: azure logout
+          run: |
+            az logout
