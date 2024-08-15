@@ -75,15 +75,21 @@ jobs:
             client-id: ${{ vars.AZURE_CLIENT_ID }}
             tenant-id: ${{ vars.AZURE_TENANT_ID }}
             subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        
+        - uses: Azure/get-keyvault-secrets@v1
+          with:
+            keyvault: "kv-blotztask-prod"
+            secrets: 'db-connection-string'  # comma separated list of secret keys that need to be fetched from the Key Vault 
+          id: getConnectionStringFromKV
 
-        - name: EF - Apply Migration SQL Script
+        - name: EF - Apply Migration SQL Script 
           uses: azure/sql-action@v2.3
           with:
             connection-string: ${{ secrets.AZURE_SQL_SERVER_CONNECTION_STRING }}
             path: ./migrations.sql    
             skip-firewall-check: true   
 
-        - name: Deploy to Azure Web App
+        - name: Deploy to Azure Web App #What if my deployment failed here? can i rollback the above script deployment?
           id: deploy-to-webapp
           uses: azure/webapps-deploy@v3
           with:
