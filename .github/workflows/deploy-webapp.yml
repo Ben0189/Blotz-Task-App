@@ -86,13 +86,13 @@ jobs:
         - uses: Azure/get-keyvault-secrets@v1
           with:
             keyvault: "kv-blotztask-prod" #fix this later to not use kv
-            secrets: 'db-connection-strings'  
+            secrets: 'database-connection-string'  
           id: get-secret-connection-strings
 
         - name: EF - Apply Migration SQL Script 
           uses: azure/sql-action@v2.3
           with:
-            connection-string: ${{ steps.get-secret-connection-strings.outputs.db-connection-strings }}
+            connection-string: ${{ steps.get-secret-connection-strings.outputs.database-connection-string }}
             path: ./migrations.sql    
             skip-firewall-check: true   
 
