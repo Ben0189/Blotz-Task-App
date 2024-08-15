@@ -89,15 +89,10 @@ jobs:
             secrets: 'db-connection-string'  
           id: get-secret-connection-string
 
-        # Set output (within the deploy job)
-        - name: Set connection string output
-          id: set-output
-          run: echo "##[set-output name=db_connection_string;]${{ steps.get-secret.outputs.db-connection-string }}"
-
         - name: EF - Apply Migration SQL Script 
           uses: azure/sql-action@v2.3
           with:
-            connection-string: ${{ steps.set-output.outputs.db_connection_string }}
+            connection-string: ${{ steps.get-secret-connection-string.outputs.db-connection-string }}
             path: ./migrations.sql    
             skip-firewall-check: true   
 
