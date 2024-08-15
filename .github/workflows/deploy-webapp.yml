@@ -92,7 +92,7 @@ jobs:
         - name: EF - Apply Migration SQL Script 
           uses: azure/sql-action@v2.3
           with:
-            connection-string: ${{ steps.get-secret-connection-strings.outputs.database-connection-string }}
+            connection-string: ${{ secrets.AZURE_SQL_SERVER_CONNECTION_STRING }} #do different way to get this
             path: ./migrations.sql    
             skip-firewall-check: true   
 
