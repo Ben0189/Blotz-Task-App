@@ -13,8 +13,8 @@ on:
     branches:
       - update-deploy-yml-after-new-resources-deploy
   workflow_dispatch:
-    
-permissions:
+
+permissions: # Do i need a permission write here ?
   id-token: write
   contents: read
 
@@ -87,12 +87,17 @@ jobs:
           with:
             keyvault: "kv-blotztask-prod"
             secrets: 'db-connection-string'  # comma separated list of secret keys that need to be fetched from the Key Vault 
-          id: getConnectionStringFromKV
+          id: get-secret-connection-string
+
+        # Set output (within the deploy job)
+        - name: Set connection string output
+          id: set-output
+          run: echo "##[set-output name=db_connection_string;]${{ steps.get-secret.outputs.db-connection-string }}"
 
         - name: EF - Apply Migration SQL Script 
           uses: azure/sql-action@v2.3
           with:
-            connection-string: ${{ secrets.AZURE_SQL_SERVER_CONNECTION_STRING }}
+            connection-string: ${{ steps.set-output.outputs.db_connection_string }}
             path: ./migrations.sql    
             skip-firewall-check: true   
 
@@ -103,4 +108,4 @@ jobs:
             app-name: 'BlotzTaskApp'
             slot-name: 'Production'
             package: .
-            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_24EFDD1C5E6C4F14AAE5D492645AE57E }}
+            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_24EFDD1C5E6C4F14AAE5D492645AE57E }} #how to improve this ?
