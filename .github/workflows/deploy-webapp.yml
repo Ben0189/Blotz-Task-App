@@ -4,14 +4,15 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - BlotzTaskApp
 
 on:
-  workflow_dispatch:
   # push:
   #   paths:
   #     - 'blotztask-api/**'
   #   branches:
   #     - main
-
-
+  push:
+    branches:
+      - update-deploy-yml-after-new-resources-deploy
+  workflow_dispatch:
 
 jobs:
   build:
