@@ -86,17 +86,17 @@ jobs:
         - uses: Azure/get-keyvault-secrets@v1
           with:
             keyvault: "kv-blotztask-prod" #fix this later to not use kv
-            secrets: 'database-connection-string'  
+            secrets: 'db-string-connection'  
           id: get-secret-connection-strings
 
         - name: EF - Apply Migration SQL Script 
           uses: azure/sql-action@v2.3
           with:
-            connection-string: ${{ secrets.AZURE_SQL_SERVER_CONNECTION_STRING }} #do different way to get this
+            connection-string: ${{ steps.get-secret-connection-strings.outputs.db-string-connection }} #do different way to get this
             path: ./migrations.sql    
             skip-firewall-check: true   
 
-        - name: Deploy to Azure Web App #What if my deployment failed here? can i rollback the above script deployment?
+        - name: Deploy to Azure Web App #What if my deployment failed here? can i rollback the above script deployment? YOu cant you just need to make the schema changes is backward compitatble
           id: deploy-to-webapp
           uses: azure/webapps-deploy@v3
           with:
