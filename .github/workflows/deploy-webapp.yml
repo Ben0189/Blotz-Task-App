@@ -97,7 +97,8 @@ jobs:
           id: deploy-to-webapp
           uses: azure/webapps-deploy@v3
           with:
-            app-name: 'BlotzTaskApp'
+            app-name: 'wapp-blotztaskapp'
+            slot-name: 'Production'
             package: './'
 
         - name: azure logout
