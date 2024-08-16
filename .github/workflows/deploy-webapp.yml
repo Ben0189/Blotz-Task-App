@@ -4,14 +4,11 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - BlotzTaskApp
 
 on:
-  # push:
-  #   paths:
-  #     - 'blotztask-api/**'
-  #   branches:
-  #     - main
   push:
+    paths:
+      - 'blotztask-api/**'
     branches:
-      - update-deploy-yml-after-new-resources-deploy
+      - main
   workflow_dispatch:
 
 permissions: # Do i need a permission write here ?
@@ -85,18 +82,18 @@ jobs:
         
         - uses: Azure/get-keyvault-secrets@v1
           with:
-            keyvault: "kv-blotztask-prod" #fix this later to not use kv
+            keyvault: "kv-blotztask-prod" # TODO: do different way to get this
             secrets: 'db-string-connection'  
           id: get-secret-connection-strings
 
         - name: EF - Apply Migration SQL Script 
           uses: azure/sql-action@v2.3
           with:
-            connection-string: ${{ steps.get-secret-connection-strings.outputs.db-string-connection }} #do different way to get this
+            connection-string: ${{ steps.get-secret-connection-strings.outputs.db-string-connection }} # TODO: do different way to get this
             path: ./migrations.sql    
             skip-firewall-check: true   
 
-        - name: Deploy to Azure Web App #What if my deployment failed here? can i rollback the above script deployment? YOu cant you just need to make the schema changes is backward compitatble
+        - name: Deploy to Azure Web App #What if my deployment failed here? can i rollback the above script deployment? You cant, you just need to make the schema changes is backward compitatble
           id: deploy-to-webapp
           uses: azure/webapps-deploy@v3
           with:
