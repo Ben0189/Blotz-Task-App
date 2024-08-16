@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { H1, H3 } from "@/components/ui/heading-with-anchor";
 import Link from "next/link";
 import { useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default function Home() {
 
