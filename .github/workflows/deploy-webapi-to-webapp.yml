@@ -80,7 +80,9 @@ jobs:
           id: deploy-to-webapp
           uses: azure/webapps-deploy@v3
           with:
-            app-name: 'BlotzTaskApp'
-            slot-name: 'Production'
-            package: .
-            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_24EFDD1C5E6C4F14AAE5D492645AE57E }}
+            app-name: 'wapp-blotztaskapp'
+            package: './'
+
+        - name: azure logout
+          run: |
+            az logout
