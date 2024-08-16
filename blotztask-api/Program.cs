@@ -24,7 +24,7 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddDbContext<BlotzTaskDbContext>(options => options.UseSqlServer(databaseConnectionString));
 }
 
-if (builder.Environment.IsDevelopment())
+if (builder.Environment.IsProduction())
 {
     var keyVaultEndpoint = builder.Configuration.GetSection("KeyVault").GetValue<string>("VaultURI");
 
