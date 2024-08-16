@@ -101,7 +101,7 @@ jobs:
           uses: azure/webapps-deploy@v3
           with:
             app-name: 'BlotzTaskApp'
-            package: 'blotztask-api'
+            package: './blotztask-api'
 
         - name: azure logout
           run: |
