@@ -37,7 +37,3 @@ resource sql 'Microsoft.Sql/servers@2023-05-01-preview' = {
     }
   }
 }
-
-output name string = sql.name
-output server string = sql.properties.fullyQualifiedDomainName
-output database string = sqlDbName

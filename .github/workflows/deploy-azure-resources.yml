@@ -1,0 +1,33 @@
+
+name: Deploy Azure resource with OIDC
+
+on:
+    # push:
+    #   branches:
+    #     - main
+    workflow_dispatch: 
+
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy Azure resources
+        uses: azure/arm-deploy@v1
+        with:
+          resourceGroupName: ${{ vars.AZURE_RESOURCE_GROUP }} #TODO: Do i need resource group here? do i need deploy resources group as well ?
+          template: ./infra/main.bicep
+          scope: resourcegroup
+          failOnStdErr: false
