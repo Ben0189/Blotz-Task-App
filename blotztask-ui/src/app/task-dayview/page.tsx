@@ -34,6 +34,17 @@ const validatedTasks = z.array(taskDTOSchema).parse(mockTasks);
 export default function Dayview() {
  const [tasks, setTasks] = useState<TaskDTO[]>(validatedTasks);
 
+ const handleCheckboxChange = (taskId) => {
+  setTasks((prevTasks) =>
+   prevTasks.map((t) => {
+    if (t.id === taskId) {
+     return { ...t, isDone: !t.isDone };
+    }
+    return t;
+   }),
+  );
+ };
+
  useEffect(() => {
   // Simulate fetching tasks
   setTasks(validatedTasks);
@@ -53,8 +64,14 @@ export default function Dayview() {
       {tasks.map((task) => (
        <Card key={task.id}>
         <CardHeader className="flex-row pb-1">
-         <Checkbox className="rounded-full mt-1 mr-2"></Checkbox>
-         <CardTitle>{task.title}</CardTitle>
+         <Checkbox
+          className="rounded-full mt-1 mr-2"
+          checked={task.isDone}
+          onCheckedChange={() => handleCheckboxChange(task.id)}
+         />
+         <CardTitle className={task.isDone ? 'line-through' : ''}>
+          {task.title}
+         </CardTitle>
         </CardHeader>
         <CardContent className="grid gap-1">
          <div className="flex items-start space-x-4 rounded-md bg-accent text-accent-foreground transition-all pt-2">
