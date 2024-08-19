@@ -35,9 +35,14 @@ export default function Dayview() {
  const [tasks, setTasks] = useState<TaskDTO[]>(validatedTasks);
 
  const handleCheckboxChange = (taskId) => {
-  console.log('Checkbox clicked, taskId:', taskId);
   setTasks((prevTasks) =>
-   prevTasks.map((t) => (t.id === taskId ? { ...t, isDone: !t.isDone } : t)),
+   //  prevTasks.map((t) => (t.id === taskId ? { ...t, isDone: !t.isDone } : t)),
+   prevTasks.map((t) => {
+    if (t.id === taskId) {
+     return { ...t, isDone: !t.isDone };
+    }
+    return t;
+   }),
   );
  };
 
