@@ -36,7 +36,6 @@ export default function Dayview() {
 
  const handleCheckboxChange = (taskId) => {
   setTasks((prevTasks) =>
-   //  prevTasks.map((t) => (t.id === taskId ? { ...t, isDone: !t.isDone } : t)),
    prevTasks.map((t) => {
     if (t.id === taskId) {
      return { ...t, isDone: !t.isDone };
