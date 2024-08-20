@@ -2,25 +2,21 @@
 
 import { Button } from '@/components/ui/button';
 import { H1, H3 } from '@/components/ui/heading-with-anchor';
+import { TaskItemDTO } from '@/model/taskItem';
+import { fetchTaskItems } from '@/services/todoService';
 import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Home() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<TaskItemDTO[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchTodos = async () => {
+  const loadTodos = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/Task/alltask`
-      );
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
+      const data = await fetchTaskItems();
       setTodos(data);
     } catch (error) {
       setError(error.message);
@@ -36,7 +32,7 @@ export default function Home() {
         Click the button to fetch the current list of todo items.
       </H3>
       <div className="mt-16 flex flex-col gap-3 md:flex-row">
-        <Button onClick={fetchTodos} disabled={loading}>
+        <Button onClick={loadTodos} disabled={loading}>
           {loading ? 'Loading...' : 'Fetch Todos'}
         </Button>
         <Link href="/">
