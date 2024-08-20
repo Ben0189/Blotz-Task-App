@@ -6,18 +6,19 @@ import { TaskItemDTO } from '@/model/taskItem';
 import { fetchTaskItems } from '@/services/todoService';
 import Link from 'next/link';
 import { useState } from 'react';
+import TaskList from './components/task-list';
 
 export default function Home() {
-  const [todos, setTodos] = useState<TaskItemDTO[]>([]);
+  const [tasks, setTasks] = useState<TaskItemDTO[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const loadTodos = async () => {
+  const loadTasks = async () => {
     setLoading(true);
     setError(null);
     try {
       const data = await fetchTaskItems();
-      setTodos(data);
+      setTasks(data);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -32,7 +33,7 @@ export default function Home() {
         Click the button to fetch the current list of todo items.
       </H3>
       <div className="mt-16 flex flex-col gap-3 md:flex-row">
-        <Button onClick={loadTodos} disabled={loading}>
+        <Button onClick={loadTasks} disabled={loading}>
           {loading ? 'Loading...' : 'Fetch Todos'}
         </Button>
         <Link href="/">
@@ -44,12 +45,8 @@ export default function Home() {
       {error && (
         <p className="mt-8 text-red-500">Error fetching todos: {error}</p>
       )}
-      {todos.length > 0 && (
-        <ul className="mt-8 list-disc">
-          {todos.map((todo, index) => (
-            <li key={index}>{todo.title}</li>
-          ))}
-        </ul>
+      {tasks.length > 0 && (
+        <TaskList tasks={tasks}/>
       )}
     </main>
   );
