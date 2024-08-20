@@ -1,6 +1,6 @@
 import { TaskItemDTO } from "@/model/taskItem";
 
-export const fetchTaskItems = async () : Promise<TaskItemDTO[]> => {
+export const fetchAllTaskItems = async () : Promise<TaskItemDTO[]> => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/Task/alltask`
     );

@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { H1, H3 } from '@/components/ui/heading-with-anchor';
 import { TaskItemDTO } from '@/model/taskItem';
-import { fetchTaskItems } from '@/services/todoService';
+import { fetchAllTaskItems } from '@/services/todoService';
 import Link from 'next/link';
 import { useState } from 'react';
 import TaskList from './components/task-list';
@@ -17,7 +17,7 @@ export default function Home() {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchTaskItems();
+      const data = await fetchAllTaskItems();
       setTasks(data);
     } catch (error) {
       setError(error.message);
