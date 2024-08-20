@@ -45,6 +45,7 @@ export default async function TaskPage() {
           className="hidden dark:block"
         />
       </div> */}
+      <p>This page is newer version of Task List page with more feature. Currently still under implementation</p>
       <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex bg-white border-1 shadow-lg	">
         <div className="flex items-center justify-between space-y-2">
           <div>

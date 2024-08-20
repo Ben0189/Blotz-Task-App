@@ -1,4 +1,4 @@
-import { TaskItemDTO } from "@/model/taskItem";
+import { TaskItemDTO } from "@/model/task-Item-dto";
 
 export const fetchAllTaskItems = async () : Promise<TaskItemDTO[]> => {
     const response = await fetch(

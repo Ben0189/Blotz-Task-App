@@ -17,9 +17,14 @@ export default function Home() {
             <span>Day View</span>
           </Button>
         </Link>
-        <Link href="/tasks">
+        <Link href="/task-list">
           <Button asChild>
             <span>Task List</span>
+          </Button>
+        </Link>
+        <Link href="/tasks">
+          <Button asChild>
+            <span>New Task List</span>
           </Button>
         </Link>
         <Link href="coming-soon">
