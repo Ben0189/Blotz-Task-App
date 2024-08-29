@@ -1,7 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
+import { Button } from '@/components/ui/button';
+import { DropdownMenuShortcut } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from '@radix-ui/react-dropdown-menu';
 
 //TODO : We might not need user nav in the tasks page
 export function UserNav() {
@@ -47,5 +55,5 @@ export function UserNav() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
