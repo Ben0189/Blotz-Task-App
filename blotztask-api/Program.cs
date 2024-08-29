@@ -2,6 +2,7 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using BlotzTask.Data;
 using BlotzTask.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITaskService, TaskService>();
+
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<BlotzTaskDbContext>();
+
+builder.Services.AddAuthorization();
 
 if (builder.Environment.IsDevelopment())
 {
@@ -50,12 +56,12 @@ if (builder.Environment.IsProduction())
 
 var app = builder.Build();
 
-
+app.MapIdentityApi<IdentityUser>();
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
 // {
 app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwaggerUI();
 // }
 
 app.UseHttpsRedirection();
@@ -63,6 +69,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseCors("AllowSpecificOrigin");
 
-app.MapControllers();
+app.MapSwagger().RequireAuthorization();
+app.MapControllers()
+.RequireAuthorization();
 
 app.Run();
