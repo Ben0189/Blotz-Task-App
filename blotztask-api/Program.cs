@@ -1,12 +1,14 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using BlotzTask.Data;
+using BlotzTask.Data.Entities;
 using BlotzTask.Services;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
-
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +17,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();  
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+
 builder.Services.AddScoped<ITaskService, TaskService>();
+
+builder.Services.AddIdentityApiEndpoints<User>()
+    .AddEntityFrameworkStores<BlotzTaskDbContext>();
+
+builder.Services.AddAuthorization();
 
 if (builder.Environment.IsDevelopment())
 {
@@ -50,12 +67,12 @@ if (builder.Environment.IsProduction())
 
 var app = builder.Build();
 
-
+app.MapIdentityApi<User>();
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
 // {
 app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwaggerUI();
 // }
 
 app.UseHttpsRedirection();
@@ -63,6 +80,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseCors("AllowSpecificOrigin");
 
-app.MapControllers();
+app.MapSwagger().RequireAuthorization();
+app.MapControllers()
+.RequireAuthorization();
 
 app.Run();

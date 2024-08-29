@@ -1,10 +1,10 @@
 ﻿using BlotzTask.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace BlotzTask.Data
 {
-    public class BlotzTaskDbContext : DbContext
+    public class BlotzTaskDbContext : IdentityDbContext<User>
     {
         public BlotzTaskDbContext(DbContextOptions options) : base(options) { }
 
@@ -12,6 +12,7 @@ namespace BlotzTask.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<TaskItem>().HasData(
                 new TaskItem
                 {
