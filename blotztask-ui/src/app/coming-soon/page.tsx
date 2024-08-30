@@ -54,7 +54,7 @@ export default function Home() {
             className="text-left font-serif text-4xl italic text-white-800 animate-zoomOut"
             style={{ animation: 'zoomOut 3.5s ease forwards',}}>
 
-            We appreciate your patience 🌿
+            We appreciate your patience :D🌿
             
           </div>
           )}
