@@ -1,3 +1,4 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { promises as fs } from 'fs';
 import { Metadata } from 'next';
 import path from 'path';
@@ -45,13 +46,23 @@ export default async function TaskPage() {
           className="hidden dark:block"
         />
       </div> */}
-      <p>This page is newer version of Task List page with more feature. Currently still under implementation</p>
+      <Card className="mb-4 bg-yellow-50">
+        <CardHeader>
+          <CardTitle className="text-yellow-600"><span className="info-icon" >ℹ️</span>Notice</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription className="text-yellow-500">
+            This page is a newer version of the Task List page with more features. Currently still under implementation.
+          </CardDescription>
+        </CardContent>
+      </Card>
+      {/* <p>This page is newer version of Task List page with more feature. Currently still under implementation</p> */}
       <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex bg-white border-1 shadow-lg	">
         <div className="flex items-center justify-between space-y-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Task List</h2>
             <p className="text-muted-foreground">
-              Here&apos;s a list of your tasks for this month!
+              Here&apos;s a list of your tasks for this month! 
             </p>
           </div>
           <div className="flex items-center space-x-2">{/* <UserNav /> */}</div>
