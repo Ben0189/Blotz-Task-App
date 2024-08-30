@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { H1, H3 } from "@/components/ui/heading-with-anchor";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import { H1, H3 } from '@/components/ui/heading-with-anchor';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -12,9 +12,7 @@ export default function Home() {
       <div className="mt-16 flex flex-col gap-3 md:flex-row">
         <Link href="/">
           <Button asChild>
-            <span>
-              Return Home Page
-            </span>
+            <span>Return Home Page</span>
           </Button>
         </Link>
       </div>

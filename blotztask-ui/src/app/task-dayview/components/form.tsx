@@ -1,28 +1,28 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormMessage
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { formSchema } from "../schema/schema"
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { formSchema } from '../schema/schema';
 
 export function ProfileForm({ setTasks }) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: '',
+      description: '',
     },
-  })
+  });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setTasks((prevTasks) => [
@@ -30,7 +30,7 @@ export function ProfileForm({ setTasks }) {
       {
         id: 122, // Just random id for now
         title: values.title,
-        description: values.description || "",
+        description: values.description || '',
         isDone: false,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
@@ -47,9 +47,13 @@ export function ProfileForm({ setTasks }) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input className="font-semibold" placeholder="Title" {...field} />
+                <Input
+                  className="font-semibold"
+                  placeholder="Title"
+                  {...field}
+                />
               </FormControl>
-              <FormMessage className="text-red-600"/>
+              <FormMessage className="text-red-600" />
             </FormItem>
           )}
         />
@@ -68,5 +72,5 @@ export function ProfileForm({ setTasks }) {
         <Button type="submit">Add</Button>
       </form>
     </Form>
-  )
+  );
 }
