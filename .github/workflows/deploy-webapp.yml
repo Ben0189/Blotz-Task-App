@@ -11,6 +11,10 @@ on:
       - main
   workflow_dispatch:
 
+permissions: # Do i need a permission write here ?
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: windows-latest
@@ -69,18 +73,34 @@ jobs:
           with:
             name: db-migrations
 
-        - name: EF - Apply Migration SQL Script
+        - name: Azure login
+          uses: azure/login@v2
+          with:
+            client-id: ${{ vars.AZURE_CLIENT_ID }}
+            tenant-id: ${{ vars.AZURE_TENANT_ID }}
+            subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        
+        - uses: Azure/get-keyvault-secrets@v1
+          with:
+            keyvault: "kv-blotztask-prod" # TODO: do different way to get this
+            secrets: 'db-string-connection'  
+          id: get-secret-connection-strings
+
+        - name: EF - Apply Migration SQL Script 
           uses: azure/sql-action@v2.3
           with:
-            connection-string: ${{ secrets.AZURE_SQL_SERVER_CONNECTION_STRING }}
+            connection-string: ${{ steps.get-secret-connection-strings.outputs.db-string-connection }} # TODO: do different way to get this
             path: ./migrations.sql    
             skip-firewall-check: true   
 
-        - name: Deploy to Azure Web App
+        - name: Deploy to Azure Web App #What if my deployment failed here? can i rollback the above script deployment? You cant, you just need to make the schema changes is backward compitatble
           id: deploy-to-webapp
           uses: azure/webapps-deploy@v3
           with:
-            app-name: 'BlotzTaskApp'
+            app-name: 'wapp-blotztaskapp'
             slot-name: 'Production'
-            package: .
-            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_24EFDD1C5E6C4F14AAE5D492645AE57E }}
+            package: './'
+
+        - name: azure logout
+          run: |
+            az logout
