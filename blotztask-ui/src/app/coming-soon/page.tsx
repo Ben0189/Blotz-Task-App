@@ -18,22 +18,7 @@ export default function Home() {
 
   return (
     <>
-      <style>{`
-        @keyframes zoomOut {
-          0% {
-            transform: scale(0.5);
-            opacity: 2;
-          }
-          100% {
-            transform: scale(3);
-            opacity: 0;
-          }
-        }
 
-        .animate-zoomOut {
-          animation: zoomOut 3.5s ease forwards;
-        }
-      `}</style>
       
     <main className="flex flex-col gap-5 p-12 md:items-center md:p-28">
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '3px' }}>
