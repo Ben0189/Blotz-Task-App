@@ -39,6 +39,7 @@ if (builder.Environment.IsDevelopment())
 {
     var databaseConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<BlotzTaskDbContext>(options => options.UseSqlServer(databaseConnectionString));
+    builder.Services.AddDbContext<LabelDbContext>(options => options.UseSqlServer(databaseConnectionString));
 }
 
 if (builder.Environment.IsProduction())
