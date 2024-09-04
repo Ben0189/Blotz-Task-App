@@ -1,5 +1,7 @@
+"use client"
 import { Button } from '@/components/ui/button';
 import { H1, H3 } from '@/components/ui/heading-with-anchor';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 
 export default function Home() {
@@ -33,7 +35,7 @@ export default function Home() {
           </Button>
         </Link>
         <Link href="/coming-soon">
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild onClick={()=> signOut()}>
             <span>Log out</span>
           </Button>
         </Link>
