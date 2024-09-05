@@ -64,8 +64,7 @@ if (builder.Environment.IsProduction())
                 , "https://blotz-task-app.vercel.app") // Prod frontend origin    
                 .WithMethods("GET", "POST", "OPTIONS") // Specify allowed methods, do not allow method never used.
                 .WithHeaders("Content-Type", "Authorization") // Specify allowed headers,may be more headers to added.
-                .WithExposedHeaders("X-Custom-Header") // Specify biz headers, x-custom-header as an example.
-                .AllowCredentials(); // anti-csrf need to be built.
+                .AllowCredentials(); // TODO: anti-csrf need to be built.
         });
 });
 
