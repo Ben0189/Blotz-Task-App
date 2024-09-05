@@ -62,10 +62,10 @@ if (builder.Environment.IsProduction())
         {
             builder.WithOrigins("http://localhost:3000" // DEV frontend origin
                 , "https://blotz-task-app.vercel.app") // Prod frontend origin    
-                .WithMethods("GET", "POST", "OPTIONS") // Specify allowed methods, do not allow method never used to avoid s
-                .WithHeaders("Content-Type", "Authorization") // Specify allowed headers
-                .WithExposedHeaders("X-Custom-Header") // Specify biz headers
-                .AllowCredentials(); // anti-csrf need to be built
+                .WithMethods("GET", "POST", "OPTIONS") // Specify allowed methods, do not allow method never used.
+                .WithHeaders("Content-Type", "Authorization") // Specify allowed headers,may be more headers to added.
+                .WithExposedHeaders("X-Custom-Header") // Specify biz headers, x-custom-header as an example.
+                .AllowCredentials(); // anti-csrf need to be built.
         });
 });
 
