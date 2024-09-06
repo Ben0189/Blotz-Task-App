@@ -17,16 +17,6 @@ interface LoginApiResponse {
 export const authOptions: NextAuthOptions = {
     // Configure one or more authentication providers
     providers: [
-        GitHubProvider({
-        profile(profile) {
-            console.log(profile);
-            return{
-                ...profile
-            }
-        },
-        clientId: process.env.GITHUB_ID,
-        clientSecret: process.env.GITHUB_SECRET
-      }),
       CredentialsProvider({
         // The name to display on the sign in form (e.g. "Sign in with...")
         name: "Credentials",
@@ -47,8 +37,8 @@ export const authOptions: NextAuthOptions = {
           try {
             //TODO : Remove reject unauthorized set to false 
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
-            const response = await fetch(`https://localhost:7112/login/`, {
+            //TODO :Also fix the fetch url for login in prod
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -62,21 +52,11 @@ export const authOptions: NextAuthOptions = {
             }
         
             const data: LoginApiResponse = await response.json();
-            console.log('Response data:', data);
-        
-            // Check if accessToken is received
+            console.log(req);
             if (data.accessToken) {
-        
-              // Store the token securely in the session or appropriate storage
-              // Example only; replace with actual secure storage solution
-              (req as any).session = (req as any).session || {}; // Type assertion to avoid TypeScript errors
-              (req as any).session.accessToken = data.accessToken;
-        
               return {
                 id: email || 'placeholder-id',
                 email: email,
-                name: null,
-                image: null,
                 accessToken: data.accessToken, // Include the access token here
                 refreshToken: data.refreshToken,
                 expiresIn: data.expiresIn,
@@ -94,13 +74,27 @@ export const authOptions: NextAuthOptions = {
       })
     ],
     callbacks: {
-      async jwt({token, user, account, profile,}) {
-        console.log("JWT Callback:");
-        console.log("token:", token);
-        console.log("user:", user);
-        console.log("account:", account);
-        console.log("profile:", profile);
+      async signIn({ user, account }) {
+        if (user?.access_token) {
+          account.access_token = user?.access_token as string
+
+          console.log('signIn callback', user, account);
+        }
+        if (user?.refresh_token) {
+          account.refresh_token = user?.refresh_token as string
+        }
+  
+        return true
+      },
+      async jwt({ token, session }) {
+        console.log('jwt callback', token, session);
         return token;
+      },
+      async session({ session, token, user }) {
+        console.log('session callback', session, token, user);
+
+        
+        return session
       }
     },
     session: {
