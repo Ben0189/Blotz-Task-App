@@ -1,10 +1,10 @@
-import React from 'react'
-import { TaskTable } from './components/task-table'
+import { TaskTable } from './components/task-table';
+import { mocktasks } from './mockdata';
 
 const page = () => {
   return (
     <div>
-      <TaskTable/>
+      <TaskTable tasks = {mocktasks}/>
     </div>
   )
 }
