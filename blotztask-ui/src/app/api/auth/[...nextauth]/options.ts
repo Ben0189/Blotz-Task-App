@@ -52,7 +52,7 @@ export const authOptions: NextAuthOptions = {
             }
         
             const data: LoginApiResponse = await response.json();
-            console.log(req);
+
             if (data.accessToken) {
               return {
                 id: email || 'placeholder-id',
@@ -78,7 +78,6 @@ export const authOptions: NextAuthOptions = {
         if (user?.access_token) {
           account.access_token = user?.access_token as string
 
-          console.log('signIn callback', user, account);
         }
         if (user?.refresh_token) {
           account.refresh_token = user?.refresh_token as string
