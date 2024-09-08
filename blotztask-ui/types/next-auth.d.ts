@@ -1,3 +1,5 @@
+//THIS FILE IS USED TO ADD CUSTOM PROPERTIES TO THE USER OBJECT IN NEXT-AUTH
+
 // types/next-auth.d.ts
 /* eslint-disable no-unused-vars */
 
