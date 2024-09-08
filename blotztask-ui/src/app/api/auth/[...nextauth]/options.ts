@@ -1,6 +1,6 @@
 import { NextAuthOptions } from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { cookies } from "next/headers";
 
 interface Credentials {
   email: string;
@@ -29,14 +29,16 @@ export const authOptions: NextAuthOptions = {
           password: { label: "Password", type: "password" }
         },
   
-        async authorize(credentials: Credentials, req) {
+        async authorize(credentials: Credentials) {
   
           const { email, password } = credentials;
           // console.log(email, password,req);
           
           try {
             //TODO : Remove reject unauthorized set to false 
-            process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+            if (process.env.NODE_ENV !== 'production') {
+              process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+            }
             //TODO :Also fix the fetch url for login in prod
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`, {
               method: 'POST',
@@ -53,6 +55,12 @@ export const authOptions: NextAuthOptions = {
         
             const data: LoginApiResponse = await response.json();
 
+            cookies().set('authToken', data.accessToken, { 
+              httpOnly: true, 
+              secure: process.env.NODE_ENV === 'production', 
+              sameSite: 'strict' 
+            });
+            
             if (data.accessToken) {
               return {
                 id: email || 'placeholder-id',
