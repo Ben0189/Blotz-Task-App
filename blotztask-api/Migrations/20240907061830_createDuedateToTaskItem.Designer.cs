@@ -4,6 +4,7 @@ using BlotzTask.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlotzTask.Migrations
 {
     [DbContext(typeof(BlotzTaskDbContext))]
-    partial class BlotzTaskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240907061830_createDuedateToTaskItem")]
+    partial class createDuedateToTaskItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +88,7 @@ namespace BlotzTask.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("DueDate")
+                    b.Property<DateOnly>("Duedate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDone")
@@ -111,32 +114,32 @@ namespace BlotzTask.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 9, 7, 6, 51, 14, 44, DateTimeKind.Utc).AddTicks(1388),
+                            CreatedAt = new DateTime(2024, 9, 7, 6, 18, 30, 105, DateTimeKind.Utc).AddTicks(4322),
                             Description = "Description for Task 1",
-                            DueDate = new DateOnly(2024, 10, 1),
+                            Duedate = new DateOnly(1, 1, 1),
                             IsDone = false,
                             Title = "Initial Task 1",
-                            UpdatedAt = new DateTime(2024, 9, 7, 6, 51, 14, 44, DateTimeKind.Utc).AddTicks(1392)
+                            UpdatedAt = new DateTime(2024, 9, 7, 6, 18, 30, 105, DateTimeKind.Utc).AddTicks(4324)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 9, 7, 6, 51, 14, 44, DateTimeKind.Utc).AddTicks(1393),
+                            CreatedAt = new DateTime(2024, 9, 7, 6, 18, 30, 105, DateTimeKind.Utc).AddTicks(4325),
                             Description = "Description for Task 2",
-                            DueDate = new DateOnly(2024, 10, 1),
+                            Duedate = new DateOnly(1, 1, 1),
                             IsDone = true,
                             Title = "Initial Task 2",
-                            UpdatedAt = new DateTime(2024, 9, 7, 6, 51, 14, 44, DateTimeKind.Utc).AddTicks(1394)
+                            UpdatedAt = new DateTime(2024, 9, 7, 6, 18, 30, 105, DateTimeKind.Utc).AddTicks(4326)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 9, 7, 6, 51, 14, 44, DateTimeKind.Utc).AddTicks(1395),
+                            CreatedAt = new DateTime(2024, 9, 7, 6, 18, 30, 105, DateTimeKind.Utc).AddTicks(4327),
                             Description = "Description for Task 3",
-                            DueDate = new DateOnly(2024, 10, 1),
+                            Duedate = new DateOnly(1, 1, 1),
                             IsDone = false,
                             Title = "Initial Task 3",
-                            UpdatedAt = new DateTime(2024, 9, 7, 6, 51, 14, 44, DateTimeKind.Utc).AddTicks(1395)
+                            UpdatedAt = new DateTime(2024, 9, 7, 6, 18, 30, 105, DateTimeKind.Utc).AddTicks(4327)
                         });
                 });
 
