@@ -56,7 +56,6 @@ export const authOptions: NextAuthOptions = {
             const data: LoginApiResponse = await response.json();
 
             cookies().set('authToken', data.accessToken, { 
-              httpOnly: true, 
               secure: process.env.NODE_ENV === 'production', 
               sameSite: 'strict' 
             });
