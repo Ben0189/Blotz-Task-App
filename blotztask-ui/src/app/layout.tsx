@@ -6,6 +6,8 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from 'next-themes';
 import SessionProvider from './provider';
 import Nav from './test-component';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/options';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -17,13 +19,14 @@ export const metadata: Metadata = {
   description: 'Efficiently organize and track users tasks',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  session,
 }: Readonly<{
   children: React.ReactNode;
-  session: any; //TODO: Define session type
 }>) {
+
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body
