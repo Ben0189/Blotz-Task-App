@@ -9,6 +9,7 @@ namespace BlotzTask.Data
         public BlotzTaskDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<TaskItem> TaskItems { get; set; }
+        public DbSet<Label> Labels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,6 +41,29 @@ namespace BlotzTask.Data
                     IsDone = false,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
+                }
+            );
+            modelBuilder.Entity<Label>().HasData(
+                new Label
+                {
+                    LabelId = 1,
+                    Name = "Urgent",
+                    Color = "Red",
+                    Description = "Tasks that need to be addressed immediately"
+                },
+                new Label
+                {
+                    LabelId = 2,
+                    Name = "In Progress",
+                    Color = "Yellow",
+                    Description = "Tasks that are currently being worked on"
+                },
+                new Label
+                {
+                    LabelId = 3,
+                    Name = "Completed",
+                    Color = "Green",
+                    Description = "Tasks that have been completed"
                 }
             );
         }
