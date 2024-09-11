@@ -5,7 +5,7 @@ import '../styles/globals.css';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from 'next-themes';
 import SessionProvider from './provider';
-import Nav from './test-component';
+import Nav from './navbar';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/options';
 
