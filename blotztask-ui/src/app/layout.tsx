@@ -5,9 +5,9 @@ import '../styles/globals.css';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from 'next-themes';
 import SessionProvider from './provider';
-import Nav from './navbar';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/options';
+import { MainNav } from './navbar/main-nav';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -42,7 +42,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Nav/>
+            <MainNav/>
             {/* <Navbar /> TODO: Implement navbar to navigate between pages*/}
             <section className="container mx-auto px-4">{children}</section>
           </ThemeProvider>
