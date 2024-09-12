@@ -9,7 +9,7 @@ namespace BlotzTask.Models
         [StringLength(160)]
         public string Title { get; set; }
 
-        [MaxLength(10, ErrorMessage = "Description should be less than 100")]
+        [MaxLength(10, ErrorMessage = "Description should be less than 10")]
         public string Description { get; set; }
         public bool IsDone { get; set; }
         public DateTime CreatedAt { get; set; }
