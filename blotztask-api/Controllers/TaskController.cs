@@ -15,7 +15,6 @@ namespace BlotzTask.Controllers
             _taskService = taskService;
         }
 
-        [AllowAnonymous]
         [HttpGet("alltask")]
         public async Task<IActionResult> GetAllTask()
         {
