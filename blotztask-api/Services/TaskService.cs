@@ -8,6 +8,7 @@ public interface ITaskService
 {
     public Task<List<TaskItemDTO>> GetTodoItems();
     public Task<TaskItemDTO> GetTaskByID(int Id);
+    public Task<List<TaskItemDTO>> AddTask(AddTaskItemDTO addtaskItem);
 }
 
 public class TaskService : ITaskService
@@ -48,6 +49,22 @@ public class TaskService : ITaskService
     };
 
         return await Task.FromResult(taskItems[Id]);
+    }
+
+    public async Task<List<TaskItemDTO>> AddTask(AddTaskItemDTO addtaskItem)
+    {
+        var addtask = new Data.Entities.TaskItem
+        {
+            Title = addtaskItem.Title,
+            Description = addtaskItem.Description,
+            CreatedAt = addtaskItem.CreatedAt, 
+            UpdatedAt = addtaskItem.UpdatedAt
+        };
+
+        _dbContext.TaskItems.Add(addtask);
+        await _dbContext.SaveChangesAsync();
+
+        return await GetTodoItems();
     }
 
 }
