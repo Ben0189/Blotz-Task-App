@@ -1,5 +1,6 @@
 ﻿using BlotzTask.Data;
 using BlotzTask.Data.Entities;
+using BlotzTask.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,18 +13,17 @@ namespace BlotzTask.Controllers
     [Route("api/[controller]")]
     public class LabelController : ControllerBase
     {
-        private readonly BlotzTaskDbContext _labelContext;
+        private readonly ILabelService _labelService;
 
-        public LabelController(BlotzTaskDbContext labelContext)
+        public LabelController(ILabelService labelService)
         {
-            _labelContext = labelContext;
+            _labelService = labelService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Label>>> GetAllLabels()
+        [HttpGet("alllabel")]
+        public async Task<IActionResult> GetAllLabels()
         {
-            var labels = await _labelContext.Labels.ToListAsync();
-            return Ok(labels);
+            return Ok(await _labelService.GetAllLabelsAsync());
         }
     }
 }
