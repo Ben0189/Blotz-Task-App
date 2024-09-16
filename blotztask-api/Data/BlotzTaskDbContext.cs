@@ -20,6 +20,7 @@ namespace BlotzTask.Data
                     Id = 1,
                     Title = "Initial Task 1",
                     Description = "Description for Task 1",
+                    DueDate = new DateOnly(2024, 10, 01),
                     IsDone = false,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
@@ -29,6 +30,7 @@ namespace BlotzTask.Data
                     Id = 2,
                     Title = "Initial Task 2",
                     Description = "Description for Task 2",
+                    DueDate = new DateOnly(2024, 10, 01),
                     IsDone = true,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
@@ -38,6 +40,7 @@ namespace BlotzTask.Data
                     Id = 3,
                     Title = "Initial Task 3",
                     Description = "Description for Task 3",
+                    DueDate = new DateOnly(2024, 10, 01),
                     IsDone = false,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
