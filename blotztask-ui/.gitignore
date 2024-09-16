@@ -28,9 +28,16 @@ yarn-error.log*
 # vercel
 .vercel
 
+# for some reason, next build in production will use the local env file so temporary fix is to ignore it
+.env*.local
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
 #local environment
 .env.local
+
+.gitignore
+
+.vscode.settings.json
