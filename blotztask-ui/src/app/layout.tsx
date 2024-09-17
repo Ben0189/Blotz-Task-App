@@ -44,7 +44,7 @@ export default async function RootLayout({
           >
             <MainNav/>
             {/* <Navbar /> TODO: Implement navbar to navigate between pages*/}
-            <section className="container mx-auto px-4">{children}</section>
+            <section className="container mx-auto p-8">{children}</section>
           </ThemeProvider>
         </SessionProvider>
       </body>

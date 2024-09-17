@@ -52,7 +52,7 @@ export default function Dayview() {
 
   return (
     <>
-      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex bg-white border-1 ">
+      <div className="hidden h-full flex-1 flex-col space-y-8 md:flex bg-white border-1 ">
         <div className="items-center space-y-2 ">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Day View</h2>
