@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { taskDto } from './models/taskDto';
 import { TaskDTO, taskDTOSchema } from './schema/schema';
-import { ProfileForm } from './components/form';
+import { TaskForm } from './components/form';
 
 // Define mock data
 const mockTasks: taskDto[] = [
@@ -89,7 +89,7 @@ export default function Dayview() {
               <Card>
                 <CardHeader className="pb-1"></CardHeader>
                 <CardContent className="grid gap-1">
-                  <ProfileForm setTasks={setTasks} />
+                  <TaskForm setTasks={setTasks} />
                 </CardContent>
               </Card>
             </div>
