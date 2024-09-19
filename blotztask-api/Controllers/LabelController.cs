@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlotzTask.Controllers
 {
-    [Route("api/[controller]")]
     [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class LabelController : ControllerBase
     {
         private readonly ILabelService _labelService;
@@ -20,7 +20,7 @@ namespace BlotzTask.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetLabelById(int id)
         {
-            return Ok(await _labelService.GetLabelById(id)); // Return 200 OK with the label data
+            return Ok(await _labelService.GetLabelById(id)); 
         }
         
     }
