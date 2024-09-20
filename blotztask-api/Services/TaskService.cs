@@ -1,6 +1,7 @@
 ﻿using BlotzTask.Data;
 using BlotzTask.Models;
 using Microsoft.EntityFrameworkCore;
+using BlotzTask.Data.Entities;
 
 namespace BlotzTask.Services;
 
@@ -50,7 +51,7 @@ public class TaskService : ITaskService
 
         return await Task.FromResult(taskItems[Id]);
     }
-    
+
     public async Task<TaskItem> EditTask(int Id, EditTaskItemDTO editTaskItem)
     {
         var task = await _dbContext.TaskItems.FindAsync(Id);

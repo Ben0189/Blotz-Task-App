@@ -1,6 +1,7 @@
 using BlotzTask.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using BlotzTask.Models;
 
 namespace BlotzTask.Controllers
 {
