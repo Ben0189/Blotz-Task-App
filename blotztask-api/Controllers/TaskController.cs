@@ -20,10 +20,24 @@ namespace BlotzTask.Controllers
         {
             return Ok(await _taskService.GetTodoItems());
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskByID(int id)
         {
             return Ok(await _taskService.GetTaskByID(id));
+        }
+
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> EditTask(int Id, [FromBody] EditTaskItemDTO editTaskItem)
+        {
+            var result = await _taskService.EditTask(Id, editTaskItem);
+
+            if (result == null)
+            {
+                return NotFound("Task not found or you do not have permission to edit this task.");
+            }
+
+            return Ok(result);
         }
     }
 }
