@@ -4,7 +4,3 @@ GET {{BlotzTask_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
-
-GET {{BlotzTask_HostAddress}}/api/label/1
-
-###
