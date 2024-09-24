@@ -29,6 +29,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<ILabelService, LabelService>();
 
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<BlotzTaskDbContext>();
@@ -56,12 +57,15 @@ if (builder.Environment.IsProduction())
 
     builder.Services.AddCors(options =>
 {
+    // CORS Best Practice https://q240iu43yr.feishu.cn/docx/JTkcdbwtloFHJWxvi0ocmTuOnjd?from=from_copylink
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
+            builder.WithOrigins("http://localhost:3000" // DEV frontend origin
+                , "https://blotz-task-app.vercel.app") // Prod frontend origin    
+                .WithMethods("GET", "POST", "OPTIONS") // Specify allowed methods, do not allow method never used.
+                .WithHeaders("Content-Type", "Authorization") // Specify allowed headers,may be more headers to added.
+                .AllowCredentials(); // TODO: anti-csrf need to be built.
         });
 });
 
