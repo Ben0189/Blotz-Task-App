@@ -1,0 +1,91 @@
+/* LoginPage.module.css */
+
+.body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #6c63ff, #3f51b5); /* 背景渐变 */
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 填满全屏 */
+  }
+  
+  .formContainer {
+    background: white;
+    padding: 40px;
+    border-radius: 15px; /* 圆角边框 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    width: 350px; /* 更宽的表单容器 */
+    text-align: center; /* 文本居中 */
+  }
+  
+  .title {
+    margin-bottom: 20px;
+    font-size: 28px; /* 增大标题字体 */
+    color: #333;
+  }
+  
+  .inputGroup {
+    margin-bottom: 20px; /* 输入框间距 */
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 15px; /* 增加内边距 */
+    border: 1px solid #ddd;
+    border-radius: 8px; /* 更圆的边角 */
+    font-size: 16px; /* 增加输入框字体 */
+    transition: border-color 0.3s, box-shadow 0.3s; /* 添加过渡效果 */
+  }
+  
+  .input:focus {
+    border-color: #6c63ff; /* 输入框聚焦时的边框颜色 */
+    outline: none; /* 移除默认轮廓 */
+    box-shadow: 0 0 5px rgba(108, 99, 255, 0.5); /* 输入框聚焦时的阴影 */
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 15px;
+    background-color: #6c63ff; /* 按钮背景颜色 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px; /* 增大按钮字体 */
+    transition: background-color 0.3s, transform 0.2s; /* 添加转换效果 */
+  }
+  
+  .button:hover {
+    background-color: #5752c8; /* 悬停时的颜色 */
+    transform: translateY(-2px); /* 悬停时微微抬升 */
+  }
+  
+  .button:active {
+    transform: translateY(0); /* 点击时返回原位 */
+  }
+  
+  /* 添加响应式样式 */
+  @media (max-width: 400px) {
+    .formContainer {
+      width: 90%; /* 小屏幕时表单宽度为90% */
+    }
+  }
+  

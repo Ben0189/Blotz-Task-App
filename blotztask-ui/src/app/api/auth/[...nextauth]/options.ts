@@ -30,9 +30,8 @@ export const authOptions: NextAuthOptions = {
         },
   
         async authorize(credentials: Credentials) {
-  
           const { email, password } = credentials;
-          // console.log(email, password,req);
+
           
           try {
             //TODO : Remove reject unauthorized set to false 
@@ -40,6 +39,7 @@ export const authOptions: NextAuthOptions = {
               process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
             }
             //TODO :Also fix the fetch url for login in prod
+            console.log(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`)
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`, {
               method: 'POST',
               headers: {
@@ -49,7 +49,7 @@ export const authOptions: NextAuthOptions = {
             });
         
             if (!response.ok) {
-              console.error('Failed to authenticate:', response);
+              console.error('Failed to authenticate:', response, email, password);
               return null;
             }
         
@@ -83,6 +83,7 @@ export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
       async signIn({ user, account }) {
+        console.log("USER"+user)
         if (user?.access_token) {
           account.access_token = user?.access_token as string
 
