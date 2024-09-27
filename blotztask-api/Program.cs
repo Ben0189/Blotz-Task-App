@@ -35,6 +35,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<ILabelService, LabelService>();
 
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<BlotzTaskDbContext>();

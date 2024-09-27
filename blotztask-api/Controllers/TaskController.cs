@@ -1,3 +1,4 @@
+using BlotzTask.Models;
 using BlotzTask.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,12 @@ namespace BlotzTask.Controllers
         public async Task<IActionResult> GetTaskByID(int id)
         {
             return Ok(await _taskService.GetTaskByID(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTaskAsync([FromBody] AddTaskItemDTO addtaskItem)
+        {
+            return Ok(await _taskService.AddTask(addtaskItem));
         }
     }
 }
