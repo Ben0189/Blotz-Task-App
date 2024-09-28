@@ -8,38 +8,6 @@
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
 
-.main {
-  width: 100vw;
-  min-height: 100vh;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  padding: 120px 24px 160px 24px;
-  pointer-events: none;
-}
-
-.main:before {
-  background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #fafafa 100%);
-  position: absolute;
-  content: "";
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  top: 0;
-}
-
-.main:after {
-  content: "";
-  background-image: url("/assets/images/grid.svg");
-  z-index: 1;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  opacity: 0.4;
-  filter: invert(1);
-}
-
 .gradient {
   height: fit-content;
   z-index: 3;
@@ -86,78 +54,32 @@
   @apply rounded-full border border-blue-600 bg-transparent py-1.5 px-5 border-blue-600 transition-all hover:bg-blue-500 hover:text-white text-center text-sm font-inter flex items-center justify-center;
 }
 
-.metallic_blue_btn {
-  @apply rounded-full border border-blue-800 bg-gradient-to-r from-blue-700 to-blue-600 py-2 px-5 text-white transition-all text-center text-sm font-inter flex items-center justify-center shadow-md 
-          hover:shadow-lg hover:from-blue-600 hover:to-blue-500;
-  background: linear-gradient(135deg, #0077b6, #00b4d8); /* 渐变背景 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
-  transition: all 0.3s ease;
-}
-
-/* 在悬停时更改阴影 */
-.metallic_blue_btn:hover {
-  background: linear-gradient(135deg, #00b4d8, #0077b6);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 增加阴影效果 */
-}
-
-
-.metallic_cyan_btn {
-  @apply rounded-full border border-cyan-300 bg-gradient-to-r from-cyan-600 to-cyan-500 py-2 px-5 text-white transition-all text-center text-sm font-inter flex items-center justify-center shadow-md 
-          hover:shadow-lg;
-  background: linear-gradient(135deg, #00bcd4, #00acc1); /* 渐变背景 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
-  transition: all 0.3s ease;
-}
-
-/* 在悬停时更改背景颜色 */
-.metallic_cyan_btn:hover {
-  background: linear-gradient(135deg, #00acc1, #00bcd4);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 增加阴影效果 */
-}
-
-/* 反向效果的按钮样式 */
-.inverse_metallic_cyan_btn {
-  @apply rounded-full border border-cyan-500 bg-transparent py-2 px-5 text-cyan-500 transition-all text-center text-sm font-inter flex items-center justify-center shadow-md 
-          hover:bg-cyan-500 hover:text-white hover:shadow-lg;
-  background: transparent; /* 透明背景 */
-  color: #00bcd4; /* 青色文本 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
-  transition: all 0.3s ease;
-}
-
-/* 在悬停时更改背景和文本颜色 */
-.inverse_metallic_cyan_btn:hover {
-  background: #00bcd4; /* 悬停时的青色背景 */
-  color: white; /* 悬停时的白色文本 */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 增加阴影效果 */
-}
-
 .gradient_green_blue_btn {
   @apply rounded-full border border-transparent py-2 px-5 text-white transition-all text-center text-sm font-inter flex items-center justify-center shadow-md;
-  background: linear-gradient(135deg, #4caf50, #2196f3); /* 绿色到蓝色的渐变 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+  background: linear-gradient(135deg, #4caf50, #2196f3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   transition: all 0.3s ease;
 }
 
-/* 在悬停时更改背景和文本颜色 */
+
 .gradient_green_blue_btn:hover {
-  background: linear-gradient(135deg, #2196f3, #4caf50); /* 悬停时反转渐变 */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 增加阴影效果 */
+  background: linear-gradient(135deg, #2196f3, #4caf50); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
 }
 
-/* 反向效果按钮样式 */
+
 .inverse_gradient_green_blue_btn {
   @apply rounded-full border border-transparent py-2 px-5 text-black transition-all text-center text-sm font-inter flex items-center justify-center shadow-md;
-  background: white; /* 正常状态为白色 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+  background: white; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   transition: all 0.3s ease;
 }
 
-/* 在悬停时更改背景和文本颜色 */
+
 .inverse_gradient_green_blue_btn:hover {
-  background: linear-gradient(135deg, #4caf50, #2196f3); /* 悬停时渐变效果，从绿色到蓝色 */
-  color: white; /* 悬停时文字颜色为白色 */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 增加阴影效果 */
+  background: linear-gradient(135deg, #4caf50, #2196f3); 
+  color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
 }
 
 .head_text {
@@ -268,3 +190,9 @@ body {
   }
 }
 
+
+.error {
+  color: red; /* Error message color */
+  text-align: center;
+  margin-top: 10px; /* Space above error message */
+}

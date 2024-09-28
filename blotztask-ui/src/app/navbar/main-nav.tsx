@@ -14,6 +14,7 @@ export function MainNav({
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false)
 
+  // load the registered nextauth providers, in our case is the credential provider
   useEffect( () => {
     (async () => {
       const res = await getProviders();
@@ -61,9 +62,11 @@ export function MainNav({
                 <div>
                 {providers &&
                   Object.values(providers).map((provider) => (
-                    <Link href="/signin?callbackUrl=%2F" className='gradient_green_blue_btn gradient_green_blue_btn:hover'>
+  
+                  <Link key={provider.id} href="/signin?callbackUrl=%2F" className='gradient_green_blue_btn gradient_green_blue_btn:hover'>
                     <span>Sign in</span>
                   </Link>
+
                   ))}
               </div>
               )}
