@@ -106,8 +106,5 @@ export const authOptions: NextAuthOptions = {
     session: {
       strategy: "jwt"
     },
-    pages: {
-      signIn: '/signin', // 定制的登录页面
-    },
   
   }
