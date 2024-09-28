@@ -49,11 +49,6 @@
     border-color: #4CAF50; /* Green border on focus */
     outline: none; /* Remove default outline */
   }
-  
-  .error {
-    color: red; /* Error message color */
-    text-align: center;
-    margin-top: 10px; /* Space above error message */
-  }
+
   
   

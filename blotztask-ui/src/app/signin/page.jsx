@@ -14,8 +14,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState(''); // State for password input
   const [error, setError] = useState(null); // State for error message
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission
 
     const result = await signIn('credentials', {
       redirect: false,

@@ -12,8 +12,8 @@ const SignUpPage = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -40,10 +40,10 @@ const SignUpPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.formContainer}>
+      <div className={styles.form_container}>
         <h1 className={styles.title}>Sign Up</h1>
         <form onSubmit={handleSubmit}>
-          <div className={styles.inputGroup}>
+          <div className={styles.input_group}>
             <label className={styles.label}>Email:</label>
             <input
               type="email"
@@ -54,7 +54,7 @@ const SignUpPage = () => {
               placeholder="Enter your email"
             />
           </div>
-          <div className={styles.inputGroup}>
+          <div className={styles.input_group}>
             <label className={styles.label}>Password:</label>
             <input
               type="password"
@@ -65,7 +65,7 @@ const SignUpPage = () => {
               placeholder="Enter your password"
             />
           </div>
-          <div className={styles.inputGroup}>
+          <div className={styles.input_group}>
             <label className={styles.label}>Confirm Password:</label>
             <input
               type="password"
@@ -78,7 +78,7 @@ const SignUpPage = () => {
           </div>
           {error && <p className={styles.error}>{error}</p>}
           {success && <p className={styles.success}>{success}</p>}
-          <button type="submit" className={styles.gradient_green_blue_btn}>Sign Up</button>
+          <button type="submit" className="gradient_green_blue_btn">Sign Up</button>
         </form>
       </div>
     </div>
