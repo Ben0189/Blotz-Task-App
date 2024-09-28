@@ -17,6 +17,12 @@ namespace BlotzTask.Controllers
             _labelService = labelService;
         }
 
+        [HttpGet("alllabel")]
+        public async Task<IActionResult> GetAllLabels()
+        {
+            return Ok(await _labelService.GetAllLabelsAsync());
+        }
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetLabelById(int id)
         {
