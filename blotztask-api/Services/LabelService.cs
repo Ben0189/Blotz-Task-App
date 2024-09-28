@@ -26,13 +26,13 @@ public class LabelService : ILabelService
         try
         {
             return await _dbContext.Labels
-                            .Select(label => new LabelDTO
-                            {
-                                LabelId = label.LabelId,
-                                Name = label.Name,
-                                Color = label.Color,
-                                Description = label.Description
-                            }).ToListAsync();
+                .Select(label => new LabelDTO
+                     {
+                         LabelId = label.LabelId,
+                         Name = label.Name,
+                         Color = label.Color,
+                         Description = label.Description
+                     }).ToListAsync();
         }
         catch (Exception ex)
         {
