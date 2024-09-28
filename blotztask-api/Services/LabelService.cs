@@ -40,7 +40,7 @@ public class LabelService : ILabelService
             throw;
         }
     }
-
+    
     public async Task<Label> GetLabelById(int id)
     {
         return await _dbContext.Labels.FindAsync(id);
