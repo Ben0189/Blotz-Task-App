@@ -1,4 +1,5 @@
-﻿using BlotzTask.Services;
+﻿using BlotzTask.Models;
+using BlotzTask.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,11 @@ namespace BlotzTask.Controllers
         {
             return Ok(await _labelService.GetLabelById(id)); 
         }
-        
+
+        [HttpPost]
+        public async Task<IActionResult> AddLabel([FromBody] AddLabelDTO addLabel)
+        {
+            return Ok(await _labelService.AddLabelAsync(addLabel));
+        }
     }
 }
