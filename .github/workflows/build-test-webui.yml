@@ -23,12 +23,17 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./blotztask-ui
 
       - name: Build Next.js app
         run: npm run build
+        working-directory: ./blotztask-ui
 
       - name: Run tests
         run: npm run test
+        working-directory: ./blotztask-ui
+
 
       - name: Lint the code
         run: npm run lint
+        working-directory: ./blotztask-ui
