@@ -2,3 +2,6 @@
 ./vs
 
 /.vs
+
+//TODO: we should have a local development json file
+blotztask-api/appsettings.json
