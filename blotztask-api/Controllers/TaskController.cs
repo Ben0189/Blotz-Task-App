@@ -1,3 +1,4 @@
+using BlotzTask.Models;
 using BlotzTask.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ namespace BlotzTask.Controllers
             return Ok(await _taskService.GetTaskByID(id));
         }
 
+
         [HttpPut("{id}")]
         public async Task<IActionResult> EditTask(int Id, [FromBody] EditTaskItemDTO editTaskItem)
         {
@@ -39,6 +41,12 @@ namespace BlotzTask.Controllers
             }
 
             return Ok($"Task {result} is successfully updated");
+
+        [HttpPost]
+        public async Task<IActionResult> AddTaskAsync([FromBody] AddTaskItemDTO addtaskItem)
+        {
+            return Ok(await _taskService.AddTask(addtaskItem));
+
         }
     }
 }

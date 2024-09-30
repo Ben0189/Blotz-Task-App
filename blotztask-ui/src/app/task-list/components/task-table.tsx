@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -17,7 +16,6 @@ interface TaskTableProps {
 export function TaskTable({ tasks }: TaskTableProps) {
     return (
       <Table>
-        <TableCaption className="caption-top">A list of your recent Tasks.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Task-id</TableHead>
