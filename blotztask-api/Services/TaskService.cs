@@ -9,7 +9,7 @@ public interface ITaskService
 {
     public Task<List<TaskItemDTO>> GetTodoItems();
     public Task<TaskItemDTO> GetTaskByID(int Id);
-    public Task<TaskItem> EditTask(int Id, EditTaskItemDTO editTaskItem);
+    public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
 }
 
 public class TaskService : ITaskService
@@ -52,7 +52,7 @@ public class TaskService : ITaskService
         return await Task.FromResult(taskItems[Id]);
     }
 
-    public async Task<TaskItem> EditTask(int Id, EditTaskItemDTO editTaskItem)
+    public async Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem)
     {
         var task = await _dbContext.TaskItems.FindAsync(Id);
 
@@ -64,9 +64,11 @@ public class TaskService : ITaskService
 
             _dbContext.TaskItems.Update(task);
             await _dbContext.SaveChangesAsync();
+            return Id;
         }
-
-        return task; 
+         else {
+            return -1;
+         }
     }
 
 }
