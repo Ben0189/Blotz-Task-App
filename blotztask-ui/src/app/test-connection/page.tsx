@@ -3,11 +3,11 @@
 import { Button } from '@/components/ui/button';
 import { H1, H3 } from '@/components/ui/heading-with-anchor';
 import { TaskItemDTO } from '@/model/task-Item-dto';
-import { fetchAllTaskItems } from '@/services/todoService';
 import Link from 'next/link';
 import { useState } from 'react';
 import TaskList from './components/task-list';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { fetchAllTaskItems } from '@/services/taskService';
 
 export default function Home() {
   const [tasks, setTasks] = useState<TaskItemDTO[]>([]);
