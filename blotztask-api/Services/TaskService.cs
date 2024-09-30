@@ -53,24 +53,6 @@ public class TaskService : ITaskService
         return await Task.FromResult(taskItems[Id]);
     }
 
-    public async Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem)
-    {
-        var task = await _dbContext.TaskItems.FindAsync(Id);
-
-        if (task != null)
-        {
-            task.Title = editTaskItem.Title;
-            task.Description = editTaskItem.Description;
-            task.UpdatedAt = DateTime.UtcNow;
-
-            _dbContext.TaskItems.Update(task);
-            await _dbContext.SaveChangesAsync();
-            return Id;
-        }
-         else {
-            return -1;
-         }
-         
     public async Task<string> AddTask(AddTaskItemDTO addtaskItem)
     {
         var addtask = new TaskItem
@@ -88,5 +70,23 @@ public class TaskService : ITaskService
 
     }
 
+    public async Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem)
+    {
+        var task = await _dbContext.TaskItems.FindAsync(Id);
+
+        if (task != null)
+        {
+            task.Title = editTaskItem.Title;
+            task.Description = editTaskItem.Description;
+            task.UpdatedAt = DateTime.UtcNow;
+
+            _dbContext.TaskItems.Update(task);
+            await _dbContext.SaveChangesAsync();
+            return Id;
+        }
+         else {
+            return -1;
+         }
+    }
 }
 

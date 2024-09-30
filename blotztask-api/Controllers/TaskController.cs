@@ -28,7 +28,12 @@ namespace BlotzTask.Controllers
         {
             return Ok(await _taskService.GetTaskByID(id));
         }
-
+        
+        [HttpPost]
+        public async Task<IActionResult> AddTask([FromBody] AddTaskItemDTO addtaskItem)
+        {
+            return Ok(await _taskService.AddTask(addtaskItem));
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditTask(int Id, [FromBody] EditTaskItemDTO editTaskItem)
@@ -41,12 +46,6 @@ namespace BlotzTask.Controllers
             }
 
             return Ok($"Task {result} is successfully updated");
-
-        [HttpPost]
-        public async Task<IActionResult> AddTaskAsync([FromBody] AddTaskItemDTO addtaskItem)
-        {
-            return Ok(await _taskService.AddTask(addtaskItem));
-
         }
     }
 }
