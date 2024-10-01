@@ -2,12 +2,18 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using BlotzTask.Data;
 using BlotzTask.Data.Entities;
+using BlotzTask.Models;
+using BlotzTask.Models.Validators;
 using BlotzTask.Services;
+using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.OpenApi.Models;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using static FluentValidation.DependencyInjectionExtensions;
 using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,6 +74,11 @@ if (builder.Environment.IsProduction())
                 .AllowCredentials(); // TODO: anti-csrf need to be built.
         });
 });
+
+// Auto-Register Validator
+builder.Services.AddValidatorsFromAssemblyContaining<SampleValidationValidator>();
+// Register FluentValidation AutoValidation
+builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 
