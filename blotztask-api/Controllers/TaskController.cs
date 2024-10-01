@@ -2,6 +2,7 @@ using BlotzTask.Models;
 using BlotzTask.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using BlotzTask.Models;
 
 namespace BlotzTask.Controllers
 {
@@ -21,16 +22,30 @@ namespace BlotzTask.Controllers
         {
             return Ok(await _taskService.GetTodoItems());
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskByID(int id)
         {
             return Ok(await _taskService.GetTaskByID(id));
         }
-
+        
         [HttpPost]
-        public async Task<IActionResult> AddTaskAsync([FromBody] AddTaskItemDTO addtaskItem)
+        public async Task<IActionResult> AddTask([FromBody] AddTaskItemDTO addtaskItem)
         {
             return Ok(await _taskService.AddTask(addtaskItem));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditTask(int Id, [FromBody] EditTaskItemDTO editTaskItem)
+        {
+            var result = await _taskService.EditTask(Id, editTaskItem);
+
+            if (result < 0)
+            {
+                return NotFound("Task not found or you do not have permission to edit this task.");
+            }
+
+            return Ok($"Task {result} is successfully updated");
         }
     }
 }
