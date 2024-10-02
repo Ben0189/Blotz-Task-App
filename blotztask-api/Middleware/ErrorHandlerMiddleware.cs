@@ -16,10 +16,16 @@ public class ErrorHandlingMiddleware
             await _next(context);
         }
     
-        catch (UnauthorizedAccessException)
+        catch (UnauthorizedAccessException ex)
         {
+            var errorMessage = string.IsNullOrWhiteSpace(ex.Message) ? "Unauthorized access." : ex.Message;
+            
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            await context.Response.WriteAsJsonAsync(new ApiResponse<object> { Success = false, Message = "Unauthorized access." });
+            await context.Response.WriteAsJsonAsync(new ApiResponse<object> 
+            { 
+                Success = false, 
+                Message = errorMessage 
+            });
         }
         
         catch (Exception ex)
