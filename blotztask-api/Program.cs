@@ -84,6 +84,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<SampleValidationValidator>(
 builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapIdentityApi<User>();
 // Configure the HTTP request pipeline.

@@ -17,7 +17,7 @@ public static class BlotzContextSeed
         // Seed admin user
         var defaultUser = new User
         {
-            UserName = "blotztest1",
+            UserName = "blotztest1@gmail.com",
             Email = "blotztest1@gmail.com",
             EmailConfirmed = true,
         };
