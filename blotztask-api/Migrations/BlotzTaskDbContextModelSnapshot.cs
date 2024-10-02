@@ -45,29 +45,6 @@ namespace BlotzTask.Migrations
                     b.HasKey("LabelId");
 
                     b.ToTable("Labels");
-
-                    b.HasData(
-                        new
-                        {
-                            LabelId = 1,
-                            Color = "Red",
-                            Description = "Tasks that need to be addressed immediately",
-                            Name = "Urgent"
-                        },
-                        new
-                        {
-                            LabelId = 2,
-                            Color = "Yellow",
-                            Description = "Tasks that are currently being worked on",
-                            Name = "In Progress"
-                        },
-                        new
-                        {
-                            LabelId = 3,
-                            Color = "Green",
-                            Description = "Tasks that have been completed",
-                            Name = "Completed"
-                        });
                 });
 
             modelBuilder.Entity("BlotzTask.Data.Entities.TaskItem", b =>
@@ -99,6 +76,7 @@ namespace BlotzTask.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -106,38 +84,6 @@ namespace BlotzTask.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("TaskItems");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2024, 9, 15, 1, 56, 29, 965, DateTimeKind.Utc).AddTicks(7865),
-                            Description = "Description for Task 1",
-                            DueDate = new DateOnly(2024, 10, 1),
-                            IsDone = false,
-                            Title = "Initial Task 1",
-                            UpdatedAt = new DateTime(2024, 9, 15, 1, 56, 29, 965, DateTimeKind.Utc).AddTicks(7867)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2024, 9, 15, 1, 56, 29, 965, DateTimeKind.Utc).AddTicks(7869),
-                            Description = "Description for Task 2",
-                            DueDate = new DateOnly(2024, 10, 1),
-                            IsDone = true,
-                            Title = "Initial Task 2",
-                            UpdatedAt = new DateTime(2024, 9, 15, 1, 56, 29, 965, DateTimeKind.Utc).AddTicks(7869)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2024, 9, 15, 1, 56, 29, 965, DateTimeKind.Utc).AddTicks(7870),
-                            Description = "Description for Task 3",
-                            DueDate = new DateOnly(2024, 10, 1),
-                            IsDone = false,
-                            Title = "Initial Task 3",
-                            UpdatedAt = new DateTime(2024, 9, 15, 1, 56, 29, 965, DateTimeKind.Utc).AddTicks(7871)
-                        });
                 });
 
             modelBuilder.Entity("BlotzTask.Data.Entities.User", b =>
@@ -340,9 +286,13 @@ namespace BlotzTask.Migrations
 
             modelBuilder.Entity("BlotzTask.Data.Entities.TaskItem", b =>
                 {
-                    b.HasOne("BlotzTask.Data.Entities.User", null)
+                    b.HasOne("BlotzTask.Data.Entities.User", "User")
                         .WithMany("TaskItems")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
