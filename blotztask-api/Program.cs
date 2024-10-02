@@ -2,7 +2,6 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using BlotzTask.Data;
 using BlotzTask.Data.Entities;
-using BlotzTask.Models;
 using BlotzTask.Models.Validators;
 using BlotzTask.Services;
 using FluentValidation;
@@ -13,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.OpenApi.Models;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
-using static FluentValidation.DependencyInjectionExtensions;
 using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +36,7 @@ builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ILabelService, LabelService>();
 
 builder.Services.AddIdentityApiEndpoints<User>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<BlotzTaskDbContext>();
 
 builder.Services.AddAuthorization();
@@ -61,7 +60,7 @@ if (builder.Environment.IsProduction())
 
 }
 
-    builder.Services.AddCors(options =>
+builder.Services.AddCors(options =>
 {
     // CORS Best Practice https://q240iu43yr.feishu.cn/docx/JTkcdbwtloFHJWxvi0ocmTuOnjd?from=from_copylink
     options.AddPolicy("AllowSpecificOrigin",
@@ -89,6 +88,31 @@ app.MapIdentityApi<User>();
 app.UseSwagger();
 app.UseSwaggerUI();
 // }
+
+if (app.Environment.IsDevelopment())
+{
+    // Seed roles and super admin
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+
+        try
+        {
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = services.GetRequiredService<UserManager<User>>();
+            var dbContext = services.GetRequiredService<BlotzTaskDbContext>();
+
+            // Call the seed methods
+            await BlotzContextSeed.SeedBlotzContextAsync(userManager,roleManager,dbContext);
+
+        }
+        catch (Exception ex)
+        {
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            logger.LogError(ex, "An error occurred while seeding the database.");
+        }
+    }
+}
 
 app.UseHttpsRedirection();
 
