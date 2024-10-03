@@ -1,13 +1,10 @@
 using BlotzTask.Models;
 using BlotzTask.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using BlotzTask.Models;
 
 namespace BlotzTask.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("/api/[controller]")]
     public class TaskController : ControllerBase
     {
@@ -36,14 +33,9 @@ namespace BlotzTask.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditTask(int Id, [FromBody] EditTaskItemDTO editTaskItem)
+        public async Task<IActionResult> EditTask(int id, [FromBody] EditTaskItemDTO editTaskItem)
         {
-            var result = await _taskService.EditTask(Id, editTaskItem);
-
-            if (result < 0)
-            {
-                return NotFound("Task not found or you do not have permission to edit this task.");
-            }
+            var result = await _taskService.EditTask(id, editTaskItem);
 
             return Ok($"Task {result} is successfully updated");
         }

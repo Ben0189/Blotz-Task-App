@@ -2,6 +2,7 @@
 using BlotzTask.Models;
 using Microsoft.EntityFrameworkCore;
 using BlotzTask.Data.Entities;
+using BlotzTask.Models.CustomError;
 
 namespace BlotzTask.Services;
 
@@ -70,23 +71,23 @@ public class TaskService : ITaskService
 
     }
 
-    public async Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem)
+    public async Task<int> EditTask(int id, EditTaskItemDTO editTaskItem)
     {
-        var task = await _dbContext.TaskItems.FindAsync(Id);
+        var task = await _dbContext.TaskItems.FindAsync(id);
 
-        if (task != null)
+        if (task == null)
         {
-            task.Title = editTaskItem.Title;
-            task.Description = editTaskItem.Description;
-            task.UpdatedAt = DateTime.UtcNow;
-
-            _dbContext.TaskItems.Update(task);
-            await _dbContext.SaveChangesAsync();
-            return Id;
+            throw new NotFoundException($"Task with ID {id} not found.");
         }
-         else {
-            return -1;
-         }
+
+        task.Title = editTaskItem.Title;
+        task.Description = editTaskItem.Description;
+        task.UpdatedAt = DateTime.UtcNow;
+
+        _dbContext.TaskItems.Update(task);
+        await _dbContext.SaveChangesAsync();
+
+        return id;
     }
 }
 

@@ -11,6 +11,7 @@ using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -40,6 +41,9 @@ builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<BlotzTaskDbContext>();
 
 builder.Services.AddAuthorization();
+
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
 if (builder.Environment.IsDevelopment())
 {
@@ -84,11 +88,10 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapIdentityApi<User>();
 // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
+
 app.UseSwagger();
 app.UseSwaggerUI();
-// }
+app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
