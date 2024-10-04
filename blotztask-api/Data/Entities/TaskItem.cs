@@ -16,6 +16,8 @@ namespace BlotzTask.Data.Entities
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
-
+        public int LabelId { get; set; }
+        [ForeignKey("LabelId")]
+        public Label Label { get; set; }
     }
 }
