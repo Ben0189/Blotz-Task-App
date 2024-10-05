@@ -8,22 +8,27 @@ The primary goal of BlotzTaskApp is to provide users with a powerful yet easy-to
 
 ## Tech Stack
 
+test
 BlotzTaskApp utilizes a variety of modern technologies to ensure a robust, scalable, and maintainable codebase:
 
 ### Frontend
+
 - Framework: Next.js
 - CSS Framework: Tailwind CSS
 - Design - Shadcn
 
 ### Backend
+
 - Framework: .NET 8
 - API: REST API
 
 ### Data Layer
+
 - ORM: Entity Framework Core
 - Database: SQL Server
 
 ### Cloud Service & Hosting
+
 - Repository: GitHub
 - CI/CD: GitHub Actions
 - Backend Hosting: Azure
