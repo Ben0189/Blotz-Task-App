@@ -59,12 +59,18 @@ public static class BlotzContextSeed
         // Seed labels and tasks only if the user was successfully created
         if (!await context.Labels.AnyAsync())
         {
-            await context.Labels.AddAsync(
+            await context.Labels.AddRangeAsync(
                 new Label
                 {
                     Name = "Urgent",
                     Color = "Red",
                     Description = "Tasks that need to be addressed immediately"
+                },
+                new Label
+                {
+                    Name = "Completed",
+                    Color = "Green",
+                    Description = "Tasks that have been completed"
                 }
             );
             await context.SaveChangesAsync();
@@ -73,6 +79,8 @@ public static class BlotzContextSeed
 
         if (!await context.TaskItems.AnyAsync())
         {
+            var labelUrgent = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Urgent");
+            var labelCompleted = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Completed");
             await context.TaskItems.AddRangeAsync(
                 new TaskItem
                 {
@@ -82,7 +90,8 @@ public static class BlotzContextSeed
                     IsDone = false,
                     CreatedAt = new DateTime(2024, 10, 2),
                     UpdatedAt = new DateTime(2024, 10, 2),
-                    UserId = user.Id
+                    UserId = user.Id,
+                    LabelId = labelUrgent.LabelId
                 },
                 new TaskItem
                 {
@@ -92,7 +101,8 @@ public static class BlotzContextSeed
                     IsDone = true,
                     CreatedAt = new DateTime(2024, 10, 2),
                     UpdatedAt = new DateTime(2024, 10, 2),
-                    UserId = user.Id
+                    UserId = user.Id,
+                    LabelId = labelCompleted.LabelId
                 }
             );
             await context.SaveChangesAsync();
