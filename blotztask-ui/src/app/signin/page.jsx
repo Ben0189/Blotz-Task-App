@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -27,14 +27,15 @@ const LoginPage = () => {
     if (result.error) {
       setError(result.error); // Set error if login fails
     } else {
-       router.push(callbackUrl);
+      router.push(callbackUrl);
     }
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.form_container}>
-        <h1 className={styles.title}>User Login</h1> {/* Title of the login page */}
+        <h1 className={styles.title}>User Login</h1>{' '}
+        {/* Title of the login page */}
         <form onSubmit={handleSubmit}>
           <div className={styles.input_group}>
             <label className={styles.label}>Email:</label>
@@ -58,11 +59,21 @@ const LoginPage = () => {
               placeholder="Enter your password"
             />
           </div>
-          {error && <p className={styles.error}>{error}</p>} {/* Display error message if any */}
-          <button type="submit" className="gradient_green_blue_btn gradient_green_blue_btn:hover">Login</button>
+          {error && <p className={styles.error}>{error}</p>}{' '}
+          {/* Display error message if any */}
+          <button
+            type="submit"
+            className="gradient_green_blue_btn gradient_green_blue_btn:hover"
+          >
+            Login
+          </button>
         </form>
         <p className={styles.registerPrompt}>
-          Don’t have an account? <a href="/signup" className={styles.registerLink}>Register here</a> {/* Registration link */}
+          Don’t have an account?{' '}
+          <a href="/signup" className={styles.registerLink}>
+            Register here
+          </a>{' '}
+          {/* Registration link */}
         </p>
       </div>
     </div>

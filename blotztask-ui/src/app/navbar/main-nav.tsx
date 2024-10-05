@@ -1,13 +1,21 @@
 'use client';
 
-import { ClientSafeProvider, getProviders, signOut, useSession } from 'next-auth/react';
+import {
+  ClientSafeProvider,
+  getProviders,
+  signOut,
+  useSession,
+} from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
   const { data: session } = useSession();
-  const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null);
+  const [providers, setProviders] = useState<Record<
+    string,
+    ClientSafeProvider
+  > | null>(null);
 
   // load the registered nextauth providers, in our case is the credential provider
   useEffect(() => {

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useRouter } from 'next/navigation'; // Import useRouter for navigation
 import { useState } from 'react';
@@ -16,25 +16,28 @@ const SignUpPage = () => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError('Passwords do not match');
       return;
     }
 
     // Call the sign-up API
-    const signUpResponse = await fetch( `${process.env.NEXT_PUBLIC_API_BASE_URL}/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    const signUpResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/register`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      }
+    );
 
     if (signUpResponse.ok) {
       // Redirect to the login page after successful sign-up
       router.push('/signin'); // Use router to navigate to the login page
     } else {
       const errorData = await signUpResponse.json();
-      setError(errorData.error || "An error occurred during sign-up.");
+      setError(errorData.error || 'An error occurred during sign-up.');
     }
   };
 
@@ -78,7 +81,9 @@ const SignUpPage = () => {
           </div>
           {error && <p className={styles.error}>{error}</p>}
           {success && <p className={styles.success}>{success}</p>}
-          <button type="submit" className="gradient_green_blue_btn">Sign Up</button>
+          <button type="submit" className="gradient_green_blue_btn">
+            Sign Up
+          </button>
         </form>
       </div>
     </div>
