@@ -8,6 +8,7 @@
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
 
+/* This class is not in used
 .gradient {
   height: fit-content;
   z-index: 3;
@@ -31,28 +32,21 @@
   filter: blur(100px) saturate(150%);
   top: 80px;
   opacity: 0.15;
-}
-
-@media screen and (max-width: 640px) {
-  .main {
-    padding: 0;
-  }
-}
+} */
 
 /* Tailwind Styles */
 
-.app {
+/* .app {
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
-}
+} */
 
-.black_btn {
+/* .black_btn {
   @apply rounded-full border border-blue-200 bg-blue-200 py-2 px-5 text-white transition-all hover:bg-blue-500 hover:border-blue-500 text-center text-sm font-inter flex items-center justify-center;
-}
+} */
 
-
-.outline_btn {
+/* .outline_btn {
   @apply rounded-full border border-blue-600 bg-transparent py-1.5 px-5 border-blue-600 transition-all hover:bg-blue-500 hover:text-white text-center text-sm font-inter flex items-center justify-center;
-}
+} */
 
 .gradient_green_blue_btn {
   @apply rounded-full border border-transparent py-2 px-5 text-white transition-all text-center text-sm font-inter flex items-center justify-center shadow-md;
@@ -61,12 +55,10 @@
   transition: all 0.3s ease;
 }
 
-
 .gradient_green_blue_btn:hover {
   background: linear-gradient(135deg, #2196f3, #4caf50); 
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
 }
-
 
 .inverse_gradient_green_blue_btn {
   @apply rounded-full border border-transparent py-2 px-5 text-black transition-all text-center text-sm font-inter flex items-center justify-center shadow-md;
@@ -75,20 +67,19 @@
   transition: all 0.3s ease;
 }
 
-
 .inverse_gradient_green_blue_btn:hover {
   background: linear-gradient(135deg, #4caf50, #2196f3); 
   color: white;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
 }
 
-.head_text {
+/* .head_text {
   @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
-}
+} */
 
-.orange_gradient {
+/* .orange_gradient {
   @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
-}
+} */
 
 .green_gradient {
   @apply bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent;
@@ -98,7 +89,7 @@
   @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent;
 }
 
-.desc {
+/* .desc {
   @apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl;
 }
 
@@ -116,21 +107,16 @@
 
 .prompt_layout {
   @apply space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3;
-}
-
-/* Feed Component */
-.feed {
-  @apply mt-16 mx-auto w-full max-w-xl flex justify-center items-center flex-col gap-2;
-}
+} */
 
 /* Form Component */
-.form_textarea {
+/* .form_textarea {
   @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
-}
+} */
 
-.form_input {
+/* .form_input {
   @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
-}
+} */
 
 /* Nav Component */
 .logo_text {
@@ -166,33 +152,26 @@
   @apply flex justify-between items-center;
 }
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-}
+} */
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
-
+} */
+/* 
 body {
   color: rgb(var(--foreground-rgb));
-}
+} */
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-
-.error {
-  color: red; /* Error message color */
-  text-align: center;
-  margin-top: 10px; /* Space above error message */
 }
