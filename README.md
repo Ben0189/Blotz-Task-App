@@ -11,43 +11,21 @@ The primary goal of BlotzTaskApp is to provide users with a powerful yet easy-to
 BlotzTaskApp utilizes a variety of modern technologies to ensure a robust, scalable, and maintainable codebase:
 
 ### Frontend
-- Library: React.js
+- Framework: Next.js
 - CSS Framework: Tailwind CSS
-- Component Library: MUI
+- Design - Shadcn
 
 ### Backend
-- Framework: .NET
+- Framework: .NET 8
 - API: REST API
 
 ### Data Layer
 - ORM: Entity Framework Core
 - Database: SQL Server
 
-### Testing
-- UI/Component Testing: Cypress, Playwright
-- Unit/API Testing: RestSharp, XUnit
-
 ### Cloud Service & Hosting
 - Repository: GitHub
 - CI/CD: GitHub Actions
 - Backend Hosting: Azure
 - Frontend Hosting: Vercel
-- Web Service: Azure SQL Database, Web App
-- Monitoring: Application Insights
-
-## Features
-
-- **Task Creation**: Easily create and manage tasks.
-- **Task Categorization**: Organize tasks into categories.
-- **Due Dates and Reminders**: Set deadlines and receive reminders.
-- **Progress Tracking**: Monitor the progress of tasks.
-- **Responsive Design**: Use the app on any device, thanks to a responsive design.
-
-## Installation
-
-To set up BlotzTaskApp locally, follow these steps:
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/yourusername/BlotzTaskApp.git
-   cd BlotzTaskApp
+- Web Service: Azure SQL Database, Azure Web App, Azure Key Vault
