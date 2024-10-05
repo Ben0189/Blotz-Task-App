@@ -17,6 +17,7 @@ export const taskDTOSchema = z.object({
   isDone: z.boolean(),
   createdAt: z.string().transform((str) => new Date(str)), // Convert string to Date
   updatedAt: z.string().transform((str) => new Date(str)), // Convert string to Date
+  dueDate: z.string(), 
 });
 
 export type TaskDTO = z.infer<typeof taskDTOSchema>;

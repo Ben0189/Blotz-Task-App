@@ -5,4 +5,5 @@ export interface taskDto {
   isDone: boolean;
   createdAt: string;
   updatedAt: string;
+  dueDate: string; 
 }
