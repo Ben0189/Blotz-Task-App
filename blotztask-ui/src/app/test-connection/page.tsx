@@ -6,7 +6,7 @@ import { TaskItemDTO } from '@/model/task-Item-dto';
 import Link from 'next/link';
 import { useState } from 'react';
 import TaskList from './components/task-list';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { fetchAllTaskItems } from '@/services/taskService';
 
 export default function Home() {
@@ -44,24 +44,26 @@ export default function Home() {
         </Link>
       </div>
       {error && (
-      <Card className="mt-8 max-w-sm p-6 text-center bg-[#1A202C] text-white">
-        <CardHeader>
-          <CardTitle className="text-2xl">❌Error fetching todos</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="mt-4">{error}</p>
-        </CardContent>
-      </Card>
+        <Card className="mt-8 max-w-sm p-6 text-center bg-[#1A202C] text-white">
+          <CardHeader>
+            <CardTitle className="text-2xl">❌Error fetching todos</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mt-4">{error}</p>
+          </CardContent>
+        </Card>
       )}
       {tasks.length > 0 && (
-      <Card className="mt-8 max-w-sm p-6 text-center bg-[#1A202C] text-white">
-        <CardHeader>
-          <CardTitle className="text-2xl">✅Successfully fetched todos</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <TaskList tasks={tasks}/>
-        </CardContent>
-      </Card>
+        <Card className="mt-8 max-w-sm p-6 text-center bg-[#1A202C] text-white">
+          <CardHeader>
+            <CardTitle className="text-2xl">
+              ✅Successfully fetched todos
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <TaskList tasks={tasks} />
+          </CardContent>
+        </Card>
       )}
     </main>
   );
