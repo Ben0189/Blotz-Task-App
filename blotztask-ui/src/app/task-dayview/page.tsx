@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { taskDto } from './models/taskDto';
 import { TaskDTO, taskDTOSchema } from './schema/schema';
+import { Button } from '@/components/ui/button';
 import { TaskForm } from './components/form';
 
 // Define mock data
@@ -34,6 +35,9 @@ const validatedTasks = z.array(taskDTOSchema).parse(mockTasks);
 export default function Dayview() {
   const [tasks, setTasks] = useState<TaskDTO[]>(validatedTasks);
 
+  //add a state for add task button deciding to hide or show the form
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
   const handleCheckboxChange = (taskId) => {
     setTasks((prevTasks) =>
       prevTasks.map((t) => {
@@ -43,6 +47,10 @@ export default function Dayview() {
         return t;
       })
     );
+  };
+
+  const toggleFormVisibility = () => {
+    setIsFormVisible(!isFormVisible);
   };
 
   useEffect(() => {
@@ -86,12 +94,15 @@ export default function Dayview() {
             ))}
 
             <div className="w-1/2">
-              <Card>
-                <CardHeader className="pb-1"></CardHeader>
-                <CardContent className="grid gap-1">
-                  <TaskForm setTasks={setTasks} />
-                </CardContent>
-              </Card>
+              <Button onClick={toggleFormVisibility}>Add task</Button>
+              {isFormVisible && (
+                <Card>
+                  <CardHeader className="pb-1"></CardHeader>
+                  <CardContent className="grid gap-1">
+                    <TaskForm setTasks={setTasks} />
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
         </div>
