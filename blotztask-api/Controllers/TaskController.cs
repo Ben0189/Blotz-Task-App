@@ -1,11 +1,10 @@
+using BlotzTask.Models;
 using BlotzTask.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlotzTask.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("/api/[controller]")]
     public class TaskController : ControllerBase
     {
@@ -15,16 +14,30 @@ namespace BlotzTask.Controllers
             _taskService = taskService;
         }
 
-        [AllowAnonymous]
         [HttpGet("alltask")]
         public async Task<IActionResult> GetAllTask()
         {
             return Ok(await _taskService.GetTodoItems());
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskByID(int id)
         {
             return Ok(await _taskService.GetTaskByID(id));
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> AddTask([FromBody] AddTaskItemDTO addtaskItem)
+        {
+            return Ok(await _taskService.AddTask(addtaskItem));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditTask(int id, [FromBody] EditTaskItemDTO editTaskItem)
+        {
+            var result = await _taskService.EditTask(id, editTaskItem);
+
+            return Ok($"Task {result} is successfully updated");
         }
     }
 }

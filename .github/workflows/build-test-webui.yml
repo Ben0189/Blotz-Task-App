@@ -1,0 +1,34 @@
+name: Build, test and run webui 
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+    types:
+      - opened
+      - synchronize
+
+jobs:
+    build-and-test-frontend:
+      runs-on: ubuntu-latest
+
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' 
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./blotztask-ui
+
+      - name: Build Next.js app
+        run: npm run build
+        working-directory: ./blotztask-ui
+
+      - name: Lint the code
+        run: npm run lint
+        working-directory: ./blotztask-ui

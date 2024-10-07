@@ -22,6 +22,31 @@ namespace BlotzTask.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BlotzTask.Data.Entities.Label", b =>
+                {
+                    b.Property<int>("LabelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LabelId"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LabelId");
+
+                    b.ToTable("Labels");
+                });
+
             modelBuilder.Entity("BlotzTask.Data.Entities.TaskItem", b =>
                 {
                     b.Property<int>("Id")
@@ -37,8 +62,14 @@ namespace BlotzTask.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateOnly>("DueDate")
+                        .HasColumnType("date");
+
                     b.Property<bool>("IsDone")
                         .HasColumnType("bit");
+
+                    b.Property<int>("LabelId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -48,42 +79,16 @@ namespace BlotzTask.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LabelId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("TaskItems");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2024, 8, 29, 9, 40, 17, 75, DateTimeKind.Utc).AddTicks(9348),
-                            Description = "Description for Task 1",
-                            IsDone = false,
-                            Title = "Initial Task 1",
-                            UpdatedAt = new DateTime(2024, 8, 29, 9, 40, 17, 75, DateTimeKind.Utc).AddTicks(9350)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2024, 8, 29, 9, 40, 17, 75, DateTimeKind.Utc).AddTicks(9352),
-                            Description = "Description for Task 2",
-                            IsDone = true,
-                            Title = "Initial Task 2",
-                            UpdatedAt = new DateTime(2024, 8, 29, 9, 40, 17, 75, DateTimeKind.Utc).AddTicks(9353)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2024, 8, 29, 9, 40, 17, 75, DateTimeKind.Utc).AddTicks(9355),
-                            Description = "Description for Task 3",
-                            IsDone = false,
-                            Title = "Initial Task 3",
-                            UpdatedAt = new DateTime(2024, 8, 29, 9, 40, 17, 75, DateTimeKind.Utc).AddTicks(9355)
-                        });
                 });
 
             modelBuilder.Entity("BlotzTask.Data.Entities.User", b =>
@@ -286,9 +291,21 @@ namespace BlotzTask.Migrations
 
             modelBuilder.Entity("BlotzTask.Data.Entities.TaskItem", b =>
                 {
-                    b.HasOne("BlotzTask.Data.Entities.User", null)
+                    b.HasOne("BlotzTask.Data.Entities.Label", "Label")
                         .WithMany("TaskItems")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("LabelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlotzTask.Data.Entities.User", "User")
+                        .WithMany("TaskItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Label");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -340,6 +357,11 @@ namespace BlotzTask.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BlotzTask.Data.Entities.Label", b =>
+                {
+                    b.Navigation("TaskItems");
                 });
 
             modelBuilder.Entity("BlotzTask.Data.Entities.User", b =>

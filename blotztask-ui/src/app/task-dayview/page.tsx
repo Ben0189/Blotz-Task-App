@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { taskDto } from './models/taskDto';
 import { TaskDTO, taskDTOSchema } from './schema/schema';
-import { ProfileForm } from './components/form';
 import { Button } from '@/components/ui/button';
+import { TaskForm } from './components/form';
 
 // Define mock data
 const mockTasks: taskDto[] = [
@@ -60,7 +60,7 @@ export default function Dayview() {
 
   return (
     <>
-      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex bg-white border-1 ">
+      <div className="hidden h-full flex-1 flex-col space-y-8 md:flex bg-white border-1 ">
         <div className="items-center space-y-2 ">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Day View</h2>
@@ -99,7 +99,7 @@ export default function Dayview() {
                 <Card>
                   <CardHeader className="pb-1"></CardHeader>
                   <CardContent className="grid gap-1">
-                    <ProfileForm setTasks={setTasks} />
+                    <TaskForm setTasks={setTasks} />
                   </CardContent>
                 </Card>
               )}

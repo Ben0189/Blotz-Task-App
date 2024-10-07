@@ -1,6 +1,8 @@
 ﻿using BlotzTask.Data;
 using BlotzTask.Models;
 using Microsoft.EntityFrameworkCore;
+using BlotzTask.Data.Entities;
+using BlotzTask.Models.CustomError;
 
 namespace BlotzTask.Services;
 
@@ -8,6 +10,8 @@ public interface ITaskService
 {
     public Task<List<TaskItemDTO>> GetTodoItems();
     public Task<TaskItemDTO> GetTaskByID(int Id);
+    public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
+    public Task<string> AddTask(AddTaskItemDTO addtaskItem);
 }
 
 public class TaskService : ITaskService
@@ -50,5 +54,40 @@ public class TaskService : ITaskService
         return await Task.FromResult(taskItems[Id]);
     }
 
+    public async Task<string> AddTask(AddTaskItemDTO addtaskItem)
+    {
+        var addtask = new TaskItem
+        {
+            Title = addtaskItem.Title,
+            Description = addtaskItem.Description,
+            CreatedAt = DateTime.UtcNow, 
+            UpdatedAt = DateTime.UtcNow
+        };
+
+        _dbContext.TaskItems.Add(addtask);
+        await _dbContext.SaveChangesAsync();
+
+        return addtaskItem.Title;
+
+    }
+
+    public async Task<int> EditTask(int id, EditTaskItemDTO editTaskItem)
+    {
+        var task = await _dbContext.TaskItems.FindAsync(id);
+
+        if (task == null)
+        {
+            throw new NotFoundException($"Task with ID {id} not found.");
+        }
+
+        task.Title = editTaskItem.Title;
+        task.Description = editTaskItem.Description;
+        task.UpdatedAt = DateTime.UtcNow;
+
+        _dbContext.TaskItems.Update(task);
+        await _dbContext.SaveChangesAsync();
+
+        return id;
+    }
 }
 

@@ -1,13 +1,16 @@
+import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
+import { ThemeProvider } from 'next-themes';
 import { Inter as FontSans } from 'next/font/google';
 import '../styles/globals.css';
-import { cn } from '@/lib/utils';
-import { ThemeProvider } from 'next-themes';
+import { MainNav } from './navbar/main-nav';
+import Provider from './provider';
 
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
 });
+
 export const metadata: Metadata = {
   title: 'Blotz Task App',
   description: 'Efficiently organize and track users tasks',
@@ -26,15 +29,20 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {/* <Navbar /> TODO: Implement navbar to navigate between pages*/}
-          <section className="container mx-auto px-4">{children}</section>
-        </ThemeProvider>
+        <Provider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <MainNav />
+            {/* <Navbar /> TODO: Implement navbar to navigate between pages*/}
+            <section className="container mx-auto px-12 py-4">
+              {children}
+            </section>
+          </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );
