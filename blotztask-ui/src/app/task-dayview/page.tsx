@@ -9,10 +9,10 @@ import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { TaskForm } from './components/form';
 import React from 'react';
 
-// 获取当前日期的字符串形式，格式为 YYYY-MM-DD
-const getTodayDateString = () => {
+const getTodayDate = () => {
   const today = new Date();
-  return today.toISOString().split('T')[0];  // 格式化为 'YYYY-MM-DD'
+  today.setHours(0, 0, 0, 0);
+  return today;
 };
 
 // Define mock data
@@ -22,27 +22,18 @@ const mockTasks: taskDto[] = [
     title: 'Complete project report',
     description: 'Finalize the project report and submit it to the manager.',
     isDone: false,
-    createdAt: '2024-07-20T08:30:00Z',
-    updatedAt: '2024-07-20T08:30:00Z',
-    dueDate: '2024-10-05',  // 设置为今天
+    createdAt: new Date(),  
+    updatedAt: new Date(),  
+    dueDate: getTodayDate(),   
   },
   {
     id: 2,
-    title: 'Meeting with the team',
-    description: 'Discuss the project milestones and deadlines with the team.',
-    isDone: false,
-    createdAt: '2024-07-21T10:00:00Z',
-    updatedAt: '2024-07-21T10:00:00Z',
-    dueDate: '2024-10-06',  // 未来日期
-  },
-  {
-    id: 3,
-    title: 'Prepare presentation slides',
-    description: 'Work on the slides for the upcoming presentation.',
-    isDone: false,
-    createdAt: '2024-07-15T08:30:00Z',
-    updatedAt: '2024-07-15T08:30:00Z',
-    dueDate: '2024-09-30',  // 过去的日期
+    title: 'Review pull requests',
+    description: 'Review the open pull requests from the team.', 
+    isDone: true,
+    createdAt: new Date(), 
+    updatedAt: new Date(), 
+    dueDate: new Date('2024-10-09'),   
   },
 ];
 
@@ -63,9 +54,11 @@ export default function Dayview() {
     );
   };
 
-  // Filter tasks: show tasks with dueDate today or in the future
-  const todayDate = getTodayDateString();
-  const todayAndFutureTasks = tasks.filter((task) => task.dueDate >= todayDate);
+  // Filter tasks: only show tasks with dueDate as today
+  const todayDate = getTodayDate();
+  const todayTasks = tasks.filter(
+    (task) => task.dueDate.toDateString() === todayDate.toDateString()
+  );
 
   useEffect(() => {
     // Simulate fetching tasks
@@ -78,12 +71,12 @@ export default function Dayview() {
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Day View</h2>
           <p className="text-muted-foreground">
-            Here&apos;s a list of your tasks for today and the future
+            Here&apos;s a list of your tasks for today
           </p>
         </div>
         <div className="grid gap-6 w-3/4">
-          {todayAndFutureTasks.length > 0 ? (
-            todayAndFutureTasks.map((task) => (
+          {todayTasks.length > 0 ? (
+            todayTasks.map((task) => (
               <Card key={task.id}>
                 <CardHeader className="flex-row pb-1">
                   <Checkbox
@@ -107,7 +100,7 @@ export default function Dayview() {
               </Card>
             ))
           ) : (
-            <p className="text-muted-foreground">No tasks due today or in the future.</p>
+            <p className="text-muted-foreground">No tasks due today.</p>
           )}
           <div className="w-1/2">
             <Card>

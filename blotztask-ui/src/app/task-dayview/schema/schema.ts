@@ -13,11 +13,11 @@ export const formSchema = z.object({
 export const taskDTOSchema = z.object({
   id: z.number(),
   title: z.string(),
-  description: z.string(),
+  description: z.string().optional(),  
   isDone: z.boolean(),
-  createdAt: z.string().transform((str) => new Date(str)), // Convert string to Date
-  updatedAt: z.string().transform((str) => new Date(str)), // Convert string to Date
-  dueDate: z.string(), 
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  dueDate: z.date(),
 });
 
 export type TaskDTO = z.infer<typeof taskDTOSchema>;

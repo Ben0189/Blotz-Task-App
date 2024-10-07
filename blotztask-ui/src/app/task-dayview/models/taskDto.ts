@@ -3,7 +3,7 @@ export interface taskDto {
   title: string;
   description?: string;
   isDone: boolean;
-  createdAt: string;
-  updatedAt: string;
-  dueDate: string; 
+  createdAt: Date;
+  updatedAt: Date;
+  dueDate: Date; 
 }
