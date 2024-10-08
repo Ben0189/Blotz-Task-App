@@ -1,0 +1,29 @@
+.link-underline {
+    background-image: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff); 
+    background-size: 0 3px; 
+    background-position: 0 100%; 
+    background-repeat: no-repeat; 
+    transition: background-size 0.3s ease-in-out; 
+  }
+  
+.link-underline:hover {
+    background-size: 100% 3px;
+}
+
+.nav-btn {
+    @apply rounded-full text-white transition-all text-center flex items-center justify-center font-display;
+    transition: all 0.3s ease;
+}
+
+.signout-nav-btn {
+    @apply font-display rounded-2xl border border-transparent py-2 px-5 text-black transition-all text-center text-sm flex items-center justify-center;
+    background: white; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: all 0.3s ease;
+}
+
+.signout-nav-btn:hover {
+    border: 1px solid white; /* Set border to white on hover */
+    background: transparent; /* Make background transparent to show the nav bar's background */
+    color: white; /* Change text color to white */
+}
