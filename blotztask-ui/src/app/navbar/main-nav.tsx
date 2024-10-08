@@ -6,9 +6,9 @@ import {
   signOut,
   useSession,
 } from 'next-auth/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import styles from './main-nav.module.css';
 
 export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
   const { data: session } = useSession();
@@ -26,48 +26,48 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
   }, []);
 
   return (
-    <nav className="flex-between w-full pt-4 px-8">
-      <Link href="/" className="flex">
+    <nav className="w-full py-5 px-8 bg-primary-dark">
+      {/* <Link href="/" className="flex">
         <Image
           src="/assets/images/logo.svg"
           alt="logo"
           width={50}
           height={50}
         />
-      </Link>
+      </Link> */}
 
-      <div className="sm:flex hidden">
+      <div className="sm:flex hidden justify-end">
         {session?.user ? (
-          <div className="flex gap-3 md:gap-5">
+          <div className="flex gap-6">
             <Link
               href="/task-dayview"
               className="gradient_green_blue_btn gradient_green_blue_btn:hover"
             >
-              <span>Day View</span>
+              <span className={styles['link-underline']}>Day View</span>
             </Link>
             <Link
               href="/task-list"
               className="gradient_green_blue_btn gradient_green_blue_btn:hover"
             >
-              <span>Task List</span>
+              <span className={styles['link-underline']}>Task List</span>
             </Link>
             <Link
               href="/tasks"
               className="gradient_green_blue_btn gradient_green_blue_btn:hover"
             >
-              <span>New Task List</span>
+              <span className={styles['link-underline']}>New Task List</span>
             </Link>
             <Link
               href="/test-connection"
               className="gradient_green_blue_btn gradient_green_blue_btn:hover"
             >
-              <span>Test Connection</span>
+              <span className={styles['link-underline']}>Test Connection</span>
             </Link>
             <Link
               href="/profile"
               className="gradient_green_blue_btn gradient_green_blue_btn:hover"
             >
-              <span>My Profile</span>
+              <span className={styles['link-underline']}>My Profile</span>
             </Link>
             <button
               type="button"
