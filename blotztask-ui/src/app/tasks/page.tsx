@@ -55,7 +55,7 @@ export default async function TaskPage() {
       <Card className="mb-4 bg-yellow-50">
         <CardHeader>
           <CardTitle className="text-yellow-600">
-            <span className="info-icon">ℹ️</span>Notice
+            <span className="info-icon pr-2">ℹ️</span>Notice
           </CardTitle>
         </CardHeader>
         <CardContent>
