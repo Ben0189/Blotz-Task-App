@@ -98,8 +98,8 @@ export default function Dayview() {
             </Card>
           ))}
 
-          <div className="w-1/2">
-            <Button onClick={toggleFormVisibility}>Add task</Button>
+          <div className="w-1/2 flex gap-5 flex-col">
+            <Button className="self-start" onClick={toggleFormVisibility}>Add task</Button>
             {isFormVisible && (
               <Card>
                 <CardHeader className="pb-1"></CardHeader>
