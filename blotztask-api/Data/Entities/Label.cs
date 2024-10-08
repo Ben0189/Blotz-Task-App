@@ -9,5 +9,6 @@ namespace BlotzTask.Data.Entities
         public string Name { get; set; } = string.Empty;
         public string Color { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        public ICollection<TaskItem> TaskItems { get; set; } = new List<TaskItem>();
     }
 }
