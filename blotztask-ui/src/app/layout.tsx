@@ -38,7 +38,7 @@ export default function RootLayout({
           >
             <MainNav />
             {/* <Navbar /> TODO: Implement navbar to navigate between pages*/}
-            <section className="container mx-auto px-12 py-4">
+            <section className="container mx-auto px-12 pt-8">
               {children}
             </section>
           </ThemeProvider>
