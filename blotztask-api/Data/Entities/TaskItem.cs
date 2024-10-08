@@ -1,18 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using BlotzTask.Data.Entities;
+﻿﻿﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class TaskItem
+namespace BlotzTask.Data.Entities
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-    public string Title { get; set; } = string.Empty; 
-    public string Description { get; set; } = string.Empty;
-    public DateOnly DueDate { get; set; }
-    public bool IsDone { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public DateTime UpdatedAt { get; set; } = DateTime.Now;
-    public string UserId { get; set; } = string.Empty; 
-
-    [ForeignKey("UserId")]
-    public User User { get; set; } = new User();  
+    public class TaskItem
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public DateOnly DueDate { get; set; }
+        public bool IsDone { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
+        public int LabelId { get; set; }
+        [ForeignKey("LabelId")]
+        public Label Label { get; set; }
+    }
 }
