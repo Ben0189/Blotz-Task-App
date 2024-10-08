@@ -1,10 +1,13 @@
-import { cn } from '@/lib/utils';
+
 import type { Metadata } from 'next';
-import { ThemeProvider } from 'next-themes';
 import { Inter as FontSans } from 'next/font/google';
 import '../styles/globals.css';
+import { cn } from '@/lib/utils';
+import { ThemeProvider } from 'next-themes';
+import SessionProvider from './provider';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/options';
 import { MainNav } from './navbar/main-nav';
-import Provider from './provider';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -16,11 +19,14 @@ export const metadata: Metadata = {
   description: 'Efficiently organize and track users tasks',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body
@@ -29,20 +35,18 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Provider>
+        <SessionProvider session={session}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-            <MainNav />
+            <MainNav/>
             {/* <Navbar /> TODO: Implement navbar to navigate between pages*/}
-            <section className="container mx-auto px-12 py-4">
-              {children}
-            </section>
+            <section className="container mx-auto px-12 py-4">{children}</section>
           </ThemeProvider>
-        </Provider>
+        </SessionProvider>
       </body>
     </html>
   );

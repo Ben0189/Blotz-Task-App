@@ -68,9 +68,6 @@ namespace BlotzTask.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LabelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -83,8 +80,6 @@ namespace BlotzTask.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LabelId");
 
                     b.HasIndex("UserId");
 
@@ -291,19 +286,11 @@ namespace BlotzTask.Migrations
 
             modelBuilder.Entity("BlotzTask.Data.Entities.TaskItem", b =>
                 {
-                    b.HasOne("BlotzTask.Data.Entities.Label", "Label")
-                        .WithMany("TaskItems")
-                        .HasForeignKey("LabelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BlotzTask.Data.Entities.User", "User")
                         .WithMany("TaskItems")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Label");
 
                     b.Navigation("User");
                 });
@@ -357,11 +344,6 @@ namespace BlotzTask.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BlotzTask.Data.Entities.Label", b =>
-                {
-                    b.Navigation("TaskItems");
                 });
 
             modelBuilder.Entity("BlotzTask.Data.Entities.User", b =>
