@@ -6,15 +6,17 @@ import { mocktasks } from './mockdata';
 
 const page = () => {
   return (
-    <div>
-      <div className="flex justify-end items-center mt-10 mr-10">
+    <div className="flex flex-col">
+      <div className="flex flex-col items-end mt-10 mr-10">
         <AddTask />
-      </div>
-      <TaskTable tasks={mocktasks} />
-      <div className="mt-10 flex flex-col gap-3 md:flex-row">
-        <Button asChild className="ml-auto mr-16">
-          <Link href="/">Return Home Page</Link>
-        </Button>
+
+        <TaskTable tasks={mocktasks} />
+
+        <div className="mt-10">
+          <Button asChild className="ml-auto">
+            <Link href="/">Return Home Page</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
