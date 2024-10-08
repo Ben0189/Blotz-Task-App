@@ -60,51 +60,47 @@ export default function Dayview() {
 
   return (
     <>
-      <div className="hidden h-full flex-1 flex-col space-y-8 md:flex bg-white border-1 ">
-        <div className="items-center space-y-2 ">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Day View</h2>
-            <p className="text-muted-foreground">
-              Here&apos;s a list of your tasks for today
-            </p>
-          </div>
-          <div className="grid gap-6 w-3/4">
-            {tasks.map((task) => (
-              <Card key={task.id}>
-                <CardHeader className="flex-row pb-1">
-                  <Checkbox
-                    className="rounded-full mt-1 mr-2"
-                    checked={task.isDone}
-                    onCheckedChange={() => handleCheckboxChange(task.id)}
-                  />
-                  <CardTitle className={task.isDone ? 'line-through' : ''}>
-                    {task.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="grid gap-1">
-                  <div className="flex items-start space-x-4 rounded-md bg-accent text-accent-foreground transition-all pt-2">
-                    <div className="space-y-1">
-                      <p className="text-sm text-muted-foreground">
-                        {task.description}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+      <div>
+        <h2 className="text-2xl font-bold">Day View</h2>
+        <p className="text-muted-foreground">
+          Here&apos;s a list of your tasks for today
+        </p>
+      </div>
+      <div className="grid gap-6 w-3/4">
+        {tasks.map((task) => (
+          <Card key={task.id}>
+            <CardHeader className="flex-row pb-1">
+              <Checkbox
+                className="rounded-full mt-1 mr-2"
+                checked={task.isDone}
+                onCheckedChange={() => handleCheckboxChange(task.id)}
+              />
+              <CardTitle className={task.isDone ? 'line-through' : ''}>
+                {task.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-1">
+              <div className="flex items-start space-x-4 rounded-md bg-accent text-accent-foreground transition-all pt-2">
+                <div className="space-y-1">
+                  <p className="text-sm text-muted-foreground">
+                    {task.description}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
 
-            <div className="w-1/2">
-              <Button onClick={toggleFormVisibility}>Add task</Button>
-              {isFormVisible && (
-                <Card>
-                  <CardHeader className="pb-1"></CardHeader>
-                  <CardContent className="grid gap-1">
-                    <TaskForm setTasks={setTasks} />
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
+        <div className="w-1/2">
+          <Button onClick={toggleFormVisibility}>Add task</Button>
+          {isFormVisible && (
+            <Card>
+              <CardHeader className="pb-1"></CardHeader>
+              <CardContent className="grid gap-1">
+                <TaskForm setTasks={setTasks} />
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </>
