@@ -32,8 +32,6 @@ module sql 'modules/sqlserver.bicep' = {
   }
 }
 
-
-//TODO: Deploy app insight when ready
 module appInsight 'modules/appInsight.bicep' = {
   name: 'BlotzTaskApp-appInsight-module'//TODO: Add a unique suffix
   params: {
