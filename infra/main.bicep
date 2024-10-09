@@ -8,6 +8,7 @@ module appServicePlan 'modules/appService.bicep' = {
   name: 'BlotzTask-Webapp-module'//TODO: Add a unique suffix
   params: {
     webAppName: appName
+    connectionString : appInsight.outputs.connectionString
   }
 }
 

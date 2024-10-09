@@ -10,3 +10,5 @@ resource appInsight 'Microsoft.Insights/components@2020-02-02' = {
     Application_Type: 'web'
   }
 }
+
+output connectionString string = appInsight.properties.ConnectionString
