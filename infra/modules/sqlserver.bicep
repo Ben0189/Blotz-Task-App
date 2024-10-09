@@ -27,9 +27,9 @@ resource sql 'Microsoft.Sql/servers@2023-05-01-preview' = {
     name: sqlDbName
     location: location
     sku: {
-      name: 'S3'
+      name: 'Basic'
       tier: 'Basic'
-      capacity: 100
+      capacity: 5
     }
     properties: {
       maxSizeBytes: 1073741824
