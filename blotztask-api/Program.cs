@@ -1,4 +1,5 @@
 using Azure.Identity;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Azure.Security.KeyVault.Secrets;
 using BlotzTask.Data;
 using BlotzTask.Data.Entities;
@@ -82,6 +83,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddValidatorsFromAssemblyContaining<SampleValidationValidator>();
 // Register FluentValidation AutoValidation
 builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
 
 var app = builder.Build();
 app.UseMiddleware<ErrorHandlingMiddleware>();
