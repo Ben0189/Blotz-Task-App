@@ -6,9 +6,10 @@ import {
   signOut,
   useSession,
 } from 'next-auth/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import styles from './main-nav.module.css';
+import { H4 } from '@/components/ui/heading-with-anchor';
 
 export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
   const { data: session } = useSession();
@@ -26,53 +27,48 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
   }, []);
 
   return (
-    <nav className="flex-between w-full pt-4 px-8">
-      <Link href="/" className="flex">
-        <Image
-          src="/assets/images/logo.svg"
-          alt="logo"
-          width={50}
-          height={50}
-        />
+    <nav className="w-full py-5 px-8 bg-primary-dark flex justify-between items-center">
+      <Link href="/">
+        <H4 className="text-white font-display ">Blotz</H4>
       </Link>
 
-      <div className="sm:flex hidden">
+      <div className="sm:flex hidden justify-end">
         {session?.user ? (
-          <div className="flex gap-3 md:gap-5">
+          <div className="flex gap-6">
             <Link
               href="/task-dayview"
-              className="gradient_green_blue_btn gradient_green_blue_btn:hover"
+              className={styles['nav-btn']}
             >
-              <span>Day View</span>
+              <span className={styles['link-underline']}>Day View</span>
             </Link>
             <Link
               href="/task-list"
-              className="gradient_green_blue_btn gradient_green_blue_btn:hover"
+              className={styles['nav-btn']}
             >
-              <span>Task List</span>
+              <span className={styles['link-underline']}>Task List</span>
             </Link>
             <Link
               href="/tasks"
-              className="gradient_green_blue_btn gradient_green_blue_btn:hover"
+              className={styles['nav-btn']}
             >
-              <span>New Task List</span>
+              <span className={styles['link-underline']}>New Task List</span>
             </Link>
             <Link
               href="/test-connection"
-              className="gradient_green_blue_btn gradient_green_blue_btn:hover"
+              className={styles['nav-btn']}
             >
-              <span>Test Connection</span>
+              <span className={styles['link-underline']}>Test Connection</span>
             </Link>
             <Link
               href="/profile"
-              className="gradient_green_blue_btn gradient_green_blue_btn:hover"
+              className={styles['nav-btn']}
             >
-              <span>My Profile</span>
+              <span className={styles['link-underline']}>My Profile</span>
             </Link>
             <button
               type="button"
               onClick={() => signOut()}
-              className="inverse_gradient_green_blue_btn inverse_gradient_green_blue_btn:hover"
+              className={styles['signout-nav-btn']}
             >
               Sign Out
             </button>
@@ -84,7 +80,7 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
                 <Link
                   key={provider.id}
                   href="/signin?callbackUrl=%2F"
-                  className="gradient_green_blue_btn gradient_green_blue_btn:hover"
+                  className="nav-btn nav-btn:hover"
                 >
                   <span>Sign in</span>
                 </Link>

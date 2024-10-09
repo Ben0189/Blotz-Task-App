@@ -8,6 +8,7 @@ module appServicePlan 'modules/appService.bicep' = {
   name: 'BlotzTask-Webapp-module'//TODO: Add a unique suffix
   params: {
     webAppName: appName
+    connectionString : appInsight.outputs.connectionString
   }
 }
 
@@ -32,14 +33,12 @@ module sql 'modules/sqlserver.bicep' = {
   }
 }
 
-
-//TODO: Deploy app insight when ready
-// module appInsight 'modules/appInsight.bicep' = {
-//   name: 'BlotzTaskApp-appInsight-module'//TODO: Add a unique suffix
-//   params: {
-//     appName: appName
-//   }
-// }
+module appInsight 'modules/appInsight.bicep' = {
+  name: 'BlotzTaskApp-appInsight-module'//TODO: Add a unique suffix
+  params: {
+    appName: appName
+    location: location
+  }
+}
 
 //TODO: Deploy managed identity when ready
-

@@ -28,7 +28,7 @@ export default function Home() {
         <div className= "flex">
           <div className= "mr-0" >
             <img
-            src="/comingsoon.webp" 
+            src="/assets/images/comingsoon.webp" 
             alt="An image of a coming soon page"
             className="w-160 h-auto object-cover"
             />
