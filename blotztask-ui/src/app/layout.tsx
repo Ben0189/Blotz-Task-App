@@ -37,7 +37,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <MainNav />
-            <section className="container mx-auto px-12 pt-8 font-display">
+            <section className="container mx-auto px-12 pt-8">
               {children}
             </section>
           </ThemeProvider>
