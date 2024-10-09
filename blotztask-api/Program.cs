@@ -62,6 +62,7 @@ if (builder.Environment.IsProduction())
 
     var client = new SecretClient(new Uri(keyVaultEndpoint), new DefaultAzureCredential());
     builder.Services.AddDbContext<BlotzTaskDbContext>(options => options.UseSqlServer(client.GetSecret("db-string-connection").Value.Value.ToString()));
+    builder.Services.AddOpenTelemetry().UseAzureMonitor();
 
 }
 
@@ -83,7 +84,6 @@ builder.Services.AddCors(options =>
 builder.Services.AddValidatorsFromAssemblyContaining<SampleValidationValidator>();
 // Register FluentValidation AutoValidation
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
 
 var app = builder.Build();
 app.UseMiddleware<ErrorHandlingMiddleware>();
