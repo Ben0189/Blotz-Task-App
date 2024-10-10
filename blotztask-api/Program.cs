@@ -1,4 +1,5 @@
 using Azure.Identity;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Azure.Security.KeyVault.Secrets;
 using BlotzTask.Data;
 using BlotzTask.Data.Entities;
@@ -61,6 +62,7 @@ if (builder.Environment.IsProduction())
 
     var client = new SecretClient(new Uri(keyVaultEndpoint), new DefaultAzureCredential());
     builder.Services.AddDbContext<BlotzTaskDbContext>(options => options.UseSqlServer(client.GetSecret("db-string-connection").Value.Value.ToString()));
+    builder.Services.AddOpenTelemetry().UseAzureMonitor();
 
 }
 
