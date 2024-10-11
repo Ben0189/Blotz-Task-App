@@ -27,10 +27,9 @@ resource sql 'Microsoft.Sql/servers@2023-05-01-preview' = {
     name: sqlDbName
     location: location
     sku: {
-      name: 'GP_S_Gen5'
-      tier: 'GeneralPurpose'
-      family: 'Gen5'  
-      capacity: 1
+      name: 'Basic'
+      tier: 'Basic'
+      capacity: 5
     }
     properties: {
       maxSizeBytes: 1073741824

@@ -1,12 +1,23 @@
-import React from 'react'
-import { TaskTable } from './components/task-table'
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { AddTask } from './components/add-button';
+import { TaskTable } from './components/task-table';
+import { mocktasks } from './mockdata';
 
 const page = () => {
   return (
-    <div>
-      <TaskTable/>
-    </div>
-  )
-}
+    <div className="flex flex-col items-end mt-10 mr-10">
+      <AddTask />
 
-export default page
+      <TaskTable tasks={mocktasks} />
+
+      <div className="mt-10">
+        <Button asChild className="ml-auto">
+          <Link href="/">Return Home Page</Link>
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default page;
