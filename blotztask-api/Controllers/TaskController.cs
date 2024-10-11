@@ -30,6 +30,7 @@ namespace BlotzTask.Controllers
         public async Task<IActionResult> DeteleTaskByID(int id)
         {
             return Ok(await _taskService.DeleteTaskByID(id));
+        }
        
         [HttpPost]
         public async Task<IActionResult> AddTask([FromBody] AddTaskItemDTO addtaskItem)
