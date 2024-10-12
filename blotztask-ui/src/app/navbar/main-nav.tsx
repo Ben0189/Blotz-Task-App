@@ -9,7 +9,6 @@ import {
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import styles from './main-nav.module.css';
-import { H4 } from '@/components/ui/heading-with-anchor';
 
 export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
   const { data: session } = useSession();
@@ -27,10 +26,10 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
   }, []);
 
   return (
-    <nav className="w-full py-5 px-8 bg-primary-dark flex justify-between items-center">
-      <Link href="/">
+    <nav className="w-full py-5 px-8 bg-primary-dark">
+      {/* <Link href="/">
         <H4 className="text-white">Blotz</H4>
-      </Link>
+      </Link> */}
 
       <div className="sm:flex hidden justify-end">
         {session?.user ? (
