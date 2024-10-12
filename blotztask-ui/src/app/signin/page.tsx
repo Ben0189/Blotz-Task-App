@@ -4,6 +4,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import styles from './LoginPage.module.css'; // Import CSS styles
+import { Button } from '@/components/ui/button';
 
 const LoginPage = () => {
   const router = useRouter(); // Get the router instance
@@ -61,12 +62,9 @@ const LoginPage = () => {
           </div>
           {error && <p className={styles.error}>{error}</p>}{' '}
           {/* Display error message if any */}
-          <button
-            type="submit"
-            className="gradient_green_blue_btn gradient_green_blue_btn:hover"
-          >
-            Login
-          </button>
+            <Button className='w-full'>
+              Login
+            </Button>
         </form>
         <p className={styles.registerPrompt}>
           Don’t have an account?{' '}
