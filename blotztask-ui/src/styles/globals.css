@@ -9,11 +9,11 @@
 */
 
 .heading-primary{
-  @apply font-display text-primary-dark
+  @apply text-primary-dark
 }
 
 .heading-secondary{
-  @apply font-display text-secondary ;
+  @apply text-secondary ;
 }
 
 /* .desc {

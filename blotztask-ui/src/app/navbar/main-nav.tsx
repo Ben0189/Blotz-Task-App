@@ -29,7 +29,7 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
   return (
     <nav className="w-full py-5 px-8 bg-primary-dark flex justify-between items-center">
       <Link href="/">
-        <H4 className="text-white font-display ">Blotz</H4>
+        <H4 className="text-white">Blotz</H4>
       </Link>
 
       <div className="sm:flex hidden justify-end">
