@@ -15,14 +15,14 @@
     transition: all 0.3s ease;
 }
 
-.signout-nav-btn {
+.sign-nav-btn {
     @apply rounded-2xl border border-transparent py-2 px-5 text-black transition-all text-center text-sm flex items-center justify-center;
     background: white; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     transition: all 0.3s ease;
 }
 
-.signout-nav-btn:hover {
+.sign-nav-btn:hover {
     border: 1px solid white; /* Set border to white on hover */
     background: transparent; /* Make background transparent to show the nav bar's background */
     color: white; /* Change text color to white */
