@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          'min-h-screen font-sans antialiased',
+          'min-h-screen font-sans antialiased h-screen',
           fontSans.variable
         )}
       >
@@ -36,8 +36,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <MainNav />
-            <section className="container mx-auto px-12 pt-8">
+            <MainNav className='h-1/6' />
+            <section className="container mx-auto px-12 pt-8 h-5/6">
               {children}
             </section>
           </ThemeProvider>

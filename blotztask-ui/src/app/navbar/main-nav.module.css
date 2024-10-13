@@ -11,7 +11,7 @@
 }
 
 .nav-btn {
-    @apply rounded-full text-white transition-all text-center flex items-center justify-center;
+    /* @apply rounded-full text-white transition-all text-center flex items-center justify-center; */
     transition: all 0.3s ease;
 }
 
