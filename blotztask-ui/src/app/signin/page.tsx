@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 const LoginPage = () => {
   const router = useRouter(); // Get the router instance
   const searchParams = useSearchParams(); // Get search parameters
-  const callbackUrl = searchParams.get('callbackUrl') || '/'; // Get callbackUrl; use default if not provided
+  const callbackUrl = searchParams.get('callbackUrl') || '/task-dayview'; // Get callbackUrl; use default if not provided
 
   const [email, setEmail] = useState(''); // State for email input
   const [password, setPassword] = useState(''); // State for password input
@@ -27,7 +27,9 @@ const LoginPage = () => {
 
     if (result.error) {
       setError(result.error); // Set error if login fails
-    } else {
+    }
+     else {
+      //TODO : I believe there is a better way to do the callback and redirect url after login
       router.push(callbackUrl);
     }
   };
@@ -36,7 +38,7 @@ const LoginPage = () => {
     <div className={styles.container}>
       <div className={styles.form_container}>
         <h1 className={styles.title}>User Login</h1>{' '}
-        {/* Title of the login page */}
+        {error && <p className={styles.error}>{error}</p>}{' '}
         <form onSubmit={handleSubmit}>
           <div className={styles.input_group}>
             <label className={styles.label}>Email:</label>
@@ -60,17 +62,16 @@ const LoginPage = () => {
               placeholder="Enter your password"
             />
           </div>
-          {error && <p className={styles.error}>{error}</p>}{' '}
           {/* Display error message if any */}
             <Button className='w-full'>
-              Login
+              Sign In
             </Button>
         </form>
         <p className={styles.registerPrompt}>
-          Don’t have an account?{' '}
+          Don’t have an account?
           <a href="/signup" className={styles.registerLink}>
             Register here
-          </a>{' '}
+          </a>  
           {/* Registration link */}
         </p>
       </div>
