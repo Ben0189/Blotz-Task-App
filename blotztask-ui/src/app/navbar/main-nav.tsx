@@ -74,7 +74,6 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
             >
             <button
               type="button"
-              onClick={() => signOut()}
               className={styles['sign-nav-btn']}
             >
               <span>Sign in</span>
