@@ -1,9 +1,8 @@
 .container {
-  display: flex;
+  display: flex;  
+  height: 100%;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: white; /* Light background color */
 }
 
 .form_container {
@@ -16,7 +15,7 @@
 
 .title {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 .input_group {

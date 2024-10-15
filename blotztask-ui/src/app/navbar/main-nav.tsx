@@ -1,37 +1,31 @@
 'use client';
 
 import {
-  ClientSafeProvider,
-  getProviders,
   signOut,
   useSession,
 } from 'next-auth/react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import styles from './main-nav.module.css';
-import { H4 } from '@/components/ui/heading-with-anchor';
 
 export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
   const { data: session } = useSession();
-  const [providers, setProviders] = useState<Record<
-    string,
-    ClientSafeProvider
-  > | null>(null);
+
+  //TODO : Do we need this ? if not remove
+  // const [providers, setProviders] = useState<Record<
+  //   string,
+  //   ClientSafeProvider
+  // > | null>(null);
 
   // load the registered nextauth providers, in our case is the credential provider
-  useEffect(() => {
-    (async () => {
-      const res = await getProviders();
-      setProviders(res);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await getProviders();
+  //     setProviders(res);
+  //   })();
+  // }, []);
 
   return (
-    <nav className="w-full py-5 px-8 bg-primary-dark flex justify-between items-center">
-      <Link href="/">
-        <H4 className="text-white font-display ">Blotz</H4>
-      </Link>
-
+    <nav className="w-full py-5 px-8 bg-primary-dark">
       <div className="sm:flex hidden justify-end">
         {session?.user ? (
           <div className="flex gap-6">
@@ -45,14 +39,14 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
               href="/task-list"
               className={styles['nav-btn']}
             >
-              <span className={styles['link-underline']}>Task List</span>
+              <span className={styles['link-underline']}>All Task</span>
             </Link>
-            <Link
+            {/* <Link
               href="/tasks"
               className={styles['nav-btn']}
             >
               <span className={styles['link-underline']}>New Task List</span>
-            </Link>
+            </Link> */}
             <Link
               href="/test-connection"
               className={styles['nav-btn']}
@@ -63,28 +57,38 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
               href="/profile"
               className={styles['nav-btn']}
             >
-              <span className={styles['link-underline']}>My Profile</span>
+              <span className={styles['link-underline']}>Profile</span>
             </Link>
             <button
               type="button"
               onClick={() => signOut()}
-              className={styles['signout-nav-btn']}
+              className={styles['nav-btn']}
             >
               Sign Out
             </button>
           </div>
         ) : (
-          <div>
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <Link
-                  key={provider.id}
-                  href="/signin?callbackUrl=%2F"
-                  className="nav-btn nav-btn:hover"
-                >
-                  <span>Sign in</span>
-                </Link>
-              ))}
+          <div className="flex gap-6">
+            <Link
+              href="/signIn"
+            >
+            <button
+              type="button"
+              className={styles['nav-secondary-btn']}
+            >
+              <span>Sign in</span>
+            </button>
+            </Link>
+            <Link
+              href="/signup"
+            >
+            <button
+              type="button"
+              className={styles['nav-btn']}
+            >
+              <span>Sign up</span>
+            </button>
+            </Link>
           </div>
         )}
       </div>
