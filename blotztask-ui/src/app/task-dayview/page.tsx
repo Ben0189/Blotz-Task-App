@@ -75,7 +75,7 @@ export default function Dayview() {
         <div className="grid gap-6 w-3/4">
 
           {tasks.map((task) => (
-            <Card key={task.id}>
+            <Card key={task.id} className='bg-white'>
               <CardHeader className="flex-row pb-1">
                 <Checkbox
                   className="rounded-full mt-1 mr-2"
