@@ -39,14 +39,14 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
               href="/task-list"
               className={styles['nav-btn']}
             >
-              <span className={styles['link-underline']}>Task List</span>
+              <span className={styles['link-underline']}>All Task</span>
             </Link>
-            <Link
+            {/* <Link
               href="/tasks"
               className={styles['nav-btn']}
             >
               <span className={styles['link-underline']}>New Task List</span>
-            </Link>
+            </Link> */}
             <Link
               href="/test-connection"
               className={styles['nav-btn']}
@@ -57,26 +57,36 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
               href="/profile"
               className={styles['nav-btn']}
             >
-              <span className={styles['link-underline']}>My Profile</span>
+              <span className={styles['link-underline']}>Profile</span>
             </Link>
             <button
               type="button"
               onClick={() => signOut()}
-              className={styles['sign-nav-btn']}
+              className={styles['nav-btn']}
             >
               Sign Out
             </button>
           </div>
         ) : (
-          <div>
+          <div className="flex gap-6">
             <Link
               href="/signIn"
             >
             <button
               type="button"
-              className={styles['sign-nav-btn']}
+              className={styles['nav-secondary-btn']}
             >
               <span>Sign in</span>
+            </button>
+            </Link>
+            <Link
+              href="/signup"
+            >
+            <button
+              type="button"
+              className={styles['nav-btn']}
+            >
+              <span>Sign up</span>
             </button>
             </Link>
           </div>
