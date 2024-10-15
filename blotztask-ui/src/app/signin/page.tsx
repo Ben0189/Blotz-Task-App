@@ -1,15 +1,13 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styles from './LoginPage.module.css'; // Import CSS styles
 import { Button } from '@/components/ui/button';
 
 const LoginPage = () => {
   const router = useRouter(); // Get the router instance
-  const searchParams = useSearchParams(); // Get search parameters
-  const callbackUrl = searchParams.get('callbackUrl') || '/task-dayview'; // Get callbackUrl; use default if not provided
 
   const [email, setEmail] = useState(''); // State for email input
   const [password, setPassword] = useState(''); // State for password input
@@ -22,7 +20,6 @@ const LoginPage = () => {
       redirect: false,
       email,
       password,
-      callbackUrl, // Pass the callback URL
     });
 
     if (result.error) {
@@ -30,7 +27,7 @@ const LoginPage = () => {
     }
      else {
       //TODO : I believe there is a better way to do the callback and redirect url after login
-      router.push(callbackUrl);
+      router.push('/task-dayview');
     }
   };
 
