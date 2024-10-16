@@ -10,7 +10,9 @@ public interface ITaskService
 {
     public Task<List<TaskItemDTO>> GetTodoItems();
     public Task<TaskItemDTO> GetTaskByID(int Id);
-    public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
+    public Task<bool> DeleteTaskByID(int Id);
+
+ public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
     public Task<string> AddTask(AddTaskItemDTO addtaskItem);
 }
 
@@ -52,6 +54,18 @@ public class TaskService : ITaskService
     };
 
         return await Task.FromResult(taskItems[Id]);
+    }
+    public async Task<bool> DeleteTaskByID(int Id)
+    {
+        var taskItem = await _dbContext.TaskItems.FindAsync(Id);
+        if (taskItem == null)
+        {
+            return false; 
+        }
+
+        _dbContext.TaskItems.Remove(taskItem);
+        await _dbContext.SaveChangesAsync();
+        return true; 
     }
 
     public async Task<string> AddTask(AddTaskItemDTO addtaskItem)

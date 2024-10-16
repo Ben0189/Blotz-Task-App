@@ -25,7 +25,22 @@ namespace BlotzTask.Controllers
         {
             return Ok(await _taskService.GetTaskByID(id));
         }
-        
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTaskByID(int id)
+        {
+            var result = await _taskService.DeleteTaskByID(id);
+
+            if (result) 
+            {
+                return Ok($"Task with ID {id} has been successfully deleted");
+            }
+            else
+            {
+                return NotFound($"Task with ID {id} not found"); 
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddTask([FromBody] AddTaskItemDTO addtaskItem)
         {
