@@ -26,7 +26,7 @@ export default function Page() {
 
     return (
         <div className="flex flex-col items-end mt-10 mr-10">
-          <AddTask />
+          <AddTask update={setUpdate}/>
     
           <TaskTable tasks={taskList} />
     
