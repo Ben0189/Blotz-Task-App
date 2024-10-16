@@ -9,7 +9,7 @@ import { TaskTable } from './components/task-table';
 import { TaskItemDTO } from '@/model/task-Item-dto';
 import { fetchAllTaskItems } from '@/services/taskService';
 
-export default function page() {
+export default function Page() {
     const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
     const [update, setUpdate] = useState(false);
     const loadTasks = async () => {
