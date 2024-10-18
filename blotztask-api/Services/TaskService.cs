@@ -17,10 +17,12 @@ public interface ITaskService
 public class TaskService : ITaskService
 {
     private readonly BlotzTaskDbContext _dbContext;
+    private readonly ILabelService _labelService;
 
-    public TaskService(BlotzTaskDbContext dbContext)
+    public TaskService(BlotzTaskDbContext dbContext, ILabelService labelService)
     {
         _dbContext = dbContext;
+        _labelService = labelService;
     }
 
     public async Task<List<TaskItemDTO>> GetTodoItems()
@@ -43,12 +45,30 @@ public class TaskService : ITaskService
     }
     public async Task<TaskItemDTO> GetTaskByID(int Id)
     {
-        
+        var labelUrgent = await _dbContext.Labels.FirstOrDefaultAsync(l => l.Name == "Urgent");
+        var labelCompleted = await _dbContext.Labels.FirstOrDefaultAsync(l => l.Name == "Completed");
+
+        var urgentLabelDTO = labelUrgent != null ? new LabelDTO
+        {
+            LabelId = labelUrgent.LabelId,
+            Name = labelUrgent.Name,
+            Color = labelUrgent.Color,
+            Description = labelUrgent.Description
+        } : null;
+
+        var completedLabelDTO = labelCompleted != null ? new LabelDTO
+        {
+            LabelId = labelCompleted.LabelId,
+            Name = labelCompleted.Name,
+            Color = labelCompleted.Color,
+            Description = labelCompleted.Description
+        } : null;
+
         var taskItems = new List<TaskItemDTO>
     {
-        new TaskItemDTO { Id = 0, Title = "Task 0", Description = "Description for Task 1", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
-        new TaskItemDTO { Id = 1, Title = "Task 1", Description = "Description for Task 2", IsDone = true, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
-        new TaskItemDTO { Id = 2, Title = "Task 2", Description = "Description for Task 3", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
+        new TaskItemDTO { Id = 0, Title = "Task 0", Description = "Description for Task 1", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, Label = urgentLabelDTO },
+        new TaskItemDTO { Id = 1, Title = "Task 1", Description = "Description for Task 2", IsDone = true, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, Label = completedLabelDTO },
+        new TaskItemDTO { Id = 2, Title = "Task 2", Description = "Description for Task 3", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, Label = null }
     };
 
         return await Task.FromResult(taskItems[Id]);
@@ -56,12 +76,23 @@ public class TaskService : ITaskService
 
     public async Task<string> AddTask(AddTaskItemDTO addtaskItem)
     {
+        Label? label = null;
+        if (addtaskItem.LabelId.HasValue)
+        {
+            label = await _labelService.GetLabelById(addtaskItem.LabelId.Value);
+            if (label == null)
+            {
+                throw new NotFoundException($"Label with ID {addtaskItem.LabelId} not found.");
+            }
+        }
         var addtask = new TaskItem
         {
             Title = addtaskItem.Title,
             Description = addtaskItem.Description,
             CreatedAt = DateTime.UtcNow, 
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            LabelId = label?.LabelId ?? 0,
+            Label = label
         };
 
         _dbContext.TaskItems.Add(addtask);

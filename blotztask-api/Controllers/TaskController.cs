@@ -9,6 +9,7 @@ namespace BlotzTask.Controllers
     public class TaskController : ControllerBase
     {
         private readonly ITaskService _taskService;
+        private readonly ILabelService _labelService;
         public TaskController(ITaskService taskService)
         {
             _taskService = taskService;
@@ -29,6 +30,14 @@ namespace BlotzTask.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTask([FromBody] AddTaskItemDTO addtaskItem)
         {
+            if (addtaskItem.LabelId.HasValue)
+            {
+                var label = await _labelService.GetLabelById(addtaskItem.LabelId.Value);
+                if (label == null)
+                {
+                    return NotFound($"Label with ID {addtaskItem.LabelId} not found.");
+                }
+            }
             return Ok(await _taskService.AddTask(addtaskItem));
         }
 
