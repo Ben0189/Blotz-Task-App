@@ -11,7 +11,11 @@ import { fetchAllTaskItems } from '@/services/taskService';
 
 export default function Page() {
     const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
-    const [update, setUpdate] = useState(false);
+
+    //Not implemented yet
+    async function handleAddTask() {
+    }
+
     const loadTasks = async () => {
         const data = await fetchAllTaskItems();
         setTaskList(data);
@@ -22,11 +26,11 @@ export default function Page() {
      */
     useEffect(() => {
         loadTasks();
-    }, [update]); // Runs on the first render using [] parameter and rerun when state changes, e.g add task
+    }, []); // Runs on the first render using [] parameter and rerun when state changes, e.g add task
 
     return (
         <div className="flex flex-col items-end mt-10 mr-10">
-          <AddTask update={setUpdate}/>
+          <AddTask handleAddTask={handleAddTask}/>
     
           <TaskTable tasks={taskList} />
     
