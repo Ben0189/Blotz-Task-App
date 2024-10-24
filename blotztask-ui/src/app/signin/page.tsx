@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styles from './LoginPage.module.css'; // Import CSS styles
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 
 const LoginPage = () => {
   const router = useRouter(); // Get the router instance
@@ -12,22 +13,33 @@ const LoginPage = () => {
   const [email, setEmail] = useState(''); // State for email input
   const [password, setPassword] = useState(''); // State for password input
   const [error, setError] = useState(null); // State for error message
+  const [loading, setLoading] = useState(false); // State for loading spinner
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
 
-    const result = await signIn('credentials', {
-      redirect: false,
-      email,
-      password,
-    });
+    setLoading(true); // Start loading
+    setError(null); // Clear any previous errors
 
-    if (result.error) {
-      setError(result.error); // Set error if login fails
-    }
-     else {
-      //TODO : I believe there is a better way to do the callback and redirect url after login
-      router.push('/task-dayview');
+try {
+      const result = await signIn('credentials', {
+        redirect: false, // Prevent immediate redirect
+        email,
+        password,
+      });
+
+      if (result?.error) {
+
+        setError('Invalid credentials. Please try again.');
+      } else {
+        router.push('/task-dayview'); 
+      }
+    } catch (error) {
+
+      console.error('Login failed:', error);
+      setError('An unexpected error occurred. Please try again later.');
+    } finally {
+      setLoading(false); // Stop loading after processing
     }
   };
 
@@ -35,7 +47,7 @@ const LoginPage = () => {
     <div className={styles.container}>
       <div className={styles.form_container}>
         <h1 className={styles.title}>User Login</h1>{' '}
-        {error && <p className={styles.error}>{error}</p>}{' '}
+        {error && <p className={styles.error}>{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className={styles.input_group}>
             <label className={styles.label}>Email:</label>
@@ -60,9 +72,10 @@ const LoginPage = () => {
             />
           </div>
           {/* Display error message if any */}
-            <Button className='w-full'>
-              Sign In
-            </Button>
+          {/* Loading Spinner or Button */}
+          <Button className="w-full" type="submit" disabled={loading}>
+            {loading ? <Spinner /> : 'Sign In'}
+          </Button>
         </form>
         <p className={styles.registerPrompt}>
           Don’t have an account?
