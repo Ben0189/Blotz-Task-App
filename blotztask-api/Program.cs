@@ -126,7 +126,6 @@ app.UseAuthorization();
 app.UseCors("AllowSpecificOrigin");
 
 app.MapSwagger().RequireAuthorization();
-app.MapControllers()
-.RequireAuthorization();
+app.MapControllers().RequireAuthorization();
 
 app.Run();
