@@ -7,7 +7,6 @@ export async function middleware(req : NextRequest) {
   // auth middleware
   const response = await withAuth(req);
   if (response) {
-    console.log('👀',response)
     return response;
   }
 
