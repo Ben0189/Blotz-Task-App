@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 
-export function AddTask() {
+export function AddTask({handleAddTask}) {
   return (
-    <Button>
+    <Button onClick={handleAddTask}>
       Add Task
     </Button>
   );
