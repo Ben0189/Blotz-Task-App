@@ -12,7 +12,7 @@ public interface ITaskService
     public Task<TaskItemDTO> GetTaskByID(int Id);
     public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
     public Task<string> AddTask(AddTaskItemDTO addtaskItem);
-    public Task<int> ToggleCompletion(int id);
+    public Task<int> CompleteTask(int id);
 }
 
 public class TaskService : ITaskService
@@ -91,21 +91,21 @@ public class TaskService : ITaskService
         return id;
     }
 
-    public async Task<int> ToggleCompletion(int id)
+    public async Task<int> CompleteTask(int taskId)
     {
-        var task = await _dbContext.TaskItems.FindAsync(id);
+        var task = await _dbContext.TaskItems.FindAsync(taskId);
 
         if (task == null)
         {
-            throw new NotFoundException($"Task with ID {id} not found.");
+            throw new NotFoundException($"Task with ID {taskId} not found.");
         }
 
-        task.IsDone = !task.IsDone;
+        task.IsDone = true;
 
         _dbContext.TaskItems.Update(task);
         await _dbContext.SaveChangesAsync();
 
-        return id;
+        return taskId;
     }
 }
 

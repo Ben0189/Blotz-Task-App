@@ -42,12 +42,12 @@ namespace BlotzTask.Controllers
             return Ok($"Task {result} is successfully updated");
         }
 
-        [HttpPut("ToggleCompletion{id}")]
-        public async Task<IActionResult> ToggleCompletion(int id)
+        [HttpPut("CompleteTask{id}")]
+        public async Task<IActionResult> CompleteTask(int taskId)
         {
-            var result = await _taskService.ToggleCompletion(id);
+            var result = await _taskService.CompleteTask(taskId);
 
-            return Ok($"Task {result} is done/undone");
+            return Ok($"Task {result} is done");
         }
     }
 }
