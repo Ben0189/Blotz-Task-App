@@ -45,7 +45,7 @@ try {
   };
 
   return (
-    <div className="h-full justify-center flex flex-col gap-1 items-center">
+    <div className="h-full justify-center flex flex-col items-center">
       <div className="flex flex-col gap-4 bg-white p-5 rounded-lg shadow-md w-4/12">
         <h1 className={styles.title}>User Login</h1>{' '}
         {error &&
