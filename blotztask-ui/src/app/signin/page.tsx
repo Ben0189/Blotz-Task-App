@@ -6,6 +6,7 @@ import { useState } from 'react';
 import styles from './LoginPage.module.css'; // Import CSS styles
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { AlertDestructive } from '@/components/ui/alert-destructive';
 
 const LoginPage = () => {
   const router = useRouter(); // Get the router instance
@@ -47,7 +48,12 @@ try {
     <div className={styles.container}>
       <div className={styles.form_container}>
         <h1 className={styles.title}>User Login</h1>{' '}
-        {error && <p className={styles.error}>{error}</p>}
+        {error &&
+          <AlertDestructive 
+            title="Error" 
+            description="Your session has expired. Please log in again." 
+          />
+        }
         <form onSubmit={handleSubmit}>
           <div className={styles.input_group}>
             <label className={styles.label}>Email:</label>
