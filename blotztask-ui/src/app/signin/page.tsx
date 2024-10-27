@@ -51,7 +51,7 @@ try {
         {error &&
           <AlertDestructive 
             title="Error" 
-            description="Your session has expired. Please log in again." 
+            description={error}
           />
         }
         <form onSubmit={handleSubmit}>
