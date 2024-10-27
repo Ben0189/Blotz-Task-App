@@ -12,6 +12,7 @@ public interface ITaskService
     public Task<TaskItemDTO> GetTaskByID(int Id);
     public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
     public Task<string> AddTask(AddTaskItemDTO addtaskItem);
+    public Task<int> CompleteTask(int id);
 }
 
 public class TaskService : ITaskService
@@ -88,6 +89,23 @@ public class TaskService : ITaskService
         await _dbContext.SaveChangesAsync();
 
         return id;
+    }
+
+    public async Task<int> CompleteTask(int taskId)
+    {
+        var task = await _dbContext.TaskItems.FindAsync(taskId);
+
+        if (task == null)
+        {
+            throw new NotFoundException($"Task with ID {taskId} not found.");
+        }
+
+        task.IsDone = true;
+
+        _dbContext.TaskItems.Update(task);
+        await _dbContext.SaveChangesAsync();
+
+        return taskId;
     }
 }
 
