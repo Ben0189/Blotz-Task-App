@@ -19,10 +19,19 @@ const SignUpPage = () => {
     setError(null); // Clear any previous errors
 
     try {
-      const result = await fetch('')
-      console.log("User registered", result)
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/register`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('Register failed:', error);
       setError('An unexpected error occurred. Please try again later.');
     } finally {
       setLoading(false); // Stop loading after processing

@@ -30,7 +30,6 @@ const LoginPage = () => {
       });
 
       if (result?.error) {
-
         setError('Invalid credentials. Please try again.');
       } else {
         router.push('/task-dayview'); 
