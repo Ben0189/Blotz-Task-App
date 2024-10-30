@@ -6,6 +6,7 @@ import { useState } from 'react';
 import styles from './LoginPage.module.css'; // Import CSS styles
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { AlertDestructive } from '@/components/ui/alert-destructive';
 
 const LoginPage = () => {
   const router = useRouter(); // Get the router instance
@@ -44,10 +45,15 @@ try {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.form_container}>
+    <div className="h-full justify-center flex flex-col items-center">
+      <div className="flex flex-col gap-4 bg-white p-5 rounded-lg shadow-md w-4/12">
         <h1 className={styles.title}>User Login</h1>{' '}
-        {error && <p className={styles.error}>{error}</p>}
+        {error &&
+          <AlertDestructive 
+            title="Error" 
+            description={error}
+          />
+        }
         <form onSubmit={handleSubmit}>
           <div className={styles.input_group}>
             <label className={styles.label}>Email:</label>
