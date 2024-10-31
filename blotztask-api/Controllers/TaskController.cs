@@ -28,7 +28,7 @@ namespace BlotzTask.Controllers
             return Ok(await _taskService.GetTaskByID(id));
         }
 
-        [HttpGet("Date-{date}")]
+        [HttpGet("due-date/{date}")]
         public async Task<IActionResult> GetTaskByDate(DateOnly date)
         {
             return Ok(await _taskService.GetTaskByDate(date));

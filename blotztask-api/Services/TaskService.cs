@@ -138,7 +138,7 @@ public class TaskService : ITaskService
         }
         catch (Exception ex)
         {
-            throw new Exception("Exception placeholder text");
+            throw new Exception($"Unhandled exception: {ex.Message}");
         }
     }
 }
