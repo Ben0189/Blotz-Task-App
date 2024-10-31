@@ -3,12 +3,6 @@ using BlotzTask.Models;
 using Microsoft.EntityFrameworkCore;
 using BlotzTask.Data.Entities;
 using BlotzTask.Models.CustomError;
-<<<<<<< Updated upstream
-=======
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-using System.Runtime.CompilerServices;
->>>>>>> Stashed changes
 
 namespace BlotzTask.Services;
 
