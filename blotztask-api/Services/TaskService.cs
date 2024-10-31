@@ -121,6 +121,7 @@ public class TaskService : ITaskService
                     Id = task.Id,
                     Title = task.Title,
                     Description = task.Description,
+                    DueDate = task.DueDate,
                     IsDone = task.IsDone
                 })
                 .ToListAsync();
