@@ -27,7 +27,13 @@ namespace BlotzTask.Controllers
         {
             return Ok(await _taskService.GetTaskByID(id));
         }
-        
+
+        [HttpGet("Date-{date}")]
+        public async Task<IActionResult> GetTaskByDate(DateOnly date)
+        {
+            return Ok(await _taskService.GetTaskByDate(date));
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddTask([FromBody] AddTaskItemDTO addtaskItem)
         {
