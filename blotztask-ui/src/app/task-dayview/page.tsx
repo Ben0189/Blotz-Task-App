@@ -9,6 +9,8 @@ import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { Button } from '@/components/ui/button';
 import { TaskForm } from './components/form';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
+import { format } from 'date-fns'
+import { FaPlus } from "react-icons/fa";
 
 // Define mock data
 const mockTasks: taskDto[] = [
@@ -35,6 +37,7 @@ const validatedTasks = z.array(taskDTOSchema).parse(mockTasks);
 // Simulate a database read for tasks.
 export default function Dayview() {
   const [tasks, setTasks] = useState<TaskDTO[]>(validatedTasks);
+  const [todayDate, setTodayDate] = useState('');
 
   //add a state for add task button deciding to hide or show the form
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -54,6 +57,21 @@ export default function Dayview() {
     setIsFormVisible(!isFormVisible);
   };
 
+  // Define IconButton as an inner component
+  const IconButton = () => (
+    <div className="absolute top-50 right-40">
+      <Button className="round-square bg-black text-white">
+        <FaPlus className="text-4xl" aria-hidden="true" />
+      </Button>
+    </div>
+  );
+  
+  //Set today's date 
+  useEffect(() => {
+    const date = new Date();
+    setTodayDate(format(date, 'MMM dd,yyyy'))
+  }, []);
+
   useEffect(() => {
     // Simulate fetching tasks
     setTasks(validatedTasks);
@@ -61,14 +79,21 @@ export default function Dayview() {
 
   return (
     <>
-      <div className='flex flex-col gap-5'>
-        <div className='flex flex-col gap-5'>
+     <IconButton/>
+      <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2'>
           <H1 className="heading-primary">
-            Day
-            <span className="heading-secondary">View</span>
-          </H1>        
+            Good morning,
+          </H1>
+          <H1 className="text-5xl font bold text-black">
+            Cornelia
+          </H1>
+          <div className='flex flex-col gap-2'>
+            <div className="text-4xl font-bold text-center mt-[-5rem]">{todayDate}
+            </div>
+          </div>
           <H5>
-              List of today&apos;s task
+            List of today&apos;s task
           </H5>
         </div>
 
