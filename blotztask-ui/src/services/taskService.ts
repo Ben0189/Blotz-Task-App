@@ -24,7 +24,6 @@ export const fetchAllTaskItems = async (): Promise<TaskItemDTO[]> => {
 export const fetchTaskItemsDueToday = async (): Promise<TaskDTO[]> => {
     //Converting today's date to ISO String format
     const date = new Date().toISOString().split('T')[0];
-    // date = date.toISOString().split('T')[0];
 
     const response = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_API_BASE_URL_WITH_API}/Task/due-date/${date}`,
