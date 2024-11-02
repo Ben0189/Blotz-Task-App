@@ -1,3 +1,4 @@
+import { TaskDTO } from "@/app/task-dayview/schema/schema";
 import { TaskItemDTO } from "@/model/task-Item-dto";
 import { fetchWithAuth } from "@/utils/fetch-with-auth";
 
