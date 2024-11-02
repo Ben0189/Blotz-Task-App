@@ -9,6 +9,7 @@ import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { Button } from '@/components/ui/button';
 import { TaskForm } from './components/form';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
+import { fetchTaskItemsDueToday } from '@/services/taskService';
 
 // Define mock data
 const mockTasks: taskDto[] = [
@@ -53,6 +54,12 @@ export default function Dayview() {
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
   };
+
+  const loadTasks = async () => {
+    const data = await fetchTaskItemsDueToday();
+    const validatedTasks = z.array(taskDTOSchema).parse(data);
+    setTasks(validatedTasks);
+}
 
   useEffect(() => {
     // Simulate fetching tasks
