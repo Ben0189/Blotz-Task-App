@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
+// import { Checkbox } from '@/components/ui/checkbox';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { taskDto } from './models/taskDto';
@@ -75,7 +75,7 @@ export default function Dayview() {
         <div className="grid gap-6 w-3/4">
 
           {tasks.map((task) => (
-            <div className='w-full'>
+            <div key={task.id} className='w-full'>
                 <div className='flex flex-row'>
                     <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label mr-2 w-[15rem] p-4`}>
                         <p>{task.title}</p>
