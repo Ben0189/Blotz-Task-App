@@ -76,12 +76,11 @@ export default function Dayview() {
 
           {tasks.map((task) => (
             <div className='w-full'>
-                <div className='flex flex-row grow'>
-                    <div key={task.id} className='flex justify-center items-center rounded-xl bg-work-label mr-2 w-[20rem] p-4'>
+                <div className='flex flex-row'>
+                    <div key={task.id} className={`flex justify-center items-center rounded-xl bg-${"work"}-label mr-2 w-[15rem] p-4`}>
                         <p>{task.title}</p>
                     </div>
-
-                    <div key={task.id} className='flex justify-center items-center rounded-xl bg-work-label grow'>
+                    <div key={task.id} className={`flex justify-center items-center rounded-xl bg-${"work"}-label grow`}>
                         <p>{task.description}</p>
                     </div>
                 </div>
