@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
@@ -39,16 +39,16 @@ export default function Dayview() {
   //add a state for add task button deciding to hide or show the form
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const handleCheckboxChange = (taskId) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((t) => {
-        if (t.id === taskId) {
-          return { ...t, isDone: !t.isDone };
-        }
-        return t;
-      })
-    );
-  };
+//   const handleCheckboxChange = (taskId) => {
+//     setTasks((prevTasks) =>
+//       prevTasks.map((t) => {
+//         if (t.id === taskId) {
+//           return { ...t, isDone: !t.isDone };
+//         }
+//         return t;
+//       })
+//     );
+//   };
 
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
@@ -77,10 +77,10 @@ export default function Dayview() {
           {tasks.map((task) => (
             <div className='w-full'>
                 <div className='flex flex-row'>
-                    <div key={task.id} className={`flex justify-center items-center rounded-xl bg-${"work"}-label mr-2 w-[15rem] p-4`}>
+                    <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label mr-2 w-[15rem] p-4`}>
                         <p>{task.title}</p>
                     </div>
-                    <div key={task.id} className={`flex justify-center items-center rounded-xl bg-${"work"}-label grow`}>
+                    <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label grow`}>
                         <p>{task.description}</p>
                     </div>
                 </div>
