@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 // import { Checkbox } from '@/components/ui/checkbox';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
-import { taskDto } from './models/taskDto';
 import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { Button } from '@/components/ui/button';
 import { TaskForm } from './components/form';
