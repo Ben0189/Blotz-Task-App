@@ -13,12 +13,13 @@ const SignUpPage = () => {
   const [password, setPassword] = useState(''); // State for password input
   const [error, setError] = useState(null); // State for error message
   const [loading, setLoading] = useState(false); // State for loading spinner
-
-  async function handleRegister(email: string, password: string) {
+  
+  const handleRegister = async () => {
     setLoading(true);
+    setError(null);
 
     try {
-      const result = await fetchWithErrorHandling( // Or use the name you've chosen for fetchWithErrorHandling
+      await fetchWithErrorHandling(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/register`,
         {
           method: 'POST',
@@ -26,33 +27,30 @@ const SignUpPage = () => {
           body: JSON.stringify({ email, password }),
         }
       );
-
-      console.log("User registered successfully:", result);
-
+      handleSuccess();
     } catch (error) {
-      if (error instanceof BadRequestError) {
-        const errorMessages = error.details
-          ? Object.values(error.details).flat().join(' ')
-          : error.message;
-        setError(errorMessages);
-        return;
-      }
-      throw error;
+      handleError(error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault(); // Prevent default form submission
+  const handleError = (error: unknown) => {
+    if (error instanceof BadRequestError) {
+      setError(error.details ? Object.values(error.details).flat().join(' ') : error.message);
+    } else {
+      console.error('Unexpected error during registration:', error);
+      setError("An unexpected error occurred. Please try again later.");
+    }
+  };
 
-    setLoading(true); // Start loading
-    setError(null); // Clear any previous errors
+  const handleSuccess = () => {
+    console.log("Registration successful:");
+  };
 
-    const email = "user@example.com"; // Replace with input values
-    const password = "password123"; // Replace with input values
-
-    await handleRegister(email, password);
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleRegister();
   };
   
   return (
