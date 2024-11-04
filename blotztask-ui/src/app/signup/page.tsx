@@ -7,8 +7,8 @@ import { Spinner } from '@/components/ui/spinner';
 import { AlertDestructive } from '@/components/ui/alert-destructive';
 import { fetchWithErrorHandling } from '@/services/http-client';
 import { BadRequestError } from '@/model/error/bad-request-error';
-import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const SignUpPage = () => {
   const router = useRouter(); // Initialize router
@@ -16,7 +16,6 @@ const SignUpPage = () => {
   const [password, setPassword] = useState(''); // State for password input
   const [error, setError] = useState(null); // State for error message
   const [loading, setLoading] = useState(false); // State for loading spinner
-  const { toast } = useToast()
 
   const handleRegister = async () => {
     setLoading(true);
@@ -50,10 +49,10 @@ const SignUpPage = () => {
 
   const handleSuccess = () => {
     router.push('/signin');
-    toast({
-      title: "Registration Successful!",
-      description: "You can now log in with your new account.",
-      duration: 3000,   
+    toast("Account registered", {
+      description: "You can now login with the registered account",
+      duration: 3000,
+      position: 'top-right',
     });
   };
 
