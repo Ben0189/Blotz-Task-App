@@ -52,7 +52,7 @@ const SignUpPage = () => {
     toast("Account registered", {
       description: "You can now login with the registered account",
       duration: 3000,
-      position: 'top-right',
+      position: 'top-center',
     });
   };
 
