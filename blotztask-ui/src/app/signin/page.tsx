@@ -3,7 +3,7 @@
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import styles from './LoginPage.module.css'; // Import CSS styles
+import styles from './AuthForm.module.css';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { AlertDestructive } from '@/components/ui/alert-destructive';
@@ -22,7 +22,7 @@ const LoginPage = () => {
     setLoading(true); // Start loading
     setError(null); // Clear any previous errors
 
-try {
+    try {
       const result = await signIn('credentials', {
         redirect: false, // Prevent immediate redirect
         email,
@@ -30,13 +30,11 @@ try {
       });
 
       if (result?.error) {
-
         setError('Invalid credentials. Please try again.');
       } else {
         router.push('/task-dayview'); 
       }
     } catch (error) {
-
       console.error('Login failed:', error);
       setError('An unexpected error occurred. Please try again later.');
     } finally {
@@ -47,7 +45,7 @@ try {
   return (
     <div className="h-full justify-center flex flex-col items-center">
       <div className="flex flex-col gap-4 bg-white p-5 rounded-lg shadow-md w-4/12">
-        <h1 className={styles.title}>User Login</h1>{' '}
+        <h1 className={styles.title}>User Login</h1>
         {error &&
           <AlertDestructive 
             title="Error" 
@@ -77,8 +75,6 @@ try {
               placeholder="Enter your password"
             />
           </div>
-          {/* Display error message if any */}
-          {/* Loading Spinner or Button */}
           <Button className="w-full" type="submit" disabled={loading}>
             {loading ? <Spinner /> : 'Sign In'}
           </Button>
