@@ -3,6 +3,7 @@ using BlotzTask.Models;
 using Microsoft.EntityFrameworkCore;
 using BlotzTask.Data.Entities;
 using BlotzTask.Models.CustomError;
+using System.Threading.Tasks;
 
 namespace BlotzTask.Services;
 
@@ -13,6 +14,7 @@ public interface ITaskService
     public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
     public Task<string> AddTask(AddTaskItemDTO addtaskItem);
     public Task<int> CompleteTask(int id);
+    public Task<List<TaskItemDTO>> GetTaskByDate(DateOnly date);
 }
 
 public class TaskService : ITaskService
@@ -44,15 +46,25 @@ public class TaskService : ITaskService
     }
     public async Task<TaskItemDTO> GetTaskByID(int Id)
     {
-        
-        var taskItems = new List<TaskItemDTO>
-    {
-        new TaskItemDTO { Id = 0, Title = "Task 0", Description = "Description for Task 1", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
-        new TaskItemDTO { Id = 1, Title = "Task 1", Description = "Description for Task 2", IsDone = true, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
-        new TaskItemDTO { Id = 2, Title = "Task 2", Description = "Description for Task 3", IsDone = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
-    };
+        var task = await _dbContext.TaskItems.FindAsync(Id);
 
-        return await Task.FromResult(taskItems[Id]);
+        if (task == null)
+        {
+            throw new NotFoundException($"Task with ID {Id} not found.");
+        }
+
+        var result = new TaskItemDTO()
+        {
+            Id = task.Id,
+            Title = task.Title,
+            Description = task.Description,
+            DueDate = task.DueDate,
+            IsDone = task.IsDone,
+            CreatedAt = task.CreatedAt,
+            UpdatedAt = task.UpdatedAt
+        };
+
+        return result;
     }
 
     public async Task<string> AddTask(AddTaskItemDTO addtaskItem)
@@ -97,7 +109,7 @@ public class TaskService : ITaskService
 
         if (task == null)
         {
-            throw new NotFoundException($"Task with ID {taskId} not found.");
+            throw new NotFoundException($"Task with ID {taskId} was not found.");
         }
 
         task.IsDone = true;
@@ -106,6 +118,28 @@ public class TaskService : ITaskService
         await _dbContext.SaveChangesAsync();
 
         return taskId;
+    }
+
+    public async Task<List<TaskItemDTO>> GetTaskByDate(DateOnly date)
+    {
+        try
+        {
+            return await _dbContext.TaskItems
+                .Where(task => task.DueDate == date)
+                .Select(task => new TaskItemDTO
+                {
+                    Id = task.Id,
+                    Title = task.Title,
+                    Description = task.Description,
+                    DueDate = task.DueDate,
+                    IsDone = task.IsDone
+                })
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Unhandled exception: {ex.Message}");
+        }
     }
 }
 
