@@ -8,17 +8,16 @@ export async function fetchWithErrorHandling<T>(
     try {
       const response = await fetch(url, options);
 
-      // If the response is OK, return the parsed JSON
       if (response.ok) {
-          return response.headers.get("content-length") !== "0" ? await response.json() : null;
+        // check if the content is empty, if not the .json() will return error
+        return response.headers.get("content-length") !== "0" ? await response.json() : null;
       }
 
       // Check for JSON content type
       const contentType = response.headers.get('Content-Type');
-      
+
       if (contentType && contentType.includes('application/problem+json')) {
           const json = await response.json();
-          // Handle specific status codes
           if (response.status === 400) {
               throw new BadRequestError(json.errors.title || "Bad Request", json.errors || null);
           }
