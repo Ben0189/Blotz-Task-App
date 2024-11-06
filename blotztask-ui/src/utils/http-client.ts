@@ -18,14 +18,16 @@ export async function fetchWithErrorHandling<T>(
 
       if (contentType && contentType.includes('application/problem+json')) {
           const json = await response.json();
+
           if (response.status === 400) {
-              throw new BadRequestError(json.errors.title || "Bad Request", json.errors || null);
+              throw new BadRequestError(json.errors.title || "Bad Request", json || null);
           }
           if (response.status >= 500) {
-              throw new ServerError(json.errors.title || "Server Error", json.errors || null);
+              throw new ServerError(json.errors.title || "Server Error", json || null);
           }
+          console.error("Uncaught exception", json)
           // For other errors, throw a generic error with the JSON message
-          throw new Error(json.errors.title || 'Uncaught exception');
+          throw new Error(json || 'Uncaught exception');
       }
 
       throw new Error('Uncaught Error with no Json result');
