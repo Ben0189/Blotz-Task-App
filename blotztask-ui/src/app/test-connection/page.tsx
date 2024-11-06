@@ -17,6 +17,8 @@ export default function Home() {
   const loadTasks = async () => {
     setLoading(true);
     setError(null);
+    setTasks([]);
+
     try {
       const data = await fetchAllTaskItems();
       setTasks(data);

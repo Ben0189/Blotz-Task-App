@@ -5,7 +5,7 @@ import styles from '../signin/AuthForm.module.css'; // Import CSS styles
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { AlertDestructive } from '@/components/ui/alert-destructive';
-import { fetchWithErrorHandling } from '@/services/http-client';
+import { fetchWithErrorHandling } from '@/utils/http-client';
 import { BadRequestError } from '@/model/error/bad-request-error';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';

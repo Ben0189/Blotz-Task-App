@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { H1, H3 } from '@/components/ui/heading-with-anchor';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
@@ -27,11 +28,11 @@ export default function Home() {
 
         <div className= "flex">
           <div className= "mr-0" >
-            <img
-            src="/assets/images/comingsoon.webp" 
-            alt="An image of a coming soon page"
-            className="w-160 h-auto object-cover"
-            />
+            <Image
+              src="/assets/images/comingsoon.webp" 
+              alt="An image of a coming soon page"
+              className="w-160 h-auto object-cover"
+              />
           </div>
         </div>
     </main>
