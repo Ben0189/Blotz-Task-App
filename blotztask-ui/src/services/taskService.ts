@@ -20,7 +20,7 @@ export const fetchTaskItemsDueToday = async (): Promise<TaskDTO[]> => {
     //Converting today's date to ISO String format
     const date = new Date().toISOString().split('T')[0];
 
-    const response = await fetchWithAuth(
+    const result = await fetchWithAuth<TaskItemDTO[]>(
       `${process.env.NEXT_PUBLIC_API_BASE_URL_WITH_API}/Task/due-date/${date}`,
       {
         method: 'GET',
@@ -30,10 +30,5 @@ export const fetchTaskItemsDueToday = async (): Promise<TaskDTO[]> => {
       }
     );
   
-    if (!response.ok) {
-      throw new Error('Error in fetching Task Item from backend');
-    }
-  
-    const data: TaskDTO[] = await response.json();
-    return data;
+    return result;
   };
