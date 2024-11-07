@@ -1,4 +1,3 @@
-'use client';
 import { H1, H3 } from '@/components/ui/heading-with-anchor';
 
 export default function Home() {

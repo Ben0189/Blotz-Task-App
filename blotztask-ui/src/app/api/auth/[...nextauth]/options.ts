@@ -92,13 +92,10 @@ export const authOptions: NextAuthOptions = {
 
       return true;
     },
-    async jwt({ token, session }) {
-      console.log('jwt callback', token, session);
+    async jwt({ token }) {
       return token;
     },
-    async session({ session, token, user }) {
-      console.log('session callback', session, token, user);
-
+    async session({ session }) {
       return session;
     },
   },

@@ -1,28 +1,9 @@
-/* .link-underline {
-    background-image: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff); 
-    background-size: 0 3px; 
-    background-position: 0 100%; 
-    background-repeat: no-repeat; 
-    transition: background-size 0.3s ease-in-out; 
-  }
-  
-.link-underline:hover {
-    background-size: 100% 3px;
-} */
-
 .nav-btn {
     @apply font-bold rounded-xl border border-transparent py-2 px-5 text-black transition-all text-center text-sm flex items-center justify-center;
     background: white; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     transition: all 0.3s ease;
 }
-
-/* .sign-nav-btn, .nav-btn {
-    @apply font-bold rounded-xl border border-transparent py-2 px-5 text-black transition-all text-center text-sm flex items-center justify-center;
-    background: white; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    transition: all 0.3s ease;
-} */
 
 .nav-btn:hover, .nav-secondary-btn:hover {
     border: 1px solid white; /* Set border to white on hover */
