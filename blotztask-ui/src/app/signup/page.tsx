@@ -1,95 +1,105 @@
 'use client';
 
-// import { useRouter } from 'next/navigation'; // Import useRouter for navigation
-// import { useState } from 'react';
-// import styles from './SignUpPage.module.css'
-// import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import styles from '../signin/AuthForm.module.css'; // Import CSS styles
+import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
+import { AlertDestructive } from '@/components/ui/alert-destructive';
+import { fetchWithErrorHandling } from '@/utils/http-client';
+import { BadRequestError } from '@/model/error/bad-request-error';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const SignUpPage = () => {
-  // const router = useRouter(); // Initialize router for navigation
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [confirmPassword, setConfirmPassword] = useState('');
-  // const [error, setError] = useState(null);
-  // // const [success, setSuccess] = useState(null);
+  const router = useRouter(); // Initialize router
+  const [email, setEmail] = useState(''); // State for email input
+  const [password, setPassword] = useState(''); // State for password input
+  const [error, setError] = useState(null); // State for error message
+  const [loading, setLoading] = useState(false); // State for loading spinner
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
+  const handleRegister = async () => {
+    setLoading(true);
+    setError(null);
 
-  //   if (password !== confirmPassword) {
-  //     setError('Passwords do not match');
-  //     return;
-  //   }
+    try {
+      await fetchWithErrorHandling(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/register`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+      handleSuccess();
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  //   // Call the sign-up API
-  //   const signUpResponse = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API_BASE_URL}/register`,
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ email, password }),
-  //     }  
-  //   );
+  const handleError = (error: unknown) => {
+    if (error instanceof BadRequestError) {
+      setError(error.details ? Object.values(error.details).flat().join(' ') : error.message);
+    } else {
+      console.error('Unexpected error during registration:', error);
+      setError("An unexpected error occurred. Please try again later.");
+    }
+  };
 
-  //   if (signUpResponse.ok) {
-  //     // Redirect to the login page after successful sign-up
-  //     router.push('/signin'); // Use router to navigate to the login page
-  //   } else {
-  //     const errorData = await signUpResponse.json();
-  //     setError(errorData.error || 'An error occurred during sign-up.');
-  //   }
-  // };
+  const handleSuccess = () => {
+    router.push('/signin');
+    toast("Account registered", {
+      description: "You can now login with the registered account",
+      duration: 3000,
+      position: 'top-center',
+    });
+  };
 
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleRegister();
+  };
+  
   return (
-    <> 
-      <p>Register account is still under implementation, Please use seeded user account to login instead</p>
-    </>
-    // <div className={styles.container}>
-    //   <div className={styles.form_container}>
-    //     <h1 className={styles.title}>Sign Up</h1>
-    //     {error && <p className={styles.error}>{error}</p>}
-    //     <form onSubmit={handleSubmit}>
-    //       <div className={styles.input_group}>
-    //         <label className={styles.label}>Email:</label>
-    //         <input
-    //           type="email"
-    //           value={email}
-    //           onChange={(e) => setEmail(e.target.value)}
-    //           required
-    //           className={styles.input}
-    //           placeholder="Enter your email"
-    //         />
-    //       </div>
-    //       <div className={styles.input_group}>
-    //         <label className={styles.label}>Password:</label>
-    //         <input
-    //           type="password"
-    //           value={password}
-    //           onChange={(e) => setPassword(e.target.value)}
-    //           required
-    //           className={styles.input}
-    //           placeholder="Enter your password"
-    //         />
-    //       </div>
-    //       <div className={styles.input_group}>
-    //         <label className={styles.label}>Confirm Password:</label>
-    //         <input
-    //           type="password"
-    //           value={confirmPassword}
-    //           onChange={(e) => setConfirmPassword(e.target.value)}
-    //           required
-    //           className={styles.input}
-    //           placeholder="Confirm your password"
-    //         />
-    //       </div>
-    //       <Button className='w-full'>
-    //         Sign Up
-    //       </Button>
-    //     </form>
-    //   </div>
-    // </div>
+    <div className="h-full justify-center flex flex-col items-center">
+      <div className="flex flex-col gap-4 bg-white p-5 rounded-lg shadow-md w-4/12">
+        <h1 className={styles.title}>User Sign Up</h1>
+        {error &&
+          <AlertDestructive 
+            title="Error" 
+            description={error}
+          />
+        }
+        <form onSubmit={handleSubmit}>
+          <div className={styles.input_group}>
+            <label className={styles.label}>Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className={styles.input}
+              placeholder="Enter your email"
+            />
+          </div>
+          <div className={styles.input_group}>
+            <label className={styles.label}>Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className={styles.input}
+              placeholder="Enter your password"
+            />
+          </div>
+          <Button className="w-full" type="submit" disabled={loading}>
+            {loading ? <Spinner /> : 'Sign Up'}
+          </Button>
+        </form>
+      </div>
+    </div>
   );
 };
 
