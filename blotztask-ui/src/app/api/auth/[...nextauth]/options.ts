@@ -1,3 +1,4 @@
+import { fetchWithErrorHandling } from '@/utils/http-client';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { cookies } from 'next/headers';
@@ -38,7 +39,7 @@ export const authOptions: NextAuthOptions = {
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
           }
           //TODO :Also fix the fetch url for login in prod
-          const response = await fetch(
+          const response = await fetchWithErrorHandling<LoginApiResponse>(
             `${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`,
             {
               method: 'POST',
@@ -49,33 +50,26 @@ export const authOptions: NextAuthOptions = {
             }
           );
 
-          if (!response.ok) {
-            console.error('Failed to authenticate:', response);
-            return null;
-          }
-
-          const data: LoginApiResponse = await response.json();
-
-          cookies().set('authToken', data.accessToken, {
+          cookies().set('authToken', response.accessToken, {
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
           });
 
-          if (data.accessToken) {
+          if (response.accessToken) {
             return {
               id: email || 'placeholder-id',
               email: email,
-              accessToken: data.accessToken, // Include the access token here
-              refreshToken: data.refreshToken,
-              expiresIn: data.expiresIn,
+              accessToken: response.accessToken, // Include the access token here
+              refreshToken: response.refreshToken,
+              expiresIn: response.expiresIn,
             };
           } else {
             console.error('Access token not found in response');
             return null;
           }
         } catch (error) {
-          console.error('Unhandled error:', error);
-          return null;
+          console.error('Login Failed:', error instanceof Error ? error.message : JSON.stringify(error));
+          return null; //return null as per https://next-auth.js.org/configuration/providers/credentials
         }
       },
     }),

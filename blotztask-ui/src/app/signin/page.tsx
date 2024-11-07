@@ -1,7 +1,7 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styles from './AuthForm.module.css';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ const LoginPage = () => {
     setError,
     formState : { errors, isSubmitting }  
   } = useForm<LoginFormField>();
-  // const router = useRouter(); // Get the router instance
+  const router = useRouter(); // Get the router instance
 
   const [email, setEmail] = useState(''); // State for email input
   const [password, setPassword] = useState(''); // State for password input
@@ -57,26 +57,25 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<LoginFormField> = async (formData) => {
     try {
-      await signIn('credentials', {
+      const result = await signIn('credentials', {
         redirect: false,
         email : formData.email,
         password : formData.password,
       });
 
-      // if (result?.error) {
-      //   setError('Invalid credentials. Please try again.');
-      // } else {
-      //   router.push('/task-dayview'); 
-      // }
+      if (result?.error) {
+        setError("root",{
+          message: "Login Failed. Please check you credential"
+        });
+      } else {
+        router.push('/task-dayview'); 
+      }
     } catch (error) {
       console.error('Login failed:', error);
       setError("root",{
         message: error
       });
-    } finally {
-      // setLoading(false); // Stop loading after processing
     }
-
   }
 
   return (
@@ -92,7 +91,7 @@ const LoginPage = () => {
         {errors.root && (
           <AlertDestructive 
             title="Error" 
-            description="Some Error" //TODO : Fix this error message
+            description={errors.root.message}
           />
         )}
         <form onSubmit={handleSubmit(onSubmit)}>
