@@ -58,24 +58,25 @@ export default function Dayview() {
     // Simulate fetching tasks
     setTasks(validatedTasks);
   }, []);
-
+  // Count this month's tasks' number for user
+  const countTasks = (tasks: taskDto[]): number => {
+    return tasks.length;
+  };
   return (
     <>
-      <div className='flex flex-col gap-5'>
-        <div className='flex flex-col gap-5'>
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5">
           <H1 className="heading-primary">
             Day
             <span className="heading-secondary">View</span>
-          </H1>        
-          <H5>
-              List of today&apos;s task
-          </H5>
+          </H1>
+          <H5>List of today&apos;s task</H5>
+          <H5>You planned {countTasks(mockTasks)} tasks this month</H5>
         </div>
 
         <div className="grid gap-6 w-3/4">
-
           {tasks.map((task) => (
-            <Card key={task.id} className='bg-white'>
+            <Card key={task.id} className="bg-white">
               <CardHeader className="flex-row pb-1">
                 <Checkbox
                   className="rounded-full mt-1 mr-2"
@@ -99,7 +100,9 @@ export default function Dayview() {
           ))}
 
           <div className="w-1/2 flex gap-5 flex-col">
-            <Button className="self-start" onClick={toggleFormVisibility}>Add task</Button>
+            <Button className="self-start" onClick={toggleFormVisibility}>
+              Add task
+            </Button>
             {isFormVisible && (
               <Card>
                 <CardHeader className="pb-1"></CardHeader>
