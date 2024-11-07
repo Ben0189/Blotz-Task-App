@@ -54,12 +54,12 @@ export default function Dayview() {
           </H5>
         </div>
 
-        <div className="grid gap-6 w-3/4">
+        <div className="grid gap-6 w-full">
 
           {tasks.map((task) => (
             <div key={task.id} className='w-full'>
                 <div className='flex flex-row'>
-                    <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label mr-2 w-[15rem] p-4`}>
+                    <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label mr-2 w-1/3 p-4`}>
                         <p>{task.title}</p>
                     </div>
                     <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label grow`}>
