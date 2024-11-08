@@ -10,9 +10,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 
-type LoginFormField = z.infer<typeof schema>
+type LoginFormField = z.infer<typeof loginFormSchema>
 
-const schema = z.object({
+const loginFormSchema = z.object({
   email: z.string().email(),
   password: z.string().min(9)
 })
@@ -25,7 +25,7 @@ const LoginPage = () => {
     setError,
     formState : { errors, isSubmitting }  
   } = useForm<LoginFormField>({
-    resolver: zodResolver(schema)
+    resolver: zodResolver(loginFormSchema)
   });
 
   const router = useRouter(); // Get the router instance
