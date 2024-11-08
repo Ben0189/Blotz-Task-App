@@ -27,7 +27,6 @@ const LoginPage = () => {
   } = useForm<LoginFormField>({
     resolver: zodResolver(loginFormSchema)
   });
-
   const router = useRouter(); // Get the router instance
 
   const onSubmit: SubmitHandler<LoginFormField> = async (formData) => {
