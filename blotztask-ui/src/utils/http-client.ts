@@ -20,7 +20,7 @@ export async function fetchWithErrorHandling<T>(
           const json = await response.json();
 
           if (response.status === 400) {
-              throw new BadRequestError(json.errors.title || "Bad Request", json || null);
+              throw new BadRequestError(json.title || "Bad Request", json || null);
           }
           if (response.status >= 500) {
               throw new ServerError(json.errors.title || "Server Error", json || null);
