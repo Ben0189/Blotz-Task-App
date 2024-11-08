@@ -2,81 +2,93 @@
 
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import styles from './AuthForm.module.css';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { AlertDestructive } from '@/components/ui/alert-destructive';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+
+type LoginFormField = z.infer<typeof loginFormSchema>
+
+const loginFormSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(9)
+})
 
 const LoginPage = () => {
+
+  const { 
+    register, 
+    handleSubmit, 
+    setError,
+    formState : { errors, isSubmitting }  
+  } = useForm<LoginFormField>({
+    resolver: zodResolver(loginFormSchema)
+  });
   const router = useRouter(); // Get the router instance
 
-  const [email, setEmail] = useState(''); // State for email input
-  const [password, setPassword] = useState(''); // State for password input
-  const [error, setError] = useState(null); // State for error message
-  const [loading, setLoading] = useState(false); // State for loading spinner
-
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
-
-    setLoading(true); // Start loading
-    setError(null); // Clear any previous errors
-
+  const onSubmit: SubmitHandler<LoginFormField> = async (formData) => {
     try {
       const result = await signIn('credentials', {
-        redirect: false, // Prevent immediate redirect
-        email,
-        password,
+        redirect: false,
+        email : formData.email,
+        password : formData.password,
       });
 
       if (result?.error) {
-        setError('Invalid credentials. Please try again.');
+        setError("root",{
+          message: "Login Failed. Please check you credential"
+        });
       } else {
         router.push('/task-dayview'); 
       }
     } catch (error) {
       console.error('Login failed:', error);
-      setError('An unexpected error occurred. Please try again later.');
-    } finally {
-      setLoading(false); // Stop loading after processing
+      setError("root",{
+        message: error
+      });
     }
-  };
+  }
 
   return (
     <div className="h-full justify-center flex flex-col items-center">
       <div className="flex flex-col gap-4 bg-white p-5 rounded-lg shadow-md w-4/12">
         <h1 className={styles.title}>User Login</h1>
-        {error &&
+        {errors.root && (
           <AlertDestructive 
             title="Error" 
-            description={error}
+            description={errors.root.message}
           />
-        }
-        <form onSubmit={handleSubmit}>
+        )}
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.input_group}>
             <label className={styles.label}>Email:</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              {...register("email")}
               className={styles.input}
               placeholder="Enter your email"
             />
           </div>
+          {errors.email && (
+            <div className="text-warn mb-3">{errors.email.message}</div>
+          )}
           <div className={styles.input_group}>
             <label className={styles.label}>Password:</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className={styles.input}
-              placeholder="Enter your password"
-            />
+              <input
+                type="password"
+                {...register("password")}              
+                className={styles.input}
+                placeholder="Enter your password"
+              />
           </div>
-          <Button className="w-full" type="submit" disabled={loading}>
-            {loading ? <Spinner /> : 'Sign In'}
+          {errors.password && (
+              <div className="text-warn mb-3">{errors.password.message}</div>
+          )} 
+          <Button className="w-full" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? <Spinner /> : 'Sign In'}
           </Button>
         </form>
         <p className={styles.registerPrompt}>
@@ -84,7 +96,6 @@ const LoginPage = () => {
           <a href="/signup" className={styles.registerLink}>
             Register here
           </a>  
-          {/* Registration link */}
         </p>
       </div>
     </div>

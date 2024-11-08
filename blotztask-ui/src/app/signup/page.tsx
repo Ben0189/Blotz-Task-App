@@ -40,7 +40,7 @@ const SignUpPage = () => {
 
   const handleError = (error: unknown) => {
     if (error instanceof BadRequestError) {
-      setError(error.details ? Object.values(error.details).flat().join(' ') : error.message);
+      setError(error.details ? Object.values(error.details.errors).flat().join(' ') : error.message);
     } else {
       console.error('Unexpected error during registration:', error);
       setError("An unexpected error occurred. Please try again later.");
