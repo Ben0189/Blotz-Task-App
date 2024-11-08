@@ -1,7 +1,7 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+// import { Checkbox } from '@/components/ui/checkbox';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { taskDto } from './models/taskDto';
@@ -39,16 +39,16 @@ export default function Dayview() {
   //add a state for add task button deciding to hide or show the form
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const handleCheckboxChange = (taskId) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((t) => {
-        if (t.id === taskId) {
-          return { ...t, isDone: !t.isDone };
-        }
-        return t;
-      })
-    );
-  };
+//   const handleCheckboxChange = (taskId) => {
+//     setTasks((prevTasks) =>
+//       prevTasks.map((t) => {
+//         if (t.id === taskId) {
+//           return { ...t, isDone: !t.isDone };
+//         }
+//         return t;
+//       })
+//     );
+//   };
 
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
@@ -75,27 +75,16 @@ export default function Dayview() {
         <div className="grid gap-6 w-3/4">
 
           {tasks.map((task) => (
-            <Card key={task.id} className='bg-white'>
-              <CardHeader className="flex-row pb-1">
-                <Checkbox
-                  className="rounded-full mt-1 mr-2"
-                  checked={task.isDone}
-                  onCheckedChange={() => handleCheckboxChange(task.id)}
-                />
-                <CardTitle className={task.isDone ? 'line-through' : ''}>
-                  {task.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="grid gap-1">
-                <div className="flex items-start space-x-4 rounded-md bg-accent text-accent-foreground transition-all pt-2">
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">
-                      {task.description}
-                    </p>
-                  </div>
+            <div key={task.id} className='w-full'>
+                <div className='flex flex-row'>
+                    <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label mr-2 w-[15rem] p-4`}>
+                        <p>{task.title}</p>
+                    </div>
+                    <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label grow`}>
+                        <p>{task.description}</p>
+                    </div>
                 </div>
-              </CardContent>
-            </Card>
+            </div>
           ))}
 
           <div className="w-1/2 flex gap-5 flex-col">
