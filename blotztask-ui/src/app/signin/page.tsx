@@ -68,7 +68,6 @@ const LoginPage = () => {
             <input
               type="email"
               {...register("email")}
-              required
               className={styles.input}
               placeholder="Enter your email"
             />
@@ -81,7 +80,6 @@ const LoginPage = () => {
               <input
                 type="password"
                 {...register("password")}              
-                required
                 className={styles.input}
                 placeholder="Enter your password"
               />
