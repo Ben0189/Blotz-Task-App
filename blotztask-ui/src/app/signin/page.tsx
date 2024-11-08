@@ -7,11 +7,15 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { AlertDestructive } from '@/components/ui/alert-destructive';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
 
-type LoginFormField ={ 
-  email: string;
-  password: string;
-}
+type LoginFormField = z.infer<typeof schema>
+
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(9)
+})
 
 const LoginPage = () => {
 
@@ -20,7 +24,9 @@ const LoginPage = () => {
     handleSubmit, 
     setError,
     formState : { errors, isSubmitting }  
-  } = useForm<LoginFormField>();
+  } = useForm<LoginFormField>({
+    resolver: zodResolver(schema)
+  });
 
   const router = useRouter(); // Get the router instance
 
@@ -62,13 +68,7 @@ const LoginPage = () => {
             <label className={styles.label}>Email:</label>
             <input
               type="email"
-              {...register("email",{
-                required: "Email is required",
-                pattern: {
-                  value: /\S+@\S+\.\S+/,
-                  message: "Entered value does not match email format"
-                }
-              })}
+              {...register("email")}
               required
               className={styles.input}
               placeholder="Enter your email"
@@ -81,13 +81,7 @@ const LoginPage = () => {
             <label className={styles.label}>Password:</label>
               <input
                 type="password"
-                {...register("password",{
-                  required: "Password is required",
-                  minLength: {
-                    value : 9,
-                    message : "Password must have at least 9 character"
-                  }
-                })}              
+                {...register("password")}              
                 required
                 className={styles.input}
                 placeholder="Enter your password"
