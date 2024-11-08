@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  signOut,
-  useSession,
-} from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import styles from './main-nav.module.css';
 
@@ -29,16 +26,14 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
       <div className="sm:flex hidden justify-end">
         {session?.user ? (
           <div className="flex gap-6">
-            <Link
-              href="/task-dayview"
-              className={styles['nav-btn']}
-            >
+            <Link href="/task-dayview" className={styles['nav-btn']}>
               <span className={styles['link-underline']}>Day View</span>
             </Link>
-            <Link
-              href="/task-list"
-              className={styles['nav-btn']}
-            >
+            {/* Add the link to the Monthly view page */}
+            <Link href="/monthly-stats" className={styles['nav-btn']}>
+              <span className={styles['link-underline']}>Monthly Summary</span>
+            </Link>
+            <Link href="/task-list" className={styles['nav-btn']}>
               <span className={styles['link-underline']}>All Task</span>
             </Link>
             {/* <Link
@@ -47,16 +42,10 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
             >
               <span className={styles['link-underline']}>New Task List</span>
             </Link> */}
-            <Link
-              href="/test-connection"
-              className={styles['nav-btn']}
-            >
+            <Link href="/test-connection" className={styles['nav-btn']}>
               <span className={styles['link-underline']}>Test Connection</span>
             </Link>
-            <Link
-              href="/profile"
-              className={styles['nav-btn']}
-            >
+            <Link href="/profile" className={styles['nav-btn']}>
               <span className={styles['link-underline']}>Profile</span>
             </Link>
             <button
@@ -69,25 +58,15 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
           </div>
         ) : (
           <div className="flex gap-6">
-            <Link
-              href="/signIn"
-            >
-            <button
-              type="button"
-              className={styles['nav-secondary-btn']}
-            >
-              <span>Sign in</span>
-            </button>
+            <Link href="/signIn">
+              <button type="button" className={styles['nav-secondary-btn']}>
+                <span>Sign in</span>
+              </button>
             </Link>
-            <Link
-              href="/signup"
-            >
-            <button
-              type="button"
-              className={styles['nav-btn']}
-            >
-              <span>Sign up</span>
-            </button>
+            <Link href="/signup">
+              <button type="button" className={styles['nav-btn']}>
+                <span>Sign up</span>
+              </button>
             </Link>
           </div>
         )}
