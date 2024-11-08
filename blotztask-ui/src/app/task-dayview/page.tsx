@@ -4,37 +4,14 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 // import { Checkbox } from '@/components/ui/checkbox';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
-import { taskDto } from './models/taskDto';
 import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { Button } from '@/components/ui/button';
 import { TaskForm } from './components/form';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
+import { fetchTaskItemsDueToday } from '@/services/taskService';
 
-// Define mock data
-const mockTasks: taskDto[] = [
-  {
-    id: 1,
-    title: 'Complete project report',
-    description: 'Finalize the project report and submit it to the manager.',
-    isDone: false,
-    createdAt: '2024-07-20T08:30:00Z',
-    updatedAt: '2024-07-20T08:30:00Z',
-  },
-  {
-    id: 2,
-    title: 'Meeting with the team',
-    description: 'Discuss the project milestones and deadlines with the team.',
-    isDone: false,
-    createdAt: '2024-07-21T10:00:00Z',
-    updatedAt: '2024-07-21T10:00:00Z',
-  },
-];
-
-const validatedTasks = z.array(taskDTOSchema).parse(mockTasks);
-
-// Simulate a database read for tasks.
 export default function Dayview() {
-  const [tasks, setTasks] = useState<TaskDTO[]>(validatedTasks);
+  const [tasks, setTasks] = useState<TaskDTO[]>([]);
 
   //add a state for add task button deciding to hide or show the form
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -54,9 +31,14 @@ export default function Dayview() {
     setIsFormVisible(!isFormVisible);
   };
 
-  useEffect(() => {
-    // Simulate fetching tasks
+  const loadTasks = async () => {
+    const data = await fetchTaskItemsDueToday();
+    const validatedTasks = z.array(taskDTOSchema).parse(data);
     setTasks(validatedTasks);
+}
+
+  useEffect(() => {
+    loadTasks();
   }, []);
 
   return (
@@ -72,15 +54,15 @@ export default function Dayview() {
           </H5>
         </div>
 
-        <div className="grid gap-6 w-3/4">
+        <div className="grid gap-6 w-full">
 
           {tasks.map((task) => (
             <div key={task.id} className='w-full'>
                 <div className='flex flex-row'>
-                    <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label mr-2 w-[15rem] p-4`}>
+                    <div className={`flex justify-center items-center rounded-xl bg-work-label mr-2 w-1/3 p-4`}>
                         <p>{task.title}</p>
                     </div>
-                    <div className={`flex justify-center items-center rounded-xl bg-${"work"}-label grow`}>
+                    <div className={`flex justify-center items-center rounded-xl bg-work-label grow`}>
                         <p>{task.description}</p>
                     </div>
                 </div>
