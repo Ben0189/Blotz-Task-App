@@ -54,6 +54,7 @@
     "next-auth": "^4.24.10",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
+    "react-countup": "^6.5.3",
     "react-day-picker": "^8.7.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.44.3",
@@ -76,5 +77,6 @@
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.6",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
