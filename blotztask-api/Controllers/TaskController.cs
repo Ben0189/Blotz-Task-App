@@ -19,7 +19,14 @@ namespace BlotzTask.Controllers
         [HttpGet("alltask")]
         public async Task<IActionResult> GetAllTask()
         {
-            return Ok(await _taskService.GetTodoItems());
+            var userId = HttpContext.Items["UserId"] as string;
+
+            if (userId == null)
+            {
+                throw new UnauthorizedAccessException("Could not find user id from Http Context");
+            }
+
+            return Ok(await _taskService.GetTodoItemsByUser(userId));
         }
 
         [HttpGet("{id}")]
