@@ -31,10 +31,12 @@ public class TaskService : ITaskService
         {
             return await _dbContext.TaskItems
                 .Where(x => x.UserId == userId)
+                .Include(x => x.Label)
                 .Select(x => new TaskItemDTO
                 {
                     Id = x.Id,
-                    Title = x.Title
+                    Title = x.Title,
+                    Label = x.Label
                 })
                 .ToListAsync();
         }
