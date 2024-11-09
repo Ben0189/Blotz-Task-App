@@ -10,10 +10,32 @@ import { TaskForm } from './components/form';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
 import { format } from 'date-fns'
 import { FaPlus } from "react-icons/fa";
-import { fetchTaskItemsDueToday } from '@/services/taskService';
+
+// Define mock data   
+const mockTasks: taskDto[] = [
+  {
+    id: 1,
+    title: 'Complete project report',
+    description: 'Finalize the project report and submit it to the manager.',
+    isDone: false,
+    createdAt: '2024-07-20T08:30:00Z',
+    updatedAt: '2024-07-20T08:30:00Z',
+  },
+  {
+    id: 2,
+    title: 'Meeting with the team',
+    description: 'Discuss the project milestones and deadlines with the team.',
+    isDone: false,
+    createdAt: '2024-07-21T10:00:00Z',
+    updatedAt: '2024-07-21T10:00:00Z',
+  },
+];
+
+const validatedTasks = z.array(taskDTOSchema).parse(mockTasks);
 
 export default function Dayview() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);
+  const [todayDate, setTodayDate] = useState('');
   const [todayDate, setTodayDate] = useState('');
   //add a state for add task button deciding to hide or show the form
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -32,6 +54,21 @@ export default function Dayview() {
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
   };
+
+  // Define IconButton as an inner component
+  const IconButton = () => (
+    <div className="absolute top-50 right-40">
+      <Button className="round-square bg-black text-white">
+        <FaPlus className="text-4xl" aria-hidden="true" />
+      </Button>
+    </div>
+  );
+
+  //Set today's date 
+  useEffect(() => {
+    const date = new Date();
+    setTodayDate(format(date, 'MMM dd,yyyy'))
+  }, []);
 
   // Define IconButton as an inner component
   const IconButton = () => (
