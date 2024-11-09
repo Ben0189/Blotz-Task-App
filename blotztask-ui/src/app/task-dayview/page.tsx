@@ -8,49 +8,70 @@ import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { Button } from '@/components/ui/button';
 import { TaskForm } from './components/form';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
+import { format } from 'date-fns'
+import { FaPlus } from "react-icons/fa";
 import { fetchTaskItemsDueToday } from '@/services/taskService';
 
 export default function Dayview() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);
-
+  const [todayDate, setTodayDate] = useState('');
   //add a state for add task button deciding to hide or show the form
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-//   const handleCheckboxChange = (taskId) => {
-//     setTasks((prevTasks) =>
-//       prevTasks.map((t) => {
-//         if (t.id === taskId) {
-//           return { ...t, isDone: !t.isDone };
-//         }
-//         return t;
-//       })
-//     );
-//   };
+  //   const handleCheckboxChange = (taskId) => {
+  //     setTasks((prevTasks) =>
+  //       prevTasks.map((t) => {
+  //         if (t.id === taskId) {
+  //           return { ...t, isDone: !t.isDone };
+  //         }
+  //         return t;
+  //       })
+  //     );
+  //   };
 
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
   };
 
-  const loadTasks = async () => {
-    const data = await fetchTaskItemsDueToday();
-    const validatedTasks = z.array(taskDTOSchema).parse(data);
-    setTasks(validatedTasks);
-}
+  // Define IconButton as an inner component
+  const IconButton = () => (
+    <div className="absolute top-50 right-40">
+      <Button className="round-square bg-black text-white">
+        <FaPlus className="text-4xl" aria-hidden="true" />
+      </Button>
+    </div>
+  );
 
+  //Page initialize
   useEffect(() => {
-    loadTasks();
-  }, []);
+    // Simulate fetching tasks
+    const loadTasks = async () => {
+      const data = await fetchTaskItemsDueToday();
+      const validatedTasks = z.array(taskDTOSchema).parse(data);
+      setTasks(validatedTasks);
+    }
+
+    const date = new Date();
+    setTodayDate(format(date, 'MMM dd,yyyy'))
+  }, [])
 
   return (
     <>
-      <div className='flex flex-col gap-5'>
-        <div className='flex flex-col gap-5'>
+      <IconButton />
+      <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2'>
           <H1 className="heading-primary">
-            Day
-            <span className="heading-secondary">View</span>
-          </H1>        
+            Good morning,
+          </H1>
+          <H1 className="text-5xl font bold text-black">
+            Cornelia
+          </H1>
+          <div className='flex flex-col gap-2'>
+            <div className="text-4xl font-bold text-center mt-[-5rem]">{todayDate}
+            </div>
+          </div>
           <H5>
-              List of today&apos;s task
+            List of today&apos;s task
           </H5>
         </div>
 
@@ -58,14 +79,14 @@ export default function Dayview() {
 
           {tasks.map((task) => (
             <div key={task.id} className='w-full'>
-                <div className='flex flex-row'>
-                    <div className={`flex justify-center items-center rounded-xl bg-work-label mr-2 w-1/3 p-4`}>
-                        <p>{task.title}</p>
-                    </div>
-                    <div className={`flex justify-center items-center rounded-xl bg-work-label grow`}>
-                        <p>{task.description}</p>
-                    </div>
+              <div className='flex flex-row'>
+                <div className={`flex justify-center items-center rounded-xl bg-work-label mr-2 w-1/3 p-4`}>
+                  <p>{task.title}</p>
                 </div>
+                <div className={`flex justify-center items-center rounded-xl bg-work-label grow`}>
+                  <p>{task.description}</p>
+                </div>
+              </div>
             </div>
           ))}
 
