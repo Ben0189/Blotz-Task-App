@@ -14,58 +14,6 @@ namespace BlotzTask.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<TaskItem>().HasData(
-                new TaskItem
-                {
-                    Id = 1,
-                    Title = "Initial Task 1",
-                    Description = "Description for Task 1",
-                    IsDone = false,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                },
-                new TaskItem
-                {
-                    Id = 2,
-                    Title = "Initial Task 2",
-                    Description = "Description for Task 2",
-                    IsDone = true,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                },
-                new TaskItem
-                {
-                    Id = 3,
-                    Title = "Initial Task 3",
-                    Description = "Description for Task 3",
-                    IsDone = false,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                }
-            );
-            modelBuilder.Entity<Label>().HasData(
-                new Label
-                {
-                    LabelId = 1,
-                    Name = "Urgent",
-                    Color = "Red",
-                    Description = "Tasks that need to be addressed immediately"
-                },
-                new Label
-                {
-                    LabelId = 2,
-                    Name = "In Progress",
-                    Color = "Yellow",
-                    Description = "Tasks that are currently being worked on"
-                },
-                new Label
-                {
-                    LabelId = 3,
-                    Name = "Completed",
-                    Color = "Green",
-                    Description = "Tasks that have been completed"
-                }
-            );
         }
     }
 }

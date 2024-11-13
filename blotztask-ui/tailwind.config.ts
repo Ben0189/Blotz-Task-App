@@ -7,16 +7,25 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        satoshi: ['Satoshi', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+        display: 'fantasy'
       },
+      colors: {
+        'primary-light': '#DBE4E9',
+        'primary-dark': '#2C3233',
+        'secondary': '#278291',
+        'warn': '#F42F67',
+        'personal-label': '#fffcc4',
+        'acadedmic-label': '#a0e4e4',
+        'others-label': '#98bcfc',
+        'work-label': '#d0b4fc'
+      }
     },
   },
   plugins: [],

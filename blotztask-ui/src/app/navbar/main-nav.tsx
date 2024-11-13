@@ -1,55 +1,97 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { getServerSession } from "next-auth";
-import { cn } from "@/lib/utils"
-import Link from "next/link";
+'use client';
 
-export async function MainNav({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLElement>) {
+import {
+  signOut,
+  useSession,
+} from 'next-auth/react';
+import Link from 'next/link';
+import styles from './main-nav.module.css';
 
-  const session = await getServerSession(authOptions);
+export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
+  const { data: session } = useSession();
+
+  //TODO : Do we need this ? if not remove
+  // const [providers, setProviders] = useState<Record<
+  //   string,
+  //   ClientSafeProvider
+  // > | null>(null);
+
+  // load the registered nextauth providers, in our case is the credential provider
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await getProviders();
+  //     setProviders(res);
+  //   })();
+  // }, []);
 
   return (
-    <div className="flex-col md:flex">
-      <div className="border-b">
-        <div className="flex h-16 items-center px-4">
-          <nav
-            className={cn("flex items-center space-x-4 lg:space-x-6", className)}
-            {...props}
-          >
+    <nav className="w-full py-5 px-8 bg-primary-dark">
+      <div className="sm:flex hidden justify-end">
+        {session?.user ? (
+          <div className="flex gap-6">
             <Link
-              href="/"
-              className="text-sm font-medium transition-colors hover:text-primary"
+              href="/task-dayview"
+              className={styles['nav-btn']}
             >
-              Home
+              <span className={styles['link-underline']}>Day View</span>
             </Link>
             <Link
-              href="/examples/dashboard"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              href="/task-list"
+              className={styles['nav-btn']}
             >
-              Task List
+              <span className={styles['link-underline']}>All Task</span>
+            </Link>
+            {/* <Link
+              href="/tasks"
+              className={styles['nav-btn']}
+            >
+              <span className={styles['link-underline']}>New Task List</span>
+            </Link> */}
+            <Link
+              href="/test-connection"
+              className={styles['nav-btn']}
+            >
+              <span className={styles['link-underline']}>Test Connection</span>
             </Link>
             <Link
-              href="/examples/dashboard"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              href="/profile"
+              className={styles['nav-btn']}
             >
-              Profile
+              <span className={styles['link-underline']}>Profile</span>
+            </Link>
+            <button
+              type="button"
+              onClick={() => signOut()}
+              className={styles['nav-btn']}
+            >
+              Sign Out
+            </button>
+          </div>
+        ) : (
+          <div className="flex gap-6">
+            <Link
+              href="/signIn"
+            >
+            <button
+              type="button"
+              className={styles['nav-secondary-btn']}
+            >
+              <span>Sign in</span>
+            </button>
             </Link>
             <Link
-              href="/examples/dashboard"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              href="/signup"
             >
-              Test Connection
+            <button
+              type="button"
+              className={styles['nav-btn']}
+            >
+              <span>Sign up</span>
+            </button>
             </Link>
-            <ul>
-                <li>
-                  {session ? (<>logined</>):(<>not logined</>)}
-                </li>
-              </ul>
-          </nav>
-        </div>
+          </div>
+        )}
       </div>
-    </div>
-  )
+    </nav>
+  );
 }

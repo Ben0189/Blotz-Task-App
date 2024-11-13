@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { formSchema } from '../schema/schema';
 
-export function ProfileForm({ setTasks }) {
+export function TaskForm({ setTasks }) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
