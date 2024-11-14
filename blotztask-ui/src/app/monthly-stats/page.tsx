@@ -1,6 +1,6 @@
 'use client';
 
-import { H1, H5 } from '@/components/ui/heading-with-anchor';
+import { H1, H5, P } from '@/components/ui/heading-with-anchor';
 import { mock } from 'node:test';
 import CountUp from 'react-countup';
 export default function Monthlystats() {
@@ -29,12 +29,13 @@ export default function Monthlystats() {
     <>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-5">
-          <H1 className="heading-primary" style={{ textAlign: 'center' }}>
-            Monthly Summary
-          </H1>
-          <H5 style={{ textAlign: 'center' }}>
-            You planned <CountUp end={taskCount} /> tasks this month
-          </H5>
+          <p className="font-arial font-bold text-[40px] leading-[100px] tracking-[-0.41px] text-center text-[#278291]">
+            You planned{' '}
+            <span className="font-arial font-bold text-[123px] leading-[100px] tracking-[-0.41px] text-center text-[#278291]">
+              <CountUp end={taskCount} />{' '}
+            </span>
+            tasks this month
+          </p>
         </div>
       </div>
     </>
