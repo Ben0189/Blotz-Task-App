@@ -27,8 +27,13 @@ export default function Monthlystats() {
   const taskCount = mockTasks.length;
   return (
     <>
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 md:items-center md:p-28">
+        <div className="flex flex-col gap-5 ">
+          <img
+            src="/assets/images/profileImage.png"
+            alt="an incredable image"
+            className="w-[120px] h-[120px] absolute top-[80px] left-[500px]"
+          />
           <p className="font-arial font-bold text-[40px] leading-[100px] tracking-[-0.41px] text-center text-[#278291]">
             You planned{' '}
             <span className="font-arial font-bold text-[123px] leading-[100px] tracking-[-0.41px] text-center text-[#278291]">
