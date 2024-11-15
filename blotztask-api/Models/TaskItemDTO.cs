@@ -1,6 +1,4 @@
-﻿using BlotzTask.Data.Entities;
-
-namespace BlotzTask.Models
+﻿namespace BlotzTask.Models
 {
     public class TaskItemDTO
     {
@@ -11,6 +9,6 @@ namespace BlotzTask.Models
         public bool IsDone { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public Label Label { get; set; }
+        public LabelDTO Label { get; set; }
     }
 }
