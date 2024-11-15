@@ -59,20 +59,7 @@ public static class BlotzContextSeed
         // Seed labels and tasks only if the user was successfully created
         if (!await context.Labels.AnyAsync())
         {
-            await context.Labels.AddRangeAsync(
-                new Label
-                {
-                    Name = "Urgent",
-                    Color = "Red",
-                    Description = "Tasks that need to be addressed immediately"
-                },
-                new Label
-                {
-                    Name = "Completed",
-                    Color = "Green",
-                    Description = "Tasks that have been completed"
-                }
-            );
+            await context.Labels.AddRangeAsync();
             await context.SaveChangesAsync();
             Console.WriteLine("Label creation Success.");
         }
