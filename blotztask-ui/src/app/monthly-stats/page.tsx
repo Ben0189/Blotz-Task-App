@@ -26,15 +26,17 @@ export default function Monthlystats() {
   return (
     <>
       <div className="flex flex-col gap-5 md:items-center md:p-28">
-        <div className="flex flex-col gap-5 ">
+        <div className="mt-[-100px]">
           <img
             src="/assets/images/profileImage.png"
             alt="an incredable image"
-            className="w-[120px] h-[120px] absolute top-[80px] left-[500px]"
+            className="w-[120px] h-[120px] "
           />
-          <p className="font-arial font-bold text-[40px] leading-[100px] tracking-[-0.41px] text-center text-[#278291]">
+        </div>
+        <div>
+          <p className="font-arial font-bold text-[40px] leading-[100px] tracking-[-0.41px] text-center text-secondary">
             You planned{' '}
-            <span className="font-arial font-bold text-[123px] leading-[100px] tracking-[-0.41px] text-center text-[#278291]">
+            <span className="font-arial font-bold text-[123px] leading-[100px] tracking-[-0.41px] text-center text-secondary">
               <CountUp end={taskCount} />{' '}
             </span>
             tasks this month
