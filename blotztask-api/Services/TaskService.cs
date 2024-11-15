@@ -14,6 +14,7 @@ public interface ITaskService
     public Task<string> AddTask(AddTaskItemDTO addtaskItem);
     public Task<int> CompleteTask(int id);
     public Task<List<TaskItemDTO>> GetTaskByDate(DateOnly date);
+    public Task<List<TaskItemDTO>> GetTaskByDate(DateOnly date, string userId);
 }
 
 public class TaskService : ITaskService
@@ -52,7 +53,8 @@ public class TaskService : ITaskService
         {
             throw new NotFoundException($"Task with ID {Id} not found.");
         }
-
+        
+        
         var result = new TaskItemDTO()
         {
             Id = task.Id,
@@ -62,6 +64,7 @@ public class TaskService : ITaskService
             IsDone = task.IsDone,
             CreatedAt = task.CreatedAt,
             UpdatedAt = task.UpdatedAt
+            LabelId = task.LabelId
         };
 
         return result;
@@ -126,6 +129,27 @@ public class TaskService : ITaskService
         {
             return await _dbContext.TaskItems
                 .Where(task => task.DueDate == date)
+                .Select(task => new TaskItemDTO
+                {
+                    Id = task.Id,
+                    Title = task.Title,
+                    Description = task.Description,
+                    DueDate = task.DueDate,
+                    IsDone = task.IsDone
+                })
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Unhandled exception: {ex.Message}");
+        }
+    }
+    public async Task<List<TaskItemDTO>> GetTaskByDate(DateOnly date,string userId)
+    {
+        try
+        {
+            return await _dbContext.TaskItems
+                .Where(task => task.DueDate == date&& task.UserId == userId)
                 .Select(task => new TaskItemDTO
                 {
                     Id = task.Id,
