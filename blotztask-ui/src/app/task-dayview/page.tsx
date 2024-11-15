@@ -58,10 +58,7 @@ export default function Dayview() {
     // Simulate fetching tasks
     setTasks(validatedTasks);
   }, []);
-  // Count this month's tasks' number for user
-  const countTasks = (tasks: taskDto[]): number => {
-    return tasks.length;
-  };
+
   return (
     <>
       <div className="flex flex-col gap-5">
@@ -71,7 +68,6 @@ export default function Dayview() {
             <span className="heading-secondary">View</span>
           </H1>
           <H5>List of today&apos;s task</H5>
-          <H5>You planned {countTasks(mockTasks)} tasks this month</H5>
         </div>
 
         <div className="grid gap-6 w-3/4">
