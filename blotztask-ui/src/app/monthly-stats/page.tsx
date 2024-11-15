@@ -1,7 +1,3 @@
-'use client';
-
-import { H1, H5, P } from '@/components/ui/heading-with-anchor';
-import { mock } from 'node:test';
 import CountUp from 'react-countup';
 export default function Monthlystats() {
   const mockTasks = [
