@@ -66,8 +66,8 @@ public static class BlotzContextSeed
 
         if (!await context.TaskItems.AnyAsync())
         {
-            var labelUrgent = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Urgent");
-            var labelCompleted = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Completed");
+            var labelWork = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Work");
+            var labelPersonal = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Personal");
             await context.TaskItems.AddRangeAsync(
                 new TaskItem
                 {
@@ -78,7 +78,7 @@ public static class BlotzContextSeed
                     CreatedAt = new DateTime(2024, 10, 2),
                     UpdatedAt = new DateTime(2024, 10, 2),
                     UserId = user.Id,
-                    LabelId = labelUrgent.LabelId
+                    LabelId = labelWork.LabelId
                 },
                 new TaskItem
                 {
@@ -89,7 +89,7 @@ public static class BlotzContextSeed
                     CreatedAt = new DateTime(2024, 10, 2),
                     UpdatedAt = new DateTime(2024, 10, 2),
                     UserId = user.Id,
-                    LabelId = labelCompleted.LabelId
+                    LabelId = labelPersonal.LabelId
                 }
             );
             await context.SaveChangesAsync();
