@@ -21,7 +21,6 @@ const config: Config = {
         'primary-dark': '#2C3233',
         'secondary': '#278291',
         'warn': '#F42F67',
-        'checkbox': '#989ca4',
         'personal-label': '#fffcc4',
         'acadedmic-label': '#a0e4e4',
         'others-label': '#98bcfc',
