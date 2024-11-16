@@ -1,20 +1,13 @@
 'use client';
 
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-// import { Checkbox } from '@/components/ui/checkbox';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
-import { TaskDTO, taskDTOSchema } from './schema/schema';
-import { Button } from '@/components/ui/button';
-import { TaskForm } from './components/form';
+import { TaskDTO, taskDTOSchema } from './schema/schema'
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
 import { fetchTaskItemsDueToday } from '@/services/taskService';
 
 export default function Dayview() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);
-
-  //add a state for add task button deciding to hide or show the form
-  const [isFormVisible, setIsFormVisible] = useState(false);
 
 //   const handleCheckboxChange = (taskId) => {
 //     setTasks((prevTasks) =>
@@ -26,10 +19,6 @@ export default function Dayview() {
 //       })
 //     );
 //   };
-
-  const toggleFormVisibility = () => {
-    setIsFormVisible(!isFormVisible);
-  };
 
   const loadTasks = async () => {
     const data = await fetchTaskItemsDueToday();
@@ -68,18 +57,6 @@ export default function Dayview() {
                 </div>
             </div>
           ))}
-
-          <div className="w-1/2 flex gap-5 flex-col">
-            <Button className="self-start" onClick={toggleFormVisibility}>Add task</Button>
-            {isFormVisible && (
-              <Card>
-                <CardHeader className="pb-1"></CardHeader>
-                <CardContent className="grid gap-1">
-                  <TaskForm setTasks={setTasks} />
-                </CardContent>
-              </Card>
-            )}
-          </div>
         </div>
       </div>
     </>
