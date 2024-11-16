@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
-import { TaskDTO, taskDTOSchema } from './schema/schema'
+import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
 import { fetchTaskItemsDueToday } from '@/services/taskService';
 
@@ -22,7 +22,7 @@ export default function Dayview() {
       const notDoneTasks = validatedTasks.filter((task) => !task.isDone);
       setIncompleteTasks(notDoneTasks);
     } catch (error) {
-      console.error("Error loading tasks:", error);
+      console.error('Error loading tasks:', error);
     }
   };
 
