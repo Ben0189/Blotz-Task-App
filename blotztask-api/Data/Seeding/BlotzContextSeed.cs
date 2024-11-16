@@ -8,13 +8,33 @@ public static class BlotzContextSeed
 {
     public static async Task SeedBlotzContextAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, BlotzTaskDbContext context)
     {
-        // Seed roles
+        await SeedRolesAsync(roleManager);
+        var user = await SeedAdminUserAsync(userManager);
+        if (user == null)
+        {
+            Console.WriteLine("Admin user creation failed or already exists. Exiting seeding process.");
+            return;
+        }
+
+        await SeedLabelsAsync(context);
+        await SeedTasksForTodayAsync(context, user);
+    }
+
+    private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
+    {
         if (!await roleManager.RoleExistsAsync("Admin"))
         {
             await roleManager.CreateAsync(new IdentityRole("Admin"));
+            Console.WriteLine("Admin role created successfully.");
         }
+        else
+        {
+            Console.WriteLine("Admin role already exists.");
+        }
+    }
 
-        // Seed admin user
+    private static async Task<User?> SeedAdminUserAsync(UserManager<User> userManager)
+    {
         var defaultUser = new User
         {
             UserName = "blotztest1@gmail.com",
@@ -23,40 +43,39 @@ public static class BlotzContextSeed
         };
 
         var user = await userManager.FindByEmailAsync(defaultUser.Email);
-
-        // If the user already exists, log and return early
         if (user != null)
         {
-            Console.WriteLine($"User with email {defaultUser.Email} already exists. No new user was added. No task and label was added");
-            return; // Exit early since no further seeding is needed
+            Console.WriteLine($"User with email {defaultUser.Email} already exists.");
+            return user;
         }
 
-        // If the user does not exist, create the new super admin
         var createUserResult = await userManager.CreateAsync(defaultUser, "@Blotztest1");
-        if (createUserResult.Succeeded)
+        if (!createUserResult.Succeeded)
         {
-            await userManager.AddToRoleAsync(defaultUser, "Admin");
+            Console.WriteLine("Admin user creation failed.");
+            return null;
+        }
 
-            var userAdded = await userManager.FindByEmailAsync(defaultUser.Email);
+        await userManager.AddToRoleAsync(defaultUser, "Admin");
+        user = await userManager.FindByEmailAsync(defaultUser.Email);
 
-            List<Claim> claims = new List<Claim>
+        if (user != null)
+        {
+            var claims = new List<Claim>
             {
                 new Claim("CanEdit", "true"),
                 new Claim("CanPost", "true"),
                 new Claim("CanDelete", "true")
             };
-
-            await userManager.AddClaimsAsync(userAdded, claims);
-            user = userAdded;
-            Console.WriteLine("User creation Success.");
-        }
-        else
-        {
-            Console.WriteLine("User creation failed.");
-            return; // Exit early if user creation failed
+            await userManager.AddClaimsAsync(user, claims);
+            Console.WriteLine("Admin user and claims created successfully.");
         }
 
-        // Seed labels and tasks only if the user was successfully created
+        return user;
+    }
+
+    private static async Task SeedLabelsAsync(BlotzTaskDbContext context)
+    {
         if (!await context.Labels.AnyAsync())
         {
             await context.Labels.AddRangeAsync(
@@ -74,39 +93,59 @@ public static class BlotzContextSeed
                 }
             );
             await context.SaveChangesAsync();
-            Console.WriteLine("Label creation Success.");
+            Console.WriteLine("Labels seeded successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Labels already exist.");
+        }
+    }
+
+    private static async Task SeedTasksForTodayAsync(BlotzTaskDbContext context, User user)
+    {
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        bool hasTasksForToday = await context.TaskItems.AnyAsync(t => t.DueDate == today);
+
+        if (hasTasksForToday)
+        {
+            Console.WriteLine("Tasks for today's date already exist. No seeding necessary.");
+            return;
         }
 
-        if (!await context.TaskItems.AnyAsync())
+        var labelUrgent = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Urgent");
+        var labelCompleted = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Completed");
+
+        if (labelUrgent == null || labelCompleted == null)
         {
-            var labelUrgent = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Urgent");
-            var labelCompleted = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Completed");
-            await context.TaskItems.AddRangeAsync(
-                new TaskItem
-                {
-                    Title = "Initial Task 1",
-                    Description = "Description for Task 1",
-                    DueDate = new DateOnly(2024, 10, 01),
-                    IsDone = false,
-                    CreatedAt = new DateTime(2024, 10, 2),
-                    UpdatedAt = new DateTime(2024, 10, 2),
-                    UserId = user.Id,
-                    LabelId = labelUrgent.LabelId
-                },
-                new TaskItem
-                {
-                    Title = "Initial Task 2",
-                    Description = "Description for Task 2",
-                    DueDate = new DateOnly(2024, 10, 01),
-                    IsDone = true,
-                    CreatedAt = new DateTime(2024, 10, 2),
-                    UpdatedAt = new DateTime(2024, 10, 2),
-                    UserId = user.Id,
-                    LabelId = labelCompleted.LabelId
-                }
-            );
-            await context.SaveChangesAsync();
-            Console.WriteLine("Tasks creation Success.");
+            Console.WriteLine("Labels are missing. Cannot seed tasks.");
+            return;
         }
+
+        await context.TaskItems.AddRangeAsync(
+            new TaskItem
+            {
+                Title = "Initial Task 1",
+                Description = "Description for Task 1",
+                DueDate = today,
+                IsDone = false,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                UserId = user.Id,
+                LabelId = labelUrgent.LabelId
+            },
+            new TaskItem
+            {
+                Title = "Initial Task 2",
+                Description = "Description for Task 2",
+                DueDate = today,
+                IsDone = true,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                UserId = user.Id,
+                LabelId = labelCompleted.LabelId
+            }
+        );
+        await context.SaveChangesAsync();
+        Console.WriteLine("Tasks for today's date seeded successfully.");
     }
 }
