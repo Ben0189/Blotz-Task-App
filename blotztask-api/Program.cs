@@ -87,6 +87,7 @@ builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseMiddleware<UserContextMiddleware>();
 
 app.MapIdentityApi<User>();
 // Configure the HTTP request pipeline.

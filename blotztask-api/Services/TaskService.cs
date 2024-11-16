@@ -3,13 +3,12 @@ using BlotzTask.Models;
 using Microsoft.EntityFrameworkCore;
 using BlotzTask.Data.Entities;
 using BlotzTask.Models.CustomError;
-using System.Threading.Tasks;
 
 namespace BlotzTask.Services;
 
 public interface ITaskService
 {
-    public Task<List<TaskItemDTO>> GetTodoItems();
+    public Task<List<TaskItemDTO>> GetTodoItemsByUser(string userId);
     public Task<TaskItemDTO> GetTaskByID(int Id);
     public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
     public Task<string> AddTask(AddTaskItemDTO addtaskItem);
@@ -26,21 +25,24 @@ public class TaskService : ITaskService
         _dbContext = dbContext;
     }
 
-    public async Task<List<TaskItemDTO>> GetTodoItems()
+    public async Task<List<TaskItemDTO>> GetTodoItemsByUser(string userId)
     {
         try
         {
             return await _dbContext.TaskItems
+                .Where(x => x.UserId == userId)
+                .Include(x => x.Label)
                 .Select(x => new TaskItemDTO
                 {
                     Id = x.Id,
-                    Title = x.Title
+                    Title = x.Title,
+                    Label = new LabelDTO { Name = x.Label.Name, Color = x.Label.Color }        
                 })
                 .ToListAsync();
         }
         catch (Exception ex)
         {
-            //TODO: Add some error log throw (havent create PBI)
+            //TODO: Add some error log throw 
             throw;
         }
     }
