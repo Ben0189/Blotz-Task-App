@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
-import { TaskDTO, taskDTOSchema } from './schema/schema';
+import { TaskDTO, taskDTOSchema } from './schema/schema'
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
 import { fetchTaskItemsDueToday } from '@/services/taskService';
 
@@ -22,7 +22,7 @@ export default function Dayview() {
       const notDoneTasks = validatedTasks.filter((task) => !task.isDone);
       setIncompleteTasks(notDoneTasks);
     } catch (error) {
-      console.error('Error loading tasks:', error);
+      console.error("Error loading tasks:", error);
     }
   };
 
@@ -43,7 +43,7 @@ export default function Dayview() {
         <div key = {task.id} className = 'w-full'>
           <div className = 'flex flex-row'>
           <div className  = {'flex justify-center items-center rounded-xl bg-work-label mr-2 w-1/3 p-4'}>
-            <P>{task.title}</p>
+            <p>{task.title}</p>
           
           </div>
         <div className = {'flex justify-center items-center rounded-xl bg-work-label grow'}>
