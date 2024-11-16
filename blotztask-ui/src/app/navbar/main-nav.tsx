@@ -36,17 +36,8 @@ export function MainNav({}: React.HTMLAttributes<HTMLElement>) {
             <Link href="/task-list" className={styles['nav-btn']}>
               <span className={styles['link-underline']}>All Task</span>
             </Link>
-            {/* <Link
-              href="/tasks"
-              className={styles['nav-btn']}
-            >
-              <span className={styles['link-underline']}>New Task List</span>
-            </Link> */}
             <Link href="/test-connection" className={styles['nav-btn']}>
               <span className={styles['link-underline']}>Test Connection</span>
-            </Link>
-            <Link href="/profile" className={styles['nav-btn']}>
-              <span className={styles['link-underline']}>Profile</span>
             </Link>
             <button
               type="button"
