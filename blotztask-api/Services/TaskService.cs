@@ -52,7 +52,7 @@ public class TaskService : ITaskService
     }
     public async Task<TaskItemDTO> GetTaskByID(int Id)
     {
-        var task = await _dbContext.TaskItems.Include(t => t.Label) // Ensure Label is included in the query
+        var task = await _dbContext.TaskItems.Include(t => t.Label)
         .FirstOrDefaultAsync(t => t.Id == Id);
 
         if (task == null)
@@ -83,22 +83,19 @@ public class TaskService : ITaskService
 
     public async Task<string> AddTask(AddTaskItemDTO addtaskItem)
     {
-        Label? label = null;
-        if (addtaskItem.LabelId != 0)
+        Label label = await _labelService.GetLabelById(addtaskItem.LabelId);
+        if (label == null)
         {
-            label = await _labelService.GetLabelById(addtaskItem.LabelId);
-            if (label == null)
-            {
-                throw new NotFoundException($"Label with ID {addtaskItem.LabelId} not found.");
-            }
+            throw new NotFoundException($"Label with ID {addtaskItem.LabelId} not found.");
         }
+        
         var addtask = new TaskItem
         {
             Title = addtaskItem.Title,
             Description = addtaskItem.Description,
             CreatedAt = DateTime.UtcNow, 
             UpdatedAt = DateTime.UtcNow,
-            LabelId = label?.LabelId ?? 0,
+            LabelId = label.LabelId,
             Label = label
         };
 
@@ -106,7 +103,6 @@ public class TaskService : ITaskService
         await _dbContext.SaveChangesAsync();
 
         return addtaskItem.Title;
-
     }
 
     public async Task<int> EditTask(int id, EditTaskItemDTO editTaskItem)
@@ -150,6 +146,7 @@ public class TaskService : ITaskService
         try
         {
             return await _dbContext.TaskItems
+                .Include(t => t.Label)
                 .Where(task => task.DueDate == date)
                 .Select(task => new TaskItemDTO
                 {
@@ -157,7 +154,14 @@ public class TaskService : ITaskService
                     Title = task.Title,
                     Description = task.Description,
                     DueDate = task.DueDate,
-                    IsDone = task.IsDone
+                    IsDone = task.IsDone,
+                    Label = task.Label != null ? new LabelDTO
+                    {
+                        LabelId = task.Label.LabelId,
+                        Name = task.Label.Name,
+                        Color = task.Label.Color,
+                        Description = task.Label.Description
+                    } : null
                 })
                 .ToListAsync();
         }

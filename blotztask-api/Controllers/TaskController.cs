@@ -45,14 +45,6 @@ namespace BlotzTask.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTask([FromBody] AddTaskItemDTO addtaskItem)
         {
-            if (addtaskItem.LabelId != 0)
-            {
-                var label = await _labelService.GetLabelById(addtaskItem.LabelId);
-                if (label == null)
-                {
-                    return NotFound($"Label with ID {addtaskItem.LabelId} not found.");
-                }
-            }
             return Ok(await _taskService.AddTask(addtaskItem));
         }
 
