@@ -3,6 +3,8 @@ using BlotzTask.Models;
 using Microsoft.EntityFrameworkCore;
 using BlotzTask.Data.Entities;
 using BlotzTask.Models.CustomError;
+using Microsoft.VisualBasic;
+using System.Runtime.CompilerServices;
 
 namespace BlotzTask.Services;
 
@@ -19,10 +21,12 @@ public interface ITaskService
 public class TaskService : ITaskService
 {
     private readonly BlotzTaskDbContext _dbContext;
+    private readonly ILabelService _labelService;
 
-    public TaskService(BlotzTaskDbContext dbContext)
+    public TaskService(BlotzTaskDbContext dbContext, ILabelService labelService)
     {
         _dbContext = dbContext;
+        _labelService = labelService;
     }
 
     public async Task<List<TaskItemDTO>> GetTodoItemsByUser(string userId)
@@ -48,7 +52,8 @@ public class TaskService : ITaskService
     }
     public async Task<TaskItemDTO> GetTaskByID(int Id)
     {
-        var task = await _dbContext.TaskItems.FindAsync(Id);
+        var task = await _dbContext.TaskItems.Include(t => t.Label) // Ensure Label is included in the query
+        .FirstOrDefaultAsync(t => t.Id == Id);
 
         if (task == null)
         {
@@ -63,7 +68,14 @@ public class TaskService : ITaskService
             DueDate = task.DueDate,
             IsDone = task.IsDone,
             CreatedAt = task.CreatedAt,
-            UpdatedAt = task.UpdatedAt
+            UpdatedAt = task.UpdatedAt,
+            Label = task.Label != null ? new LabelDTO
+            {
+                LabelId = task.Label.LabelId,
+                Name = task.Label.Name,
+                Color = task.Label.Color,
+                Description = task.Label.Description
+            } : null
         };
 
         return result;
@@ -71,12 +83,23 @@ public class TaskService : ITaskService
 
     public async Task<string> AddTask(AddTaskItemDTO addtaskItem)
     {
+        Label? label = null;
+        if (addtaskItem.LabelId != 0)
+        {
+            label = await _labelService.GetLabelById(addtaskItem.LabelId);
+            if (label == null)
+            {
+                throw new NotFoundException($"Label with ID {addtaskItem.LabelId} not found.");
+            }
+        }
         var addtask = new TaskItem
         {
             Title = addtaskItem.Title,
             Description = addtaskItem.Description,
             CreatedAt = DateTime.UtcNow, 
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            LabelId = label?.LabelId ?? 0,
+            Label = label
         };
 
         _dbContext.TaskItems.Add(addtask);
