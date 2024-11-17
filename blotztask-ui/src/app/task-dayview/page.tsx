@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
-import { TaskDTO, taskDTOSchema } from './schema/schema'
+import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
 import { fetchTaskItemsDueToday } from '@/services/taskService';
 
@@ -22,33 +22,35 @@ export default function Dayview() {
       const notDoneTasks = validatedTasks.filter((task) => !task.isDone);
       setIncompleteTasks(notDoneTasks);
     } catch (error) {
-      console.error("Error loading tasks:", error);
+      console.error('Error loading tasks:', error);
     }
   };
 
   return (
     <>
-      <div className='flex flex-col gap-5'>
-        <div className='flex flex-col gap-5'>
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5">
           <H1 className="heading-primary">
             Day
             <span className="heading-secondary">View</span>
-          </H1>        
-          <H5>
-              List of today&apos;s task
-          </H5>
+          </H1>
+          <H5>List of today&apos;s task</H5>
         </div>
 
         <div className="grid gap-6 w-full">
           {incompleteTasks.length > 0 ? (
             <div className="grid gap-6 w-full">
               {incompleteTasks.map((task) => (
-                <div key={task.id} className='w-full'>
-                  <div className='flex flex-row'>
-                    <div className={`flex justify-center items-center rounded-xl bg-work-label mr-2 w-1/3 p-4`}>
+                <div key={task.id} className="w-full">
+                  <div className="flex flex-row">
+                    <div
+                      className={`flex justify-center items-center rounded-xl bg-work-label mr-2 w-1/3 p-4`}
+                    >
                       <p>{task.title}</p>
                     </div>
-                    <div className={`flex justify-center items-center rounded-xl bg-work-label grow`}>
+                    <div
+                      className={`flex justify-center items-center rounded-xl bg-work-label grow`}
+                    >
                       <p>{task.description}</p>
                     </div>
                   </div>
