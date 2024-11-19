@@ -67,8 +67,6 @@ public class TaskService : ITaskService
             Description = task.Description,
             DueDate = task.DueDate,
             IsDone = task.IsDone,
-            CreatedAt = task.CreatedAt,
-            UpdatedAt = task.UpdatedAt,
             Label = task.Label != null ? new LabelDTO
             {
                 LabelId = task.Label.LabelId,
