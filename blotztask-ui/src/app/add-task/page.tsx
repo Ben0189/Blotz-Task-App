@@ -1,6 +1,9 @@
+import AddTask from './addTask';
 
 export default function Home() {
   return (
-    <><p>Add task page currently under Implementation</p></>
+    <>
+      <AddTask />
+    </>
   );
 }
