@@ -60,9 +60,9 @@ const mockLabels = {
                 </div>
                 <div>
                     <p className="pl-20 font-arial font-bold text-[40px] leading-[100px] tracking-[-0.41px] text-center text-secondary">
-                        You planned{' '}
-                        <span className="font-arial font-bold text-[120px] leading-[100px] tracking-[-0.41px] text-center text-secondary">
-                        <CountUp end={taskCount} />{' '}
+                        You planned
+                        <span className="px-3 font-arial font-bold text-8xl text-center text-secondary">
+                            <CountUp end={taskCount} />
                         </span>
                         tasks this month
                     </p>
