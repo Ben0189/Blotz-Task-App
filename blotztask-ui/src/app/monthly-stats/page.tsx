@@ -1,8 +1,8 @@
 'use client';
 
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
-import { mock } from 'node:test';
 import CountUp from 'react-countup';
 
 export default function Monthlystats() {
@@ -47,6 +47,9 @@ const mockLabels = {
 };
 
   const taskCount = mockTasks.length;
+  const sum= (a, b) => a + b;
+  const unfinishedTasks = Object.values(mockLabels.data.tasks.unfinished).reduce(sum, 0);
+
   return (
         <div>
             <div className="flex flex-col gap-5 md:items-center md:p-10">
@@ -69,21 +72,33 @@ const mockLabels = {
                 </div>
             </div>
             <div className='w-full flex flex-row gap-2'>
-                <Card className='grow bg bg-completed'>
-                    <CardHeader className='flex items-center bg-secondary rounded-lg'>
-                        <CardTitle>Completed</CardTitle>
+                <Card className='bg-completed w-1/2'>
+                    <CardHeader className='flex items-center rounded-lg bg-secondary '>
+                        <CardTitle className='text-completed text-4xl'>Completed</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                       
+                    <CardContent className='flex flex-row text-3xl justify-center text-secondary'>
+                       {Object.keys(mockLabels.data.tasks.completed).map((label, i) => (
+                            <div className='flex flex-row py-4'>
+                                <div className='flex flex-col items-center gap-40 p-6 px-10'>
+                                    <span className='font-bold text-6xl'>{mockLabels.data.tasks.completed[label]}</span>
+                                    <p className='capitalize'>{label}</p>
+                                </div>
+                                {i < Object.keys(mockLabels.data.tasks.completed).length - 1 && (
+                                    <Separator orientation='vertical' className='border-2 border-secondary'/>
+                                )}
+                            </div>
+                            
+                       ))}
                     </CardContent>
                 </Card>
-                <Card className='grow bg-unfinished'>
-                    <CardHeader className='flex items-center bg-unfinished-header'>
-                        <CardTitle>Unfinished</CardTitle>
+                <Card className='bg-unfinished w-1/2 text-white'>
+                    <CardHeader className='flex items-center rounded-lg bg-unfinished-header'>
+                        <CardTitle className='text-4xl'>Unfinished</CardTitle>
                     </CardHeader>
-                    <CardContent className='flex items-center'>
-                        <div className='flex flex-col'>
-
+                    <CardContent className='flex flex-row text-3xl justify-center'>
+                        <div className='flex flex-col items-center gap-40 py-12' >
+                            <span className='font-bold text-6xl'>{unfinishedTasks}</span>
+                            <p className='capitalize'>others</p>
                         </div>
                     </CardContent>
                 </Card>
