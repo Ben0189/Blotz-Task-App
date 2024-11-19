@@ -24,7 +24,10 @@ const config: Config = {
         'personal-label': '#fffcc4',
         'acadedmic-label': '#a0e4e4',
         'others-label': '#98bcfc',
-        'work-label': '#d0b4fc'
+        'work-label': '#d0b4fc',
+        'completed': '#9BE3E1',
+        'unfinished': '#FF94B3',
+        'unfinished-header': '#DC567C'
       }
     },
   },

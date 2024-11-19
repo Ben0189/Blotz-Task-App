@@ -1,7 +1,8 @@
 'use client';
 
-import { Card } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
+import { mock } from 'node:test';
 import CountUp from 'react-countup';
 
 export default function Monthlystats() {
@@ -67,9 +68,24 @@ const mockLabels = {
                     </p>
                 </div>
             </div>
-            <div>
-                <Card>
+            <div className='w-full flex flex-row gap-2'>
+                <Card className='grow bg bg-completed'>
+                    <CardHeader className='flex items-center bg-secondary rounded-lg'>
+                        <CardTitle>Completed</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                       
+                    </CardContent>
+                </Card>
+                <Card className='grow bg-unfinished'>
+                    <CardHeader className='flex items-center bg-unfinished-header'>
+                        <CardTitle>Unfinished</CardTitle>
+                    </CardHeader>
+                    <CardContent className='flex items-center'>
+                        <div className='flex flex-col'>
 
+                        </div>
+                    </CardContent>
                 </Card>
             </div>
         </div>
