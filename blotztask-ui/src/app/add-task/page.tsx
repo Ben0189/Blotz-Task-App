@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 mx-24">
         <Input type="email" placeholder="Write Your Title Here" />
 
         <Tabs defaultValue="account" className="w-full">
