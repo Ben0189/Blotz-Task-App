@@ -1,56 +1,45 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function Home() {
 
   return (
-    <Tabs defaultValue="account" className="w-[400px]">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="account">Account</TabsTrigger>
-        <TabsTrigger value="password">Password</TabsTrigger>
-      </TabsList>
-      <TabsContent value="account">
-        <Card>
-          <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>
-              Make changes to your account here. Click save when you&#39;re done.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" defaultValue="Pedro Duarte" />
+    <>
+      <div className="flex flex-col gap-10">
+        <Input type="email" placeholder="Write Your Title Here" />
+
+        <Tabs defaultValue="account" className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger className="bg-secondary text-white" value="work">Work</TabsTrigger>
+            <TabsTrigger value="personal">Personal</TabsTrigger>
+            <TabsTrigger value="acedemic">Acedemic</TabsTrigger>
+            <TabsTrigger value="others">Others</TabsTrigger>
+          </TabsList>
+          <TabsContent value="work">
+            <div className="p-1">
+              <Card>
+                <CardContent className="space-y-2 bg-secondary">
+                  <Textarea 
+                    className="text-secondary bg-[#9BE3E1] border-[#9BE3E1] placeholder:text-center placeholder:leading-[10rem]"  
+                    rows={10}
+                    placeholder="Type your message here." />
+                </CardContent>
+              </Card>
             </div>
-            <div className="space-y-1">
-              <Label htmlFor="username">Username</Label>
-              <Input id="username" defaultValue="@peduarte" />
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-      <TabsContent value="password">
-        <Card>
-          <CardHeader>
-            <CardTitle>Password</CardTitle>
-            <CardDescription>
-              Change your password here. After saving, you&#39;ll be logged out.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new">New password</Label>
-              <Input id="new" type="password" />
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
+          </TabsContent>
+          <TabsContent value="personal">
+            <Textarea placeholder="Type your message here." />
+          </TabsContent>
+          <TabsContent value="acedemic">
+            <Textarea placeholder="Type your message here." />
+          </TabsContent>
+          <TabsContent value="others">
+            <Textarea placeholder="Type your message here." />
+          </TabsContent>
+        </Tabs>
+      </div>
+    </>
   );
 }
