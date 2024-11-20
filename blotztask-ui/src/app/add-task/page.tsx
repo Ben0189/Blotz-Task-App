@@ -11,7 +11,7 @@ export default function Home() {
         <Input type="email" placeholder="Write Your Title Here" />
 
         <Tabs defaultValue="account" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-4 gap-2 px-2">
             <TabsTrigger className="bg-secondary text-white" value="work">Work</TabsTrigger>
             <TabsTrigger className="bg-secondary text-white" value="personal">Personal</TabsTrigger>
             <TabsTrigger className="bg-secondary text-white" value="acedemic">Acedemic</TabsTrigger>
