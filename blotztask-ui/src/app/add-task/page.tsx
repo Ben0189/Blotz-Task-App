@@ -21,7 +21,7 @@ export default function Home() {
               <CardContent className="space-y-2 bg-secondary">
                 <div className="p-1">
                   <Textarea 
-                    className="text-secondary bg-[#9BE3E1] border-[#9BE3E1] placeholder:text-center placeholder:leading-[10rem]" 
+                    className="text-secondary bg-[#9BE3E1] border-[#9BE3E1] placeholder:text-secondar placeholder:text-center placeholder:leading-[10rem]" 
                     placeholder="Type your description here." 
                     rows={10}/>
                 </div>
