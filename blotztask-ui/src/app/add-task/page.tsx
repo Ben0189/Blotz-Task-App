@@ -13,9 +13,9 @@ export default function Home() {
         <Tabs defaultValue="account" className="w-full">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger className="bg-secondary text-white" value="work">Work</TabsTrigger>
-            <TabsTrigger value="personal">Personal</TabsTrigger>
-            <TabsTrigger value="acedemic">Acedemic</TabsTrigger>
-            <TabsTrigger value="others">Others</TabsTrigger>
+            <TabsTrigger className="bg-secondary text-white" value="personal">Personal</TabsTrigger>
+            <TabsTrigger className="bg-secondary text-white" value="acedemic">Acedemic</TabsTrigger>
+            <TabsTrigger className="bg-secondary text-white" value="others">Others</TabsTrigger>
           </TabsList>
           <TabsContent value="work">
             <div className="p-1">
