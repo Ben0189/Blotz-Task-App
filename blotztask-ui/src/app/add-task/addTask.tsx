@@ -5,7 +5,7 @@ export default function AddTask() {
     <div>
       <Input
         placeholder="Write Your Title Here"
-        className="bg-secondary m-4 text-center 
+        className="bg-secondary text-center mb-4
                    placeholder:text-white     
                    text-white"
       />
