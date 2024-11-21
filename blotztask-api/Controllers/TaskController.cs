@@ -11,6 +11,7 @@ namespace BlotzTask.Controllers
     public class TaskController : ControllerBase
     {
         private readonly ITaskService _taskService;
+        private readonly ILabelService _labelService;
         public TaskController(ITaskService taskService)
         {
             _taskService = taskService;
