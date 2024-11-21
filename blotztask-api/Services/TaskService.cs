@@ -63,7 +63,8 @@ public class TaskService : ITaskService
             DueDate = task.DueDate,
             IsDone = task.IsDone,
             CreatedAt = task.CreatedAt,
-            UpdatedAt = task.UpdatedAt
+            UpdatedAt = task.UpdatedAt,
+            Label = new LabelDTO { Name = task.Label.Name, Color = task.Label.Color }
         };
 
         return result;
@@ -76,7 +77,12 @@ public class TaskService : ITaskService
             Title = addtaskItem.Title,
             Description = addtaskItem.Description,
             CreatedAt = DateTime.UtcNow, 
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            Label = new Label
+            {
+                Name = addtaskItem.Label.Name,
+                Color = addtaskItem.Label.Color
+            }
         };
 
         _dbContext.TaskItems.Add(addtask);
@@ -134,7 +140,8 @@ public class TaskService : ITaskService
                     Title = task.Title,
                     Description = task.Description,
                     DueDate = task.DueDate,
-                    IsDone = task.IsDone
+                    IsDone = task.IsDone,
+                    Label = new LabelDTO { Name = task.Label.Name, Color = task.Label.Color }
                 })
                 .ToListAsync();
         }
