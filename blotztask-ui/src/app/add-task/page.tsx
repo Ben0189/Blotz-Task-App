@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+// import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import AddTask from './addTask';
@@ -7,9 +7,7 @@ import AddTask from './addTask';
 export default function Home() {
   return (
     <>
-      <div className="flex flex-col gap-10 mx-24">
-        <Input type="email" placeholder="Write Your Title Here" />
-      </div>
+      <AddTask />
       <Tabs defaultValue="account" className="w-full">
         <TabsList className="grid w-full grid-cols-4 gap-2 px-2">
           <TabsTrigger className="bg-secondary text-white" value="work">
