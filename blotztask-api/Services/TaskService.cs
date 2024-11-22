@@ -78,11 +78,7 @@ public class TaskService : ITaskService
             Description = addtaskItem.Description,
             CreatedAt = DateTime.UtcNow, 
             UpdatedAt = DateTime.UtcNow,
-            Label = new Label
-            {
-                Name = addtaskItem.Label.Name,
-                Color = addtaskItem.Label.Color
-            }
+            LabelId = addtaskItem.LabelId,
         };
 
         _dbContext.TaskItems.Add(addtask);
