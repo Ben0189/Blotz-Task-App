@@ -16,7 +16,6 @@ public static class BlotzContextSeed
             return;
         }
 
-        await SeedLabelsAsync(context);
         await SeedTasksForTodayAsync(context, user);
     }
 
@@ -74,20 +73,6 @@ public static class BlotzContextSeed
         return user;
     }
 
-    private static async Task SeedLabelsAsync(BlotzTaskDbContext context)
-    {
-        if (!await context.Labels.AnyAsync())
-        {
-            await context.Labels.AddRangeAsync();
-            await context.SaveChangesAsync();
-            Console.WriteLine("Labels seeded successfully.");
-        }
-        else
-        {
-            Console.WriteLine("Labels already exist.");
-        }
-    }
-
     private static async Task SeedTasksForTodayAsync(BlotzTaskDbContext context, User user)
     {
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -104,7 +89,7 @@ public static class BlotzContextSeed
 
         if (labelWork == null || labelPersonal == null)
         {
-            Console.WriteLine("Labels are missing. Cannot seed tasks.");
+            Console.WriteLine("Label missing. Try to run migrations to seed the label. Failed to seed task");
             return;
         }
 
