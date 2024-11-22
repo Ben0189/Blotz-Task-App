@@ -23,11 +23,11 @@ export default function Dayview() {
   };
   // Define IconButton as an inner component
   const IconButton = () => (
-    <div className="absolute top-50 right-40">
+   
       <Button className="round-square bg-black text-white">
         <FaPlus className="text-4xl" aria-hidden="true"/>
       </Button>
-    </div>
+   
   );
 
   //Page initialize
@@ -57,7 +57,7 @@ export default function Dayview() {
           </H1>
         </div>
             <div 
-            className="text-4xl font-bold text-center text-black">{todayDate}
+            className="text-4xl font-bold text-center text-black mx-auto">{todayDate}
             </div>
          <IconButton />
         
