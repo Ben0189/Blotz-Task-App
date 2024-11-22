@@ -23,11 +23,10 @@ export default function Dayview() {
   };
   // Define IconButton as an inner component
   const IconButton = () => (
-   
-      <Button className="round-square bg-black text-white">
-        <FaPlus className="text-4xl" aria-hidden="true"/>
-      </Button>
-   
+    <Button className="round-square bg-black text-white">
+      <FaPlus className="text-4xl" aria-hidden="true" />
+    </Button>
+
   );
 
   //Page initialize
@@ -44,30 +43,24 @@ export default function Dayview() {
 
   return (
     <>
-     
-      
-      <div className='flex flex-col'>
-      <div className="flex items-center justify-between">
-      <div>
-          <H1 className="heading-primary">
-            Good morning,
-          </H1>
-          <H1 className="text-5xl font-bold text-black ">
-            Cornelia
-          </H1>
-        </div>
-            <div 
+      <div className='flex flex-col gap-2'>
+        <div className="flex items-center justify-between">
+          <div>
+            <H1 className="heading-primary">Good morning,</H1>
+            <H1 className="text-5xl font-bold text-black "> Cornelia</H1>
+          </div>
+          <div
             className="text-4xl font-bold text-center text-black mx-auto">{todayDate}
-            </div>
-         <IconButton />
-        
+          </div>
+          <div>
+            <IconButton />
+          </div>
         </div>
-            
-          <H5>
-            List of today&apos;s task
-          </H5>
-       
-        
+        <H5>
+          List of today&apos;s task
+        </H5>
+
+
         <div className="grid gap-6 w-full">
 
           {tasks.map((task) => (
