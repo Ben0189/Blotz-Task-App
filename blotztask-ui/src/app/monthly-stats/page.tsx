@@ -79,7 +79,7 @@ const mockLabels = {
                     <CardContent className='flex flex-row text-3xl justify-center text-secondary'>
                        {Object.keys(mockLabels.data.tasks.completed).map((label, i) => (
                             <div key={i} className='flex flex-row py-4'>
-                                <div className='flex flex-col items-center gap-36 px-10'>
+                                <div className='flex flex-col justify-center items-center px-10'>
                                     <span className='font-bold text-6xl'>{mockLabels.data.tasks.completed[label]}</span>
                                     <p className='capitalize'>{label}</p>
                                 </div>
@@ -96,7 +96,7 @@ const mockLabels = {
                         <CardTitle className='text-4xl'>Unfinished</CardTitle>
                     </CardHeader>
                     <CardContent className='flex flex-row text-3xl justify-center'>
-                        <div className='flex flex-col items-center gap-36 py-4' >
+                        <div className='flex flex-col items-center py-4' >
                             <span className='font-bold text-6xl'>{unfinishedTasks}</span>
                             <p className='capitalize'>others</p>
                         </div>
