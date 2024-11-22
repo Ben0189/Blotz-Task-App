@@ -11,5 +11,6 @@ namespace BlotzTask.Models
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public int LabelId { get; set; }
     }
 }
