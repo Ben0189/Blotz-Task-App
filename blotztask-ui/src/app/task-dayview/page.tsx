@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { TaskForm } from './components/form';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
 import { fetchTaskItemsDueToday } from '@/services/taskService';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export default function Dayview() {
   const [tasks, setTasks] = useState<TaskDTO[]>([]);
@@ -40,6 +41,12 @@ export default function Dayview() {
   useEffect(() => {
     loadTasks();
   }, []);
+
+  const [isChecked, setIsChecked] = useState(false);
+  
+  const handleCheckboxChange = (checked: boolean) => {
+    setIsChecked(checked); 
+  };
 
   return (
     <>
@@ -81,6 +88,15 @@ export default function Dayview() {
             )}
           </div>
         </div>
+
+          <div className="flex flex-row justify-start space-x-4">
+            <Checkbox
+                checked={isChecked} 
+                onCheckedChange={handleCheckboxChange} 
+                className="h-8 w-8 rounded-md border-transparent bg-gray-400"
+            />
+          </div>
+
       </div>
     </>
   );
