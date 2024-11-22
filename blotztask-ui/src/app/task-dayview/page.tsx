@@ -46,7 +46,7 @@ export default function Dayview() {
     <>
       <IconButton />
       <div className="flex items-start">
-      <div className='flex flex-col gap-2'>
+      <div className='flex flex-col'>
           <H1 className="heading-primary">
             Good morning,
           </H1>
