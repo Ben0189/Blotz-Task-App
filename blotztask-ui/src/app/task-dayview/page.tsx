@@ -25,7 +25,7 @@ export default function Dayview() {
   const IconButton = () => (
     <div className="absolute top-50 right-40">
       <Button className="round-square bg-black text-white">
-        <FaPlus className="text-4xl" aria-hidden="true" />
+        <FaPlus className="text-4xl" aria-hidden="true"/>
       </Button>
     </div>
   );
@@ -45,23 +45,25 @@ export default function Dayview() {
   return (
     <>
       <IconButton />
+      <div className="flex items-start">
       <div className='flex flex-col gap-2'>
-        <div className='flex flex-col gap-2'>
           <H1 className="heading-primary">
             Good morning,
           </H1>
-          <H1 className="text-5xl font bold text-black">
+          <H1 className="text-5xl font-bold text-black">
             Cornelia
           </H1>
           <div className='flex flex-col gap-2'>
-            <div className="text-4xl font-bold text-center mt-[-5rem]">{todayDate}
+            <div 
+            className="text-4xl font-bold text-center mt-[-5rem] ">{todayDate}
             </div>
           </div>
+            
           <H5>
             List of today&apos;s task
           </H5>
         </div>
-
+        
         <div className="grid gap-6 w-full">
 
           {tasks.map((task) => (
