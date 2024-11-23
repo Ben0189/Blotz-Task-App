@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <div className="flex flex-col gap-10 mx-24">
         <Input
-          className="bg-[#9BE3E1] text-center text-primary-light placeholder-primary-light"
+          className="bg-[#278291] text-center text-primary-light placeholder-primary-light"
           placeholder="Write Your Title Here"
         />
 
@@ -27,7 +27,7 @@ export default function Home() {
               Personal
             </TabsTrigger>
             <TabsTrigger
-              className="bg-acadedmic-label text-primary-dark"
+              className="bg-[#278291] text-primary-dark"
               value="acedemic"
             >
               Acedemic
@@ -68,9 +68,9 @@ export default function Home() {
           <TabsContent value="acedemic">
             <div className="p-1">
               <Card>
-                <CardContent className="space-y-2 bg-acadedmic-label">
+                <CardContent className="space-y-2 bg-[#278291]">
                   <Textarea
-                    className="text-secondary bg-acadedmic-label border-acadedmic-label placeholder:text-center placeholder:leading-[10rem]"
+                    className="text-secondary bg-[#278291] border-[#278291] placeholder:text-center placeholder:leading-[10rem]"
                     rows={10}
                     placeholder="Type your message here."
                   />
