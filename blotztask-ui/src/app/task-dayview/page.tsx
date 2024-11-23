@@ -44,13 +44,14 @@ export default function Dayview() {
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           <div>
             <H1 className="heading-primary">Good morning,</H1>
             <H1 className="text-5xl font-bold text-black "> Cornelia</H1>
           </div>
           <div
-            className="text-4xl font-bold text-center text-black mx-auto">{todayDate}
+            className="text-4xl font-bold text-center text-black">
+            <span className="mr-40">{todayDate}</span>
           </div>
           <div>
             <IconButton />
