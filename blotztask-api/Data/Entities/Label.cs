@@ -2,7 +2,7 @@
 
 namespace BlotzTask.Data.Entities
 {
-    enum LabelTypes
+    public enum LabelType
     {
         Work,
         Personal,

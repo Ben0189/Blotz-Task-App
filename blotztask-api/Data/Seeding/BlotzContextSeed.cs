@@ -84,8 +84,8 @@ public static class BlotzContextSeed
             return;
         }
 
-        var labelWork = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Work");
-        var labelPersonal = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Personal");
+        var labelWork = await context.Labels.FirstOrDefaultAsync(l => l.Name == nameof(LabelType.Work));
+        var labelPersonal = await context.Labels.FirstOrDefaultAsync(l => l.Name == nameof(LabelType.Personal));
 
         if (labelWork == null || labelPersonal == null)
         {
