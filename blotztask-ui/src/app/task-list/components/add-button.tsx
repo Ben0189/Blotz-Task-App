@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
-export function AddTask({handleAddTask}) {
+export function AddTask({ handleAddTask }) {
   return (
-    <Button onClick={handleAddTask}>
-      Add Task
-    </Button>
+    <Link href="/add-task">
+      <Button onClick={handleAddTask}>Add Task</Button>
+    </Link>
   );
 }
