@@ -14,8 +14,7 @@ export default function Home() {
 
         <Tabs defaultValue="work" className="w-full">
           <TabsList className="grid w-full grid-cols-4 gap-2 px-2">
-            <TabsTrigger
-              className="bg-monthly-stats-work-label text-primary-dark"
+            <TabsTrigger className="bg-monthly-stats-work-label text-primary-dark"
               value="work"
             >
               Work
