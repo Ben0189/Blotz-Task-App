@@ -15,13 +15,13 @@ export default function Home() {
         <Tabs defaultValue="account" className="w-full">
           <TabsList className="grid w-full grid-cols-4 gap-2 px-2">
             <TabsTrigger
-              className="bg-work-label text-primary-dark"
+              className="bg-monthly-stats-work-label text-primary-dark"
               value="work"
             >
               Work
             </TabsTrigger>
             <TabsTrigger
-              className="bg-personal-label text-primary-dark"
+              className="bg-monthly-stats-personal-label text-primary-dark"
               value="personal"
             >
               Personal
@@ -33,7 +33,7 @@ export default function Home() {
               Acedemic
             </TabsTrigger>
             <TabsTrigger
-              className="bg-others-label text-primary-dark"
+              className="bg-monthly-stats-others-label text-primary-dark"
               value="others"
             >
               Others
@@ -42,9 +42,9 @@ export default function Home() {
           <TabsContent value="work">
             <div className="p-1">
               <Card>
-                <CardContent className="space-y-2 bg-work-label">
+                <CardContent className="space-y-2 bg-monthly-stats-work-label">
                   <Textarea
-                    className="text-secondary bg-work-label border-work-label placeholder:text-center placeholder:leading-[10rem]"
+                    className="text-primary-dark bg-monthly-stats-work-label border-work-label placeholder:text-center placeholder:leading-[10rem]"
                     rows={10}
                     placeholder="Type your message here."
                   />
@@ -55,9 +55,9 @@ export default function Home() {
           <TabsContent value="personal">
             <div className="p-1">
               <Card>
-                <CardContent className="space-y-2 bg-personal-label">
+                <CardContent className="space-y-2 bg-monthly-stats-personal-label">
                   <Textarea
-                    className="text-secondary bg-personal-label border-personal-label placeholder:text-center placeholder:leading-[10rem]"
+                    className="text-primary-dark bg-monthly-stats-personal-label border-personal-label placeholder:text-center placeholder:leading-[10rem]"
                     rows={10}
                     placeholder="Type your message here."
                   />
@@ -70,7 +70,7 @@ export default function Home() {
               <Card>
                 <CardContent className="space-y-2 bg-[#278291]">
                   <Textarea
-                    className="text-secondary bg-[#278291] border-[#278291] placeholder:text-center placeholder:leading-[10rem]"
+                    className="text-primary-dark bg-[#278291] border-[#278291] placeholder:text-center placeholder:leading-[10rem]"
                     rows={10}
                     placeholder="Type your message here."
                   />
@@ -81,9 +81,9 @@ export default function Home() {
           <TabsContent value="others">
             <div className="p-1">
               <Card>
-                <CardContent className="space-y-2 bg-others-label">
+                <CardContent className="space-y-2 bg-monthly-stats-others-label">
                   <Textarea
-                    className="text-secondary bg-others-label border-others-label placeholder:text-center placeholder:leading-[10rem]"
+                    className="text-primary-dark bg-monthly-stats-others-label border-others-label placeholder:text-center placeholder:leading-[10rem]"
                     rows={10}
                     placeholder="Type your message here."
                   />
