@@ -2,6 +2,14 @@
 
 namespace BlotzTask.Data.Entities
 {
+    public enum LabelType
+    {
+        Work,
+        Personal,
+        Academic,
+        Others
+    }
+
     public class Label
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
