@@ -8,7 +8,7 @@ import { AddTask } from './components/add-button';
 import { TaskTable } from './components/task-table';
 import { TaskItemDTO } from '@/model/task-Item-dto';
 import { fetchAllTaskItems } from '@/services/taskService';
-import { Checkbox } from '@/components/ui/checkbox';
+
 
 export default function Page() {
     const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
@@ -29,11 +29,6 @@ export default function Page() {
         loadTasks();
     }, []); // Runs on the first render using [] parameter and rerun when state changes, e.g add task
 
-    const [isChecked, setIsChecked] = useState(false);
-
-    const handleCheckboxChange = (checked: boolean) => {
-      setIsChecked(checked); 
-  };
    
 
     return (
@@ -41,25 +36,10 @@ export default function Page() {
 
           <div className="flex justify-end">
             <AddTask handleAddTask={handleAddTask}/>
-          </div>
-          
-          
-          <div className="flex flex-row justify-start space-x-4">
-            <Checkbox
-                checked={isChecked} 
-                onCheckedChange={handleCheckboxChange} 
-                className="h-8 w-8 rounded-md"
-                style={{
-                  backgroundColor: isChecked ? '#343236' : '#838087', 
-                  color: isChecked ? 'white' : 'transparent',
-                  position: 'relative',
-                  borderColor:'transparent'
-              }}
-            />
-            <TaskTable tasks={taskList} />
-          </div>
-          
-    
+          </div>          
+
+          <TaskTable tasks={taskList} />
+
           <div className="flex justify-end mt-10">
             <Button asChild className="ml-auto">
               <Link href="/">Return Home Page</Link>
