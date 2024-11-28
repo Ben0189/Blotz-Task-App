@@ -4,6 +4,7 @@ using BlotzTask.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlotzTask.Migrations
 {
     [DbContext(typeof(BlotzTaskDbContext))]
-    partial class BlotzTaskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241115145303_DefaultLabels")]
+    partial class DefaultLabels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,29 +52,29 @@ namespace BlotzTask.Migrations
                     b.HasData(
                         new
                         {
-                            LabelId = 6,
-                            Color = "#CDB2FF",
+                            LabelId = 1,
+                            Color = "Purple",
                             Description = "Work related tasks",
                             Name = "Work"
                         },
                         new
                         {
-                            LabelId = 7,
-                            Color = "#FBFAC2",
+                            LabelId = 2,
+                            Color = "Yellow",
                             Description = "Personal tasks",
                             Name = "Personal"
                         },
                         new
                         {
-                            LabelId = 8,
-                            Color = "#278291",
+                            LabelId = 3,
+                            Color = "Teal",
                             Description = "Academic tasks",
                             Name = "Academic"
                         },
                         new
                         {
-                            LabelId = 9,
-                            Color = "#1458C6",
+                            LabelId = 4,
+                            Color = "Sky",
                             Description = "Other tasks",
                             Name = "Others"
                         });

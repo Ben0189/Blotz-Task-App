@@ -16,7 +16,6 @@ public static class BlotzContextSeed
             return;
         }
 
-        await SeedLabelsAsync(context);
         await SeedTasksForTodayAsync(context, user);
     }
 
@@ -74,33 +73,6 @@ public static class BlotzContextSeed
         return user;
     }
 
-    private static async Task SeedLabelsAsync(BlotzTaskDbContext context)
-    {
-        if (!await context.Labels.AnyAsync())
-        {
-            await context.Labels.AddRangeAsync(
-                new Label
-                {
-                    Name = "Urgent",
-                    Color = "Red",
-                    Description = "Tasks that need to be addressed immediately"
-                },
-                new Label
-                {
-                    Name = "Completed",
-                    Color = "Green",
-                    Description = "Tasks that have been completed"
-                }
-            );
-            await context.SaveChangesAsync();
-            Console.WriteLine("Labels seeded successfully.");
-        }
-        else
-        {
-            Console.WriteLine("Labels already exist.");
-        }
-    }
-
     private static async Task SeedTasksForTodayAsync(BlotzTaskDbContext context, User user)
     {
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -112,12 +84,12 @@ public static class BlotzContextSeed
             return;
         }
 
-        var labelUrgent = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Urgent");
-        var labelCompleted = await context.Labels.FirstOrDefaultAsync(l => l.Name == "Completed");
+        var labelWork = await context.Labels.FirstOrDefaultAsync(l => l.Name == nameof(LabelType.Work));
+        var labelPersonal = await context.Labels.FirstOrDefaultAsync(l => l.Name == nameof(LabelType.Personal));
 
-        if (labelUrgent == null || labelCompleted == null)
+        if (labelWork == null || labelPersonal == null)
         {
-            Console.WriteLine("Labels are missing. Cannot seed tasks.");
+            Console.WriteLine("Label missing. Try to run migrations to seed the label. Failed to seed task");
             return;
         }
 
@@ -131,7 +103,7 @@ public static class BlotzContextSeed
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 UserId = user.Id,
-                LabelId = labelUrgent.LabelId
+                LabelId = labelWork.LabelId
             },
             new TaskItem
             {
@@ -142,7 +114,7 @@ public static class BlotzContextSeed
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 UserId = user.Id,
-                LabelId = labelCompleted.LabelId
+                LabelId = labelPersonal.LabelId
             }
         );
         await context.SaveChangesAsync();

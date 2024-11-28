@@ -4,6 +4,7 @@ using BlotzTask.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlotzTask.Migrations
 {
     [DbContext(typeof(BlotzTaskDbContext))]
-    partial class BlotzTaskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241118025948_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,28 +52,28 @@ namespace BlotzTask.Migrations
                     b.HasData(
                         new
                         {
-                            LabelId = 6,
+                            LabelId = 1,
                             Color = "#CDB2FF",
                             Description = "Work related tasks",
                             Name = "Work"
                         },
                         new
                         {
-                            LabelId = 7,
+                            LabelId = 2,
                             Color = "#FBFAC2",
                             Description = "Personal tasks",
                             Name = "Personal"
                         },
                         new
                         {
-                            LabelId = 8,
+                            LabelId = 3,
                             Color = "#278291",
                             Description = "Academic tasks",
                             Name = "Academic"
                         },
                         new
                         {
-                            LabelId = 9,
+                            LabelId = 4,
                             Color = "#1458C6",
                             Description = "Other tasks",
                             Name = "Others"

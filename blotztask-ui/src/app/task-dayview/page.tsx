@@ -67,13 +67,13 @@ export default function Dayview() {
                   <div className="flex flex-row">
 
                     <div
-                      className={`flex justify-center items-center rounded-xl bg-work-label mr-2 w-1/3 p-4`}
+                      className={`flex justify-center items-center rounded-xl bg-monthly-stats-work-label mr-2 w-1/3 p-4`}
                     >
                       <p>{task.title}</p>
                     </div>
 
                     <div
-                      className={`flex justify-center items-center rounded-xl bg-work-label grow`}
+                      className={`flex justify-center items-center rounded-xl bg-monthly-stats-work-label grow`}
                     >
                       <p>{task.description}</p>
                     </div>
