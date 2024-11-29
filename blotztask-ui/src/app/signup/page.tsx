@@ -19,34 +19,45 @@ const signUpSchema = z.object({
     .email('Invalid email')
     .min(1, 'Email is required')
     .regex(/@/, 'Email address must contain @'),
-  password:z
-  .string()
-  .min(8, 'Password must be at least 8 characters')
-  .max(128, 'Password must be at most 128 characters')
-  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character')
+  password: z
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .max(128, 'Password must be at most 128 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(
+      /[^A-Za-z0-9]/,
+      'Password must contain at least one special character'
+    ),
 });
 
+// Define TypeScript type based on Zod schema
+type SignUpFormData = z.infer<typeof signUpSchema>;
 
-  const handleRegister = async () => {
-    setLoading(true);
-    setError(null);
+const SignUpPage = () => {
+  const router = useRouter(); // Initialize router
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  const handleRegister = async (data: SignUpFormData) => {
     try {
       await fetchWithErrorHandling(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/register`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify(data),
         }
       );
       handleSuccess();
     } catch (error) {
       handleError(error);
-    } finally {
-      setLoading(false);
     }
   };
 
