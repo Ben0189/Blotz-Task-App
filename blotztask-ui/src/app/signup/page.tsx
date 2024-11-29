@@ -40,7 +40,7 @@ const SignUpPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
   });
@@ -63,14 +63,15 @@ const SignUpPage = () => {
 
   const handleError = (error: unknown) => {
     if (error instanceof BadRequestError) {
-      setError(
-        error.details
-          ? Object.values(error.details.errors).flat().join(' ')
-          : error.message
-      );
+      const errorMessage = error.details
+        ? Object.values(error.details.errors).flat().join(' ')
+        : error.message;
+      toast.error(errorMessage, { duration: 5000 });
     } else {
       console.error('Unexpected error during registration:', error);
-      setError('An unexpected error occurred. Please try again later.');
+      toast.error('An unexpected error occurred. Please try again later.', {
+        duration: 5000,
+      });
     }
   };
 
@@ -83,41 +84,43 @@ const SignUpPage = () => {
     });
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    handleRegister();
-  };
-
   return (
     <div className="h-full justify-center flex flex-col items-center">
       <div className="flex flex-col gap-4 bg-white p-5 rounded-lg shadow-md w-4/12">
         <h1 className={styles.title}>User Sign Up</h1>
-        {error && <AlertDestructive title="Error" description={error} />}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(handleRegister)}>
           <div className={styles.input_group}>
             <label className={styles.label}>Email:</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              {...register('email')}
               className={styles.input}
               placeholder="Enter your email"
+              required
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div className={styles.input_group}>
             <label className={styles.label}>Password:</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              {...register('password')}
               className={styles.input}
               placeholder="Enter your password"
+              required
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
-          <Button className="w-full" type="submit" disabled={loading}>
-            {loading ? <Spinner /> : 'Sign Up'}
+          <Button className="w-full" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? <Spinner /> : 'Sign Up'}
           </Button>
         </form>
       </div>
