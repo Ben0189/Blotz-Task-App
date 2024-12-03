@@ -29,6 +29,19 @@ namespace BlotzTask.Controllers
             return Ok(await _taskService.GetTodoItemsByUser(userId));
         }
 
+        [HttpGet("monthly-stats")]
+        public async Task<IActionResult> GetMonthlyStats(int year, int month)
+        {
+            var userId = HttpContext.Items["UserId"] as string;
+
+            if (userId == null)
+            {
+                throw new UnauthorizedAccessException("Could not find user id from Http Context");
+            }
+
+            return Ok(await _taskService.GetMonthlyStats(userId, year, month));
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskByID(int id)
         {
