@@ -4,6 +4,7 @@ param connectionString string
 var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 var webSiteName = toLower('wapp-${webAppName}')
 
+//TODO : A new app service plan is created from azure portal please update the bicep script here
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
   location: location
