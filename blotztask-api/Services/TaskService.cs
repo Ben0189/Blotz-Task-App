@@ -156,8 +156,7 @@ public class TaskService : ITaskService
         try
         {
             var filteredTasks = await _dbContext.TaskItems
-                //.Where(x => x.UserId == userId && x.CreatedAt.ToString("yyyy-MM") == currentMonth)
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == userId && x.DueDate.Month == input.Month && x.DueDate.Year == input.Year)
                 .GroupBy(x => new { x.Label.Name, x.IsDone })
                 .Select(g => new
                 {
