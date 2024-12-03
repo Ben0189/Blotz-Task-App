@@ -47,7 +47,7 @@ jobs:
 
       - name: Generate EF Core migration script
         working-directory: ./blotztask-api
-        run: dotnet ef migrations script -o ${{ runner.temp }}/migrations.sql
+        run: dotnet ef migrations script --idempotent -o ${{ runner.temp }}/migrations.sql
 
       - name: Upload migration script for deployment job
         uses: actions/upload-artifact@v4
@@ -91,7 +91,6 @@ jobs:
           with:
             connection-string: ${{ steps.get-secret-connection-strings.outputs.db-string-connection }} # TODO: do different way to get this
             path: ./migrations.sql    
-            skip-firewall-check: true   
 
         - name: Deploy to Azure Web App #What if my deployment failed here? can i rollback the above script deployment? You cant, you just need to make the schema changes is backward compitatble
           id: deploy-to-webapp
