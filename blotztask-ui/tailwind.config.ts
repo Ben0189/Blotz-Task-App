@@ -14,7 +14,7 @@ const config: Config = {
       fontFamily: {
         satoshi: ['Satoshi', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
-        display: 'fantasy'
+        display: 'fantasy',
       },
       colors: {
         'primary-light': '#DBE4E9',
@@ -27,8 +27,23 @@ const config: Config = {
         'monthly-stats-work-label': '#d0b4fc',
         'completed': '#9BE3E1',
         'unfinished': '#FF94B3',
-        'unfinished-header': '#DC567C'
-      }
+        'unfinished-header': '#DC567C',
+        'add-task-title-bg': '#278291',
+        'add-task-title-text': '#FFFFFF',
+        'add-task-title-placeholder': '#FFFFFF',
+        'add-task-work-label-bg': '#CDB2FF',
+        'add-task-work-label-text': '#6021D6',
+        'add-task-personal-label-bg': '#FBFAC2',
+        'add-task-personal-label-text': '#7E7C1D',
+        'add-task-academic-label-bg': '#278291',
+        'add-task-academic-label-text': '#FFFFFF',
+        'add-task-others-label-bg': '#94BDFF',
+        'add-task-others-label-text': '#1458C6',
+        'add-task-work-input-area-bg': '#E8E1F5',
+        'add-task-personal-input-area-bg': '#F4F4E3',
+        'add-task-academic-input-area-bg': '#9BE3E1',
+        'add-task-others-input-area-bg': '#D2E3FF',
+      },
     },
   },
   plugins: [],
