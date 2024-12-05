@@ -155,7 +155,10 @@ export default function Home() {
             </div>
           </TabsContent>
         </Tabs>
-        <DatePickerWithRange />
+        <div className="flex justify-between items-center w-full">
+          <DatePickerWithRange />
+          <Button>Add task</Button>
+        </div>
       </div>
     </>
   );
