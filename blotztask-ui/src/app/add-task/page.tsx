@@ -8,32 +8,32 @@ export default function Home() {
     <>
       <div className="flex flex-col gap-10 mx-24">
         <Input
-          className="bg-[#278291] text-center text-primary-light placeholder-primary-light"
+          className="bg-add-task-title-bg text-center text-add-task-title-text placeholder-add-task-title-placeholder"
           placeholder="Write Your Title Here"
         />
 
-        <Tabs defaultValue="account" className="w-full">
+        <Tabs defaultValue="work" className="w-full">
           <TabsList className="grid w-full grid-cols-4 gap-2 px-2">
             <TabsTrigger
-              className="bg-work-label text-primary-dark"
+              className="bg-add-task-work-label-bg text-add-task-work-label-text"
               value="work"
             >
               Work
             </TabsTrigger>
             <TabsTrigger
-              className="bg-personal-label text-primary-dark"
+              className="bg-add-task-personal-label-bg text-add-task-personal-label-text"
               value="personal"
             >
               Personal
             </TabsTrigger>
             <TabsTrigger
-              className="bg-[#278291] text-primary-dark"
+              className="bg-add-task-academic-label-bg text-add-task-academic-label-text"
               value="acedemic"
             >
               Acedemic
             </TabsTrigger>
             <TabsTrigger
-              className="bg-others-label text-primary-dark"
+              className="bg-add-task-others-label-bg text-add-task-others-label-text"
               value="others"
             >
               Others
@@ -42,9 +42,9 @@ export default function Home() {
           <TabsContent value="work">
             <div className="p-1">
               <Card>
-                <CardContent className="space-y-2 bg-work-label">
+                <CardContent className="space-y-2 bg-add-task-work-label-bg">
                   <Textarea
-                    className="text-secondary bg-work-label border-work-label placeholder:text-center placeholder:leading-[10rem]"
+                    className="text-primary-dark bg-add-task-work-input-area-bg border-add-task-work-label-bg placeholder:text-center placeholder:leading-[10rem] placeholder-add-task-work-label-text"
                     rows={10}
                     placeholder="Type your message here."
                   />
@@ -55,9 +55,9 @@ export default function Home() {
           <TabsContent value="personal">
             <div className="p-1">
               <Card>
-                <CardContent className="space-y-2 bg-personal-label">
+                <CardContent className="space-y-2 bg-add-task-personal-label-bg">
                   <Textarea
-                    className="text-secondary bg-personal-label border-personal-label placeholder:text-center placeholder:leading-[10rem]"
+                    className="text-primary-dark bg-add-task-personal-input-area-bg border-add-task-personal-label-bg placeholder:text-center placeholder:leading-[10rem]  placeholder-add-task-personal-label-text"
                     rows={10}
                     placeholder="Type your message here."
                   />
@@ -68,9 +68,9 @@ export default function Home() {
           <TabsContent value="acedemic">
             <div className="p-1">
               <Card>
-                <CardContent className="space-y-2 bg-[#278291]">
+                <CardContent className="space-y-2 bg-add-task-academic-label-bg">
                   <Textarea
-                    className="text-secondary bg-[#278291] border-[#278291] placeholder:text-center placeholder:leading-[10rem]"
+                    className="text-primary-dark bg-add-task-academic-input-area-bg border-add-task-academic-label-bg placeholder:text-center placeholder:leading-[10rem] placeholder-add-task-academic-label-bg"
                     rows={10}
                     placeholder="Type your message here."
                   />
@@ -81,9 +81,9 @@ export default function Home() {
           <TabsContent value="others">
             <div className="p-1">
               <Card>
-                <CardContent className="space-y-2 bg-others-label">
+                <CardContent className="space-y-2 bg-add-task-others-label-bg">
                   <Textarea
-                    className="text-secondary bg-others-label border-others-label placeholder:text-center placeholder:leading-[10rem]"
+                    className="text-primary-dark bg-add-task-others-input-area-bg border-add-task-others-label-bg placeholder:text-center placeholder:leading-[10rem] placeholder-add-task-others-label-text"
                     rows={10}
                     placeholder="Type your message here."
                   />
