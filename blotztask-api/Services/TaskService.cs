@@ -166,24 +166,20 @@ public class TaskService : ITaskService
                 })
                 .ToListAsync();
 
-            var result = new MonthlyStatDTO
-            {
-                CurrentMonth = currentMonth,
-                Data = new Tasks()
-            };
+            var result = new MonthlyStatDTO(currentMonth);
 
             foreach (var task in filteredTasks)
             {
                 if (task.IsDone)
                 {
-                    result.Data.Completed.Add(task.Label, task.Count) ;
+                    result.Data.Completed.Add(task.Label, task.Count);
                 }
                 else
                 {
                     result.Data.Uncompleted.Add(task.Label, task.Count);
                 }
             }
-
+ 
             return result;
         }
         catch (Exception ex)

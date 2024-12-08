@@ -29,7 +29,7 @@ namespace BlotzTask.Controllers
             return Ok(await _taskService.GetTodoItemsByUser(userId));
         }
 
-        [HttpGet("monthly-stats")]
+        [HttpGet("monthly-stats/{year}-{month}")]
         public async Task<IActionResult> GetMonthlyStats(int year, int month)
         {
             var userId = HttpContext.Items["UserId"] as string;
