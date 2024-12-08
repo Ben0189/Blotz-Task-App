@@ -9,6 +9,7 @@ import { TaskTable } from './components/task-table';
 import { TaskItemDTO } from '@/model/task-Item-dto';
 import { fetchAllTaskItems } from '@/services/taskService';
 
+
 export default function Page() {
     const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
 
@@ -28,13 +29,18 @@ export default function Page() {
         loadTasks();
     }, []); // Runs on the first render using [] parameter and rerun when state changes, e.g add task
 
+   
+
     return (
-        <div className="flex flex-col items-end mt-10 mr-10">
-          <AddTask handleAddTask={handleAddTask}/>
-    
+        <div className="flex flex-col mt-10 mr-10">
+
+          <div className="flex justify-end">
+            <AddTask handleAddTask={handleAddTask}/>
+          </div>          
+
           <TaskTable tasks={taskList} />
-    
-          <div className="mt-10">
+
+          <div className="flex justify-end mt-10">
             <Button asChild className="ml-auto">
               <Link href="/">Return Home Page</Link>
             </Button>

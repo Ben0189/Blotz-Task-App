@@ -5,9 +5,14 @@ import { z } from 'zod';
 import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
 import { fetchTaskItemsDueToday } from '@/services/taskService';
+import { Checkbox } from '@/components/ui/checkbox';
+import { fetchWithAuth } from '@/utils/fetch-with-auth';
+import { completeTaskForToday } from '@/services/taskService';
 
 export default function Dayview() {
   const [incompleteTasks, setIncompleteTasks] = useState<TaskDTO[]>([]);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  
 
   useEffect(() => {
     loadIncompleteTasks();
@@ -23,6 +28,24 @@ export default function Dayview() {
       setIncompleteTasks(notDoneTasks);
     } catch (error) {
       console.error('Error loading tasks:', error);
+    }
+  };
+
+  
+  
+  const handleCheckboxChange = (checked: boolean, taskId: number) => {
+    setIsChecked(checked); 
+    if (checked) {
+      completeTask(taskId);
+      loadIncompleteTasks();
+    }
+  };
+
+  const completeTask = async (taskId: number) => {
+    try {
+      await completeTaskForToday(taskId);
+    } catch (error) {
+      console.error('Error completing task:', error);
     }
   };
 
@@ -42,17 +65,32 @@ export default function Dayview() {
             <div className="grid gap-6 w-full">
               {incompleteTasks.map((task) => (
                 <div key={task.id} className="w-full">
-                  <div className="flex flex-row">
+                  <div className="flex flex-row space-x-4">
+
+                    <div className="flex flex-row justify-start items-center space-x-4">
+                      <Checkbox
+                          checked={isChecked} 
+                          onCheckedChange={(checked:boolean) =>
+                            handleCheckboxChange(checked,task.id)
+                          } 
+                          className="h-8 w-8 rounded-md border-transparent bg-gray-400"
+                      />
+                    </div>
+
                     <div
                       className={`flex justify-center items-center rounded-xl bg-monthly-stats-work-label mr-2 w-1/3 p-4`}
                     >
                       <p>{task.title}</p>
                     </div>
+
                     <div
                       className={`flex justify-center items-center rounded-xl bg-monthly-stats-work-label grow`}
                     >
                       <p>{task.description}</p>
                     </div>
+
+                    
+
                   </div>
                 </div>
               ))}
@@ -65,3 +103,4 @@ export default function Dayview() {
     </>
   );
 }
+
