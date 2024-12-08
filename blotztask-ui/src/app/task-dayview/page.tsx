@@ -37,7 +37,7 @@ export default function Dayview() {
     setIsChecked(checked); 
     if (checked) {
       completeTask(taskId);
-      setIncompleteTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
+      loadIncompleteTasks();
     }
   };
 
