@@ -1,7 +1,11 @@
+'use client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
+import * as React from 'react';
+import { DatePickerWithRange } from './component/calendar';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
@@ -92,6 +96,10 @@ export default function Home() {
             </div>
           </TabsContent>
         </Tabs>
+        <div className="flex justify-between items-center w-full">
+          <DatePickerWithRange />
+          <Button>Add task</Button>
+        </div>
       </div>
     </>
   );
