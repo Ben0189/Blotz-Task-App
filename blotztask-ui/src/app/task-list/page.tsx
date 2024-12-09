@@ -1,11 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { TaskItemDTO } from '@/model/task-Item-dto';
-import { fetchAllTaskItems } from '@/services/taskService';
 import { Trash } from 'lucide-react';
 
 export default function Page() {
