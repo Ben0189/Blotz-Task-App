@@ -114,6 +114,7 @@ public class TaskService : ITaskService
         task.Title = editTaskItem.Title;
         task.Description = editTaskItem.Description;
         task.UpdatedAt = DateTime.UtcNow;
+        task.LabelId = editTaskItem.LabelId;
 
         _dbContext.TaskItems.Update(task);
         await _dbContext.SaveChangesAsync();
