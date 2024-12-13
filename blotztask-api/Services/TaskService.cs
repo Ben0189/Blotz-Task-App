@@ -11,6 +11,7 @@ public interface ITaskService
     public Task<List<TaskItemDTO>> GetTodoItemsByUser(string userId);
     public Task<TaskItemDTO> GetTaskByID(int Id);
     public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
+    public Task<bool> DeleteTaskByID(int Id);
     public Task<string> AddTask(AddTaskItemDTO addtaskItem);
     public Task<int> CompleteTask(int id);
     public Task<List<TaskItemDTO>> GetTaskByDate(DateOnly date);
@@ -70,6 +71,19 @@ public class TaskService : ITaskService
         return result;
     }
 
+    public async Task<bool> DeleteTaskByID(int Id)
+    {
+        var taskItem = await _dbContext.TaskItems.FindAsync(Id);
+        if (taskItem == null)
+        {
+            throw new NotFoundException($"Task with ID {Id} not found.");
+        }
+
+        _dbContext.TaskItems.Remove(taskItem);
+        await _dbContext.SaveChangesAsync();
+        return true;
+    }
+
     public async Task<string> AddTask(AddTaskItemDTO addtaskItem)
     {
         var addtask = new TaskItem
@@ -100,6 +114,7 @@ public class TaskService : ITaskService
         task.Title = editTaskItem.Title;
         task.Description = editTaskItem.Description;
         task.UpdatedAt = DateTime.UtcNow;
+        task.LabelId = editTaskItem.LabelId;
 
         _dbContext.TaskItems.Update(task);
         await _dbContext.SaveChangesAsync();
