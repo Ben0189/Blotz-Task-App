@@ -63,6 +63,7 @@ const SignUpPage = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
   });
@@ -85,14 +86,24 @@ const SignUpPage = () => {
 
   const handleError = (error: unknown) => {
     if (error instanceof BadRequestError) {
-      const errorMessage = error.details
-        ? Object.values(error.details.errors).flat().join(' ')
-        : error.message;
-      toast.error(errorMessage, { duration: 5000 });
+      if (error.details) {
+        // Map server-side errors to form fields
+        Object.entries(error.details.errors).forEach(([field, messages]) => {
+          setError(field as keyof SignUpFormData, {
+            type: 'server',
+            message: Array.isArray(messages) ? messages.join(', ') : messages,
+          });
+        });
+      } else {
+        setError('email', {
+          type: 'server',
+          message: error.message || 'An unexpected error occurred',
+        });
+      }
     } else {
-      console.error('Unexpected error during registration:', error);
-      toast.error('An unexpected error occurred. Please try again later.', {
-        duration: 5000,
+      setError('email', {
+        type: 'server',
+        message: 'An unexpected error occurred. Please try again later.',
       });
     }
   };
@@ -110,6 +121,18 @@ const SignUpPage = () => {
     <div className="h-full justify-center flex flex-col items-center">
       <div className="flex flex-col gap-4 bg-white p-5 rounded-lg shadow-md w-4/12">
         <h1 className={styles.title}>User Sign Up</h1>
+        {/* Global Error Prompt */}
+        {errors.email?.message || errors.password?.message ? (
+          <div className="text-red-500 p-4 rounded-md mb-4 border border-red-500">
+            <h2 className="font-bold text-lg">Error</h2>
+            <p>
+              {errors.email?.message ||
+                errors.password?.message ||
+                'An error occurred.'}
+            </p>
+          </div>
+        ) : null}
+
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className={styles.input_group}>
             <label className={styles.label}>Email:</label>
@@ -120,9 +143,10 @@ const SignUpPage = () => {
               placeholder="Enter your email"
               required
             />
-            {errors.email && (
+            {/* Inline Error Message */}
+            {!errors.email && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.email.message}
+                {errors.email?.message}
               </p>
             )}
           </div>
@@ -135,9 +159,10 @@ const SignUpPage = () => {
               placeholder="Enter your password"
               required
             />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-2">
-                {errors.password.message}
+            {/* Inline Error Message */}
+            {!errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password?.message}
               </p>
             )}
           </div>
