@@ -172,11 +172,11 @@ public class TaskService : ITaskService
             {
                 if (task.IsDone)
                 {
-                    result.Data.Completed.Add(task.Label, task.Count);
+                    result.Tasks.Completed.Add(task.Label, task.Count);
                 }
                 else
                 {
-                    result.Data.Uncompleted.Add(task.Label, task.Count);
+                    result.Tasks.Uncompleted.Add(task.Label, task.Count);
                 }
             }
  

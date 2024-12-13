@@ -6,10 +6,10 @@ namespace BlotzTask.Models
     {
         public MonthlyStatDTO(string inputMonth) {
             CurrentMonth = inputMonth;
-            Data = new Tasks();
+            Tasks = new Tasks();
         }
         public string CurrentMonth { get; set; }
-        public Tasks Data { get; set; }
+        public Tasks Tasks { get; set; }
     }
 
     public class Tasks
