@@ -11,23 +11,46 @@ import { BadRequestError } from '@/model/error/bad-request-error';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-//Define Zod validation schema
+// Define Zod validation schema with custom email validation
 const signUpSchema = z.object({
-  email: z
-    .string()
-    .email('Invalid email')
-    .min(1, 'Email is required')
-    .regex(/@/, 'Email address must contain @'),
+  email: z.string().refine(
+    (email) => {
+      // Split the email into parts by '@'
+      const parts = email.split('@');
+      if (parts.length !== 2) return false; // Must have exactly one '@'
+
+      const [localPart, domainPart] = parts;
+
+      // Ensure local and domain parts are not empty
+      if (!localPart || !domainPart) return false;
+
+      // Ensure the domain part contains at least one dot and valid subparts
+      const domainParts = domainPart.split('.');
+      if (
+        domainParts.length < 2 ||
+        domainParts.some((part) => part.trim() === '')
+      )
+        return false;
+
+      return true;
+    },
+    {
+      message: 'Invalid email address',
+    }
+  ),
   password: z
     .string()
     .min(8, 'Password must be at least 8 characters')
     .max(128, 'Password must be at most 128 characters')
-    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-    .regex(
-      /[^A-Za-z0-9]/,
-      'Password must contain at least one special character'
-    ),
+    .refine((password) => /[A-Z]/.test(password), {
+      message: 'Password must contain at least one uppercase letter',
+    })
+    .refine((password) => /[a-z]/.test(password), {
+      message: 'Password must contain at least one lowercase letter',
+    })
+    .refine((password) => /[^A-Za-z0-9]/.test(password), {
+      message: 'Password must contain at least one special character',
+    }),
 });
 
 // Define TypeScript type based on Zod schema
@@ -113,7 +136,7 @@ const SignUpPage = () => {
               required
             />
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="text-red-500 text-sm mt-2">
                 {errors.password.message}
               </p>
             )}
