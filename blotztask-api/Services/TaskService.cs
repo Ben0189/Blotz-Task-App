@@ -15,6 +15,7 @@ public interface ITaskService
     public Task<string> AddTask(AddTaskItemDTO addtaskItem);
     public Task<int> CompleteTask(int id);
     public Task<List<TaskItemDTO>> GetTaskByDate(DateOnly date);
+    public Task<MonthlyStatDTO> GetMonthlyStats(string userId, int year, int month);
 }
 
 public class TaskService : ITaskService
@@ -159,6 +160,44 @@ public class TaskService : ITaskService
         catch (Exception ex)
         {
             throw new Exception($"Unhandled exception: {ex.Message}");
+        }
+    }
+
+    public async Task<MonthlyStatDTO> GetMonthlyStats(string userId, int year, int month)
+    {
+
+        try
+        {
+            var filteredTasks = await _dbContext.TaskItems
+                .Where(x => x.UserId == userId && x.DueDate.Month == month && x.DueDate.Year == year)
+                .GroupBy(x => new { x.Label.Name, x.IsDone })
+                .Select(g => new
+                {
+                    Label = g.Key.Name,
+                    IsDone = g.Key.IsDone,
+                    Count = g.Count()
+                })
+                .ToListAsync();
+
+            var result = new MonthlyStatDTO(year, month);
+
+            foreach (var task in filteredTasks)
+            {
+                if (task.IsDone)
+                {
+                    result.Tasks.Completed.Add(task.Label, task.Count);
+                }
+                else
+                {
+                    result.Tasks.Uncompleted.Add(task.Label, task.Count);
+                }
+            }
+ 
+            return result;
+        }
+        catch (Exception ex)
+        {
+            throw;
         }
     }
 }
