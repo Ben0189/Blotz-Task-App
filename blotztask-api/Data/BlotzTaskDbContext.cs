@@ -14,6 +14,36 @@ namespace BlotzTask.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Label>().HasData(
+                new Label
+                {
+                    LabelId = 6,
+                    Name = "Work",
+                    Color = "#CDB2FF",
+                    Description = "Work related tasks"
+                },
+                new Label
+                {
+                    LabelId = 7,
+                    Name = "Personal",
+                    Color = "#FBFAC2",
+                    Description = "Personal tasks"
+                },
+                new Label
+                {
+                    LabelId = 8,
+                    Name = "Academic",
+                    Color = "#278291",
+                    Description = "Academic tasks"
+                },
+                new Label
+                {
+                    LabelId = 9,
+                    Name = "Others",
+                    Color = "#1458C6",
+                    Description = "Other tasks"
+                }
+            );
         }
     }
 }

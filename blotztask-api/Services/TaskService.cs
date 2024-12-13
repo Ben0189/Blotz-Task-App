@@ -11,9 +11,11 @@ public interface ITaskService
     public Task<List<TaskItemDTO>> GetTodoItemsByUser(string userId);
     public Task<TaskItemDTO> GetTaskByID(int Id);
     public Task<int> EditTask(int Id, EditTaskItemDTO editTaskItem);
+    public Task<bool> DeleteTaskByID(int Id);
     public Task<string> AddTask(AddTaskItemDTO addtaskItem);
     public Task<int> CompleteTask(int id);
     public Task<List<TaskItemDTO>> GetTaskByDate(DateOnly date);
+    public Task<MonthlyStatDTO> GetMonthlyStats(string userId, int year, int month);
 }
 
 public class TaskService : ITaskService
@@ -31,10 +33,12 @@ public class TaskService : ITaskService
         {
             return await _dbContext.TaskItems
                 .Where(x => x.UserId == userId)
+                .Include(x => x.Label)
                 .Select(x => new TaskItemDTO
                 {
                     Id = x.Id,
-                    Title = x.Title
+                    Title = x.Title,
+                    Label = new LabelDTO { Name = x.Label.Name, Color = x.Label.Color }        
                 })
                 .ToListAsync();
         }
@@ -61,10 +65,24 @@ public class TaskService : ITaskService
             DueDate = task.DueDate,
             IsDone = task.IsDone,
             CreatedAt = task.CreatedAt,
-            UpdatedAt = task.UpdatedAt
+            UpdatedAt = task.UpdatedAt,
+            Label = new LabelDTO { Name = task.Label.Name, Color = task.Label.Color }
         };
 
         return result;
+    }
+
+    public async Task<bool> DeleteTaskByID(int Id)
+    {
+        var taskItem = await _dbContext.TaskItems.FindAsync(Id);
+        if (taskItem == null)
+        {
+            throw new NotFoundException($"Task with ID {Id} not found.");
+        }
+
+        _dbContext.TaskItems.Remove(taskItem);
+        await _dbContext.SaveChangesAsync();
+        return true;
     }
 
     public async Task<string> AddTask(AddTaskItemDTO addtaskItem)
@@ -74,7 +92,8 @@ public class TaskService : ITaskService
             Title = addtaskItem.Title,
             Description = addtaskItem.Description,
             CreatedAt = DateTime.UtcNow, 
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            LabelId = addtaskItem.LabelId,
         };
 
         _dbContext.TaskItems.Add(addtask);
@@ -96,6 +115,7 @@ public class TaskService : ITaskService
         task.Title = editTaskItem.Title;
         task.Description = editTaskItem.Description;
         task.UpdatedAt = DateTime.UtcNow;
+        task.LabelId = editTaskItem.LabelId;
 
         _dbContext.TaskItems.Update(task);
         await _dbContext.SaveChangesAsync();
@@ -132,13 +152,52 @@ public class TaskService : ITaskService
                     Title = task.Title,
                     Description = task.Description,
                     DueDate = task.DueDate,
-                    IsDone = task.IsDone
+                    IsDone = task.IsDone,
+                    Label = new LabelDTO { Name = task.Label.Name, Color = task.Label.Color }
                 })
                 .ToListAsync();
         }
         catch (Exception ex)
         {
             throw new Exception($"Unhandled exception: {ex.Message}");
+        }
+    }
+
+    public async Task<MonthlyStatDTO> GetMonthlyStats(string userId, int year, int month)
+    {
+
+        try
+        {
+            var filteredTasks = await _dbContext.TaskItems
+                .Where(x => x.UserId == userId && x.DueDate.Month == month && x.DueDate.Year == year)
+                .GroupBy(x => new { x.Label.Name, x.IsDone })
+                .Select(g => new
+                {
+                    Label = g.Key.Name,
+                    IsDone = g.Key.IsDone,
+                    Count = g.Count()
+                })
+                .ToListAsync();
+
+            var result = new MonthlyStatDTO(year, month);
+
+            foreach (var task in filteredTasks)
+            {
+                if (task.IsDone)
+                {
+                    result.Tasks.Completed.Add(task.Label, task.Count);
+                }
+                else
+                {
+                    result.Tasks.Uncompleted.Add(task.Label, task.Count);
+                }
+            }
+ 
+            return result;
+        }
+        catch (Exception ex)
+        {
+            throw;
         }
     }
 }

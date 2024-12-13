@@ -7,6 +7,7 @@ param dbAdminUsername string
 @secure()
 param dbAdminPassword string
 
+//TODO : A new database resource is created from azure portal please update the bicep script here
 resource sql 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: sqlServerName
   location: location

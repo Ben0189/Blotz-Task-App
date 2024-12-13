@@ -33,6 +33,7 @@ builder.Services.AddSwaggerGen(options =>
     });
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
+builder.Services.AddApplicationInsightsTelemetry();
 
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ILabelService, LabelService>();
@@ -62,9 +63,12 @@ if (builder.Environment.IsProduction())
 
     var client = new SecretClient(new Uri(keyVaultEndpoint), new DefaultAzureCredential());
     builder.Services.AddDbContext<BlotzTaskDbContext>(options => options.UseSqlServer(client.GetSecret("db-string-connection").Value.Value.ToString()));
-    builder.Services.AddOpenTelemetry().UseAzureMonitor();
-
 }
+
+builder.Services.AddOpenTelemetry().UseAzureMonitor(options => {
+    var connectionString = builder.Configuration.GetSection("ApplicationInsights:ConnectionString").Value;
+    options.ConnectionString = connectionString;
+});
 
 builder.Services.AddCors(options =>
 {
