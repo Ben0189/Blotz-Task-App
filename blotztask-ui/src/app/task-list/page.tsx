@@ -8,9 +8,20 @@ import { AddTask } from './components/add-button';
 import { TaskTable } from './components/task-table';
 import { TaskItemDTO } from '@/model/task-Item-dto';
 import { fetchAllTaskItems } from '@/services/taskService';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 
 export default function Page() {
     const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
+    const [isDialogOpen, setDialogOpen] = useState(true);
 
     //Not implemented yet
     async function handleAddTask() {
@@ -39,6 +50,29 @@ export default function Page() {
               <Link href="/">Return Home Page</Link>
             </Button>
           </div>
+
+          <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              {/* This will trigger the Dialog */}
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[370px] bg-white">
+              <DialogHeader>
+                <DialogDescription>
+                  Are you sure you want to delete the Task?
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="flex justify-between">
+                <Button variant="outline" className="w-full focus:outline-none focus:ring-0 focus:border-black-500">
+                  Cancel
+                </Button>
+                <Button className="ml-2 w-full">
+                  Yes
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+
         </div>
       );
 }
