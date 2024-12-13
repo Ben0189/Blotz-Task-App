@@ -6,12 +6,11 @@ import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
 import { fetchTaskItemsDueToday } from '@/services/taskService';
 import { Checkbox } from '@/components/ui/checkbox';
-import { fetchWithAuth } from '@/utils/fetch-with-auth';
 import { completeTaskForToday } from '@/services/taskService';
 
 export default function Dayview() {
   const [incompleteTasks, setIncompleteTasks] = useState<TaskDTO[]>([]);
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [tasksCompleted, setTasksCompleted] = useState(false);
   
 
   useEffect(() => {
@@ -33,13 +32,16 @@ export default function Dayview() {
 
   
   
-  const handleCheckboxChange = (checked: boolean, taskId: number) => {
-    setIsChecked(checked); 
-    if (checked) {
-      completeTask(taskId);
-      loadIncompleteTasks();
-    }
+  const handleCheckboxChange = (taskId: number) => {
+    completeTask(taskId);
+    setTasksCompleted(prevState => !prevState);
+    loadIncompleteTasks();
   };
+
+
+  useEffect(() => {
+    loadIncompleteTasks(); // 只有当 tasksCompleted 改变时，才调用一次
+  }, [tasksCompleted]);
 
   const completeTask = async (taskId: number) => {
     try {
@@ -69,10 +71,7 @@ export default function Dayview() {
 
                     <div className="flex flex-row justify-start items-center space-x-4">
                       <Checkbox
-                          checked={isChecked} 
-                          onCheckedChange={(checked:boolean) =>
-                            handleCheckboxChange(checked,task.id)
-                          } 
+                          onCheckedChange={() => handleCheckboxChange(task.id) }
                           className="h-8 w-8 rounded-md border-transparent bg-gray-400"
                       />
                     </div>
