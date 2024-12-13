@@ -40,7 +40,7 @@ export default function Dayview() {
 
 
   useEffect(() => {
-    loadIncompleteTasks(); // 只有当 tasksCompleted 改变时，才调用一次
+    loadIncompleteTasks(); 
   }, [tasksCompleted]);
 
   const completeTask = async (taskId: number) => {
