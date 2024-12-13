@@ -150,13 +150,11 @@ public class TaskService : ITaskService
 
     public async Task<MonthlyStatDTO> GetMonthlyStats(string userId, int year, int month)
     {
-        var input = new DateTime(year, month, 1);
-        var currentMonth = input.ToString("yyyy-MM");
 
         try
         {
             var filteredTasks = await _dbContext.TaskItems
-                .Where(x => x.UserId == userId && x.DueDate.Month == input.Month && x.DueDate.Year == input.Year)
+                .Where(x => x.UserId == userId && x.DueDate.Month == month && x.DueDate.Year == year)
                 .GroupBy(x => new { x.Label.Name, x.IsDone })
                 .Select(g => new
                 {
@@ -166,7 +164,7 @@ public class TaskService : ITaskService
                 })
                 .ToListAsync();
 
-            var result = new MonthlyStatDTO(currentMonth);
+            var result = new MonthlyStatDTO(year, month);
 
             foreach (var task in filteredTasks)
             {
