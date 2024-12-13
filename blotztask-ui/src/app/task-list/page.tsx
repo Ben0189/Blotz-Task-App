@@ -14,6 +14,7 @@ export default function Page() {
   const loadTasks = async () => {
     const data = await fetchAllTaskItems();
     setTaskList(data);
+    console.log(taskList);
   };
 
   /**
