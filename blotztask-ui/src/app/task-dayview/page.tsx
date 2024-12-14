@@ -10,7 +10,7 @@ import { completeTaskForToday } from '@/services/taskService';
 
 export default function Dayview() {
   const [incompleteTasks, setIncompleteTasks] = useState<TaskDTO[]>([]);
-  const [tasksCompleted, setTasksCompleted] = useState(false);
+  
   
 
   useEffect(() => {
@@ -19,6 +19,7 @@ export default function Dayview() {
 
   const loadIncompleteTasks = async () => {
     try {
+      
       const data = await fetchTaskItemsDueToday();
       const validatedTasks = z.array(taskDTOSchema).parse(data);
 
@@ -32,20 +33,20 @@ export default function Dayview() {
 
   
   
-  const handleCheckboxChange = (taskId: number) => {
-    completeTask(taskId);
-    setTasksCompleted(prevState => !prevState);
+  const handleCheckboxChange = async (taskId: number) => {
+    await completeTask(taskId);
     loadIncompleteTasks();
   };
 
 
   useEffect(() => {
     loadIncompleteTasks(); 
-  }, [tasksCompleted]);
+  },[]);
 
   const completeTask = async (taskId: number) => {
     try {
       await completeTaskForToday(taskId);
+
     } catch (error) {
       console.error('Error completing task:', error);
     }
@@ -86,9 +87,7 @@ export default function Dayview() {
                       className={`flex justify-center items-center rounded-xl bg-monthly-stats-work-label grow`}
                     >
                       <p>{task.description}</p>
-                    </div>
-
-                    
+                    </div>                  
 
                   </div>
                 </div>
