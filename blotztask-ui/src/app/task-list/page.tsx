@@ -20,7 +20,7 @@ import {
 
 export default function Page() {
     const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
-    const [isDialogOpen, setDialogOpen] = useState(true);
+    const [isDialogOpen, setDialogOpen] = useState(false);
 
   const loadTasks = async () => {
     const data = await fetchAllTaskItems();
@@ -35,25 +35,25 @@ export default function Page() {
     loadTasks();
   }, []); // Runs on the first render using [] parameter and rerun when state changes, e.g add task
 
-  return (
-    <div className="flex  mt-10 mr-10 w-full justify-between">
-      <div>
-        <p className=" text-5xl font-bold">All Task</p>
-      </div>
-      <div className="flex items-center gap-3">
-        <Link href="/add-task">
-          <Button className="bg-all-task-add-button-bg text-all-task-add-button-text border-2 border-all-task-add-button-border">
-            <span className="">+ </span>Add Task
-          </Button>
-        </Link>
+  
 
 
     return (
         <div className="flex flex-col items-end mt-10 mr-10">
-          <AddTask handleAddTask={handleAddTask}/>
-    
-          <TaskTable tasks={taskList} />
-    
+
+          <div className="flex  mt-10 mr-10 w-full justify-between">
+            <div>
+              <p className=" text-5xl font-bold">All Task</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Link href="/add-task">
+                <Button className="bg-all-task-add-button-bg text-all-task-add-button-text border-2 border-all-task-add-button-border">
+                  <span className="">+ </span>Add Task
+                </Button>
+              </Link>
+            </div>
+          </div>
+          
           <div className="mt-10">
             <Button asChild className="ml-auto">
               <Link href="/">Return Home Page</Link>
@@ -63,14 +63,12 @@ export default function Page() {
           <Button
             variant="outline"
             className="bg-all-task-delete-button-bg text-white border-2"
+            onClick={() => setDialogOpen(true)}
           >
             <Trash />
           </Button>
 
           <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
-              {/* This will trigger the Dialog */}
-            </DialogTrigger>
             <DialogContent className="sm:max-w-[370px] bg-white">
               <DialogHeader>
                 <DialogDescription>
@@ -78,10 +76,19 @@ export default function Page() {
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter className="flex justify-between">
-                <Button variant="outline" className="w-full focus:outline-none focus:ring-0 focus:border-black-500">
+                <Button 
+                  variant="outline" 
+                  className="w-full focus:outline-none focus:ring-0 focus:border-black-500"
+                  onClick={() => setDialogOpen(false)}
+                >
                   Cancel
                 </Button>
-                <Button className="ml-2 w-full">
+                <Button 
+                  className="ml-2 w-full"
+                  onClick={() => {
+                    setDialogOpen(false);
+                }}
+                >
                   Yes
                 </Button>
               </DialogFooter>
