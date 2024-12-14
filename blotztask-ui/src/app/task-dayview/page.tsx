@@ -4,27 +4,40 @@ import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { TaskDTO, taskDTOSchema } from './schema/schema';
 import { H1, H5 } from '@/components/ui/heading-with-anchor';
+import { format } from 'date-fns';
+import { FaPlus } from 'react-icons/fa';
 import { fetchTaskItemsDueToday } from '@/services/taskService';
 
 export default function Dayview() {
-  const [incompleteTasks, setIncompleteTasks] = useState<TaskDTO[]>([]);
+  const [tasks, setTasks] = useState<TaskDTO[]>([]);
+
+  //add a state for add task button deciding to hide or show the form
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
+  //   const handleCheckboxChange = (taskId) => {
+  //     setTasks((prevTasks) =>
+  //       prevTasks.map((t) => {
+  //         if (t.id === taskId) {
+  //           return { ...t, isDone: !t.isDone };
+  //         }
+  //         return t;
+  //       })
+  //     );
+  //   };
+
+  const toggleFormVisibility = () => {
+    setIsFormVisible(!isFormVisible);
+  };
+
+  const loadTasks = async () => {
+    const data = await fetchTaskItemsDueToday();
+    const validatedTasks = z.array(taskDTOSchema).parse(data);
+    setTasks(validatedTasks);
+  };
 
   useEffect(() => {
-    loadIncompleteTasks();
+    loadTasks();
   }, []);
-
-  const loadIncompleteTasks = async () => {
-    try {
-      const data = await fetchTaskItemsDueToday();
-      const validatedTasks = z.array(taskDTOSchema).parse(data);
-
-      // Filter tasks to only include those where isDone is false
-      const notDoneTasks = validatedTasks.filter((task) => !task.isDone);
-      setIncompleteTasks(notDoneTasks);
-    } catch (error) {
-      console.error('Error loading tasks:', error);
-    }
-  };
 
   return (
     <>
@@ -38,28 +51,36 @@ export default function Dayview() {
         </div>
 
         <div className="grid gap-6 w-full">
-          {incompleteTasks.length > 0 ? (
-            <div className="grid gap-6 w-full">
-              {incompleteTasks.map((task) => (
-                <div key={task.id} className="w-full">
-                  <div className="flex flex-row">
-                    <div
-                      className={`flex justify-center items-center rounded-xl bg-monthly-stats-work-label mr-2 w-1/3 p-4`}
-                    >
-                      <p>{task.title}</p>
-                    </div>
-                    <div
-                      className={`flex justify-center items-center rounded-xl bg-monthly-stats-work-label grow`}
-                    >
-                      <p>{task.description}</p>
-                    </div>
-                  </div>
+          {tasks.map((task) => (
+            <div key={task.id} className="w-full">
+              <div className="flex flex-row">
+                <div
+                  className={`flex justify-center items-center rounded-xl bg-work-label mr-2 w-1/3 p-4`}
+                >
+                  <p>{task.title}</p>
                 </div>
-              ))}
+                <div
+                  className={`flex justify-center items-center rounded-xl bg-work-label grow`}
+                >
+                  <p>{task.description}</p>
+                </div>
+              </div>
             </div>
-          ) : (
-            <p>No incomplete tasks for today!</p>
-          )}
+          ))}
+
+          <div className="w-1/2 flex gap-5 flex-col">
+            <Button className="self-start" onClick={toggleFormVisibility}>
+              Add task
+            </Button>
+            {isFormVisible && (
+              <Card>
+                <CardHeader className="pb-1"></CardHeader>
+                <CardContent className="grid gap-1">
+                  <TaskForm setTasks={setTasks} />
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
       </div>
     </>
