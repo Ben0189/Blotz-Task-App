@@ -7,13 +7,18 @@ import Link from 'next/link';
 import { TaskItemDTO } from '@/model/task-Item-dto';
 import { fetchAllTaskItems } from '@/services/taskService';
 import { Trash } from 'lucide-react';
+
 import { TaskTable } from './components/task-table';
+
+
+
 export default function Page() {
   const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
 
   const loadTasks = async () => {
     const data = await fetchAllTaskItems();
     setTaskList(data);
+
   };
 
   /**
@@ -22,6 +27,7 @@ export default function Page() {
   useEffect(() => {
     loadTasks();
   }, []); // Runs on the first render using [] parameter and rerun when state changes, e.g add task
+
   console.log('taskList');
   console.log(taskList);
 
