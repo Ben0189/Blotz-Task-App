@@ -12,9 +12,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogHeader
 } from "@/components/ui/dialog";
 
 
@@ -85,9 +83,7 @@ export default function Page() {
                 </Button>
                 <Button 
                   className="ml-2 w-full"
-                  onClick={() => {
-                    setDialogOpen(false);
-                }}
+                  onClick={() => setDialogOpen(false)}
                 >
                   Yes
                 </Button>
