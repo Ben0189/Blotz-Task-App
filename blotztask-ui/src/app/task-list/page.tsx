@@ -7,13 +7,7 @@ import Link from 'next/link';
 import { TaskItemDTO } from '@/model/task-Item-dto';
 import { fetchAllTaskItems } from '@/services/taskService';
 import { Trash } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader
-} from "@/components/ui/dialog";
+import { DeleteDialog } from './components/delete-confirmation-dialog';
 
 
 export default function Page() {
@@ -66,30 +60,10 @@ export default function Page() {
             <Trash />
           </Button>
 
-          <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-            <DialogContent className="sm:max-w-[370px] bg-white">
-              <DialogHeader>
-                <DialogDescription>
-                  Are you sure you want to delete the Task?
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter className="flex justify-between">
-                <Button 
-                  variant="outline" 
-                  className="w-full focus:outline-none focus:ring-0 focus:border-black-500"
-                  onClick={() => setDialogOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button 
-                  className="ml-2 w-full"
-                  onClick={() => setDialogOpen(false)}
-                >
-                  Yes
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <div>
+            <Button onClick={() => setDialogOpen(true)}>Delete Task</Button>
+            <DeleteDialog isDialogOpen={isDialogOpen} setDialogOpen={setDialogOpen} />
+          </div>
 
 
         </div>
