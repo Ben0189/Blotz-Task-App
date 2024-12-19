@@ -32,7 +32,7 @@ export default function Home() {
       title: '',
       description: '',
       dueDate: undefined,
-      labelId: 0,
+      labelId: 1,
     },
   });
 
