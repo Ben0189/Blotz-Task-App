@@ -49,7 +49,6 @@ export default function Page() {
             </Link>
 
             {!isDeleteTriggered ? (
-              // Trash Icon Button (Visible when delete button is not visible)
               <Button
                 variant="outline"
                 className="bg-all-task-delete-button-bg text-white border-2"
@@ -58,7 +57,6 @@ export default function Page() {
                 <Trash />
               </Button>
             ) : (
-              // "Delete Task" Button (Visible when trash icon is clicked)
               <Button
                 className="bg-all-task-delete-button-bg text-white border-2"
                 onClick={() => setDialogOpen(true)}
