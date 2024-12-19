@@ -9,6 +9,6 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-  ],
-  "extends": ["next/core-web-vitals"]
+    "next/core-web-vitals"
+  ]
 }
