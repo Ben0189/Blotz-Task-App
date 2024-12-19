@@ -8,6 +8,7 @@ import Link from 'next/link';
 // import { fetchAllTaskItems } from '@/services/taskService';
 import { Trash } from 'lucide-react';
 import { DeleteDialog } from './components/delete-confirmation-dialog';
+import { H1 } from '@/components/ui/heading-with-anchor';
 
 export default function Page() {
   // const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
@@ -39,7 +40,7 @@ export default function Page() {
       <div className="flex flex-col items-end mt-5">
 
         <div className="flex w-full justify-between">
-          <p className=" text-5xl font-bold">All Task</p>
+          <H1>All Task</H1>
           <div className="flex items-center gap-3">
             <Link href="/add-task">
               <Button className="bg-all-task-add-button-bg text-all-task-add-button-text border-2 border-all-task-add-button-border">
