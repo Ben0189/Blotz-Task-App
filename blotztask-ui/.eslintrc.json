@@ -3,7 +3,7 @@
     "React": "readonly"
   },
   "rules": {
-    "no-unused-vars": "error",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
     "camelcase": "warn"
   },
   "extends": ["next/core-web-vitals"]
