@@ -4,15 +4,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 // import { TaskItemDTO } from '@/model/task-Item-dto';
 
 // interface TaskTableProps {
 //   tasks: TaskItemDTO[]; // tasks prop is an array of TaskItemDTO objects
 // }
 
-export function TaskTable({ tasks }) {
-  console.log('tasks');
-  console.log(tasks);
+export function TaskCard({ tasks }) {
   return (
     <div className="flex flex-col h-fit mt-10">
       {tasks.map((task) => (
@@ -22,7 +21,7 @@ export function TaskTable({ tasks }) {
             style={{ backgroundColor: task.label.color }}
           >
             <CardHeader>
-              <CardTitle className="text-center bg-task.label.color">
+              <CardTitle className="text-center">
                 {task.label?.name || 'No Label'}
               </CardTitle>
             </CardHeader>
@@ -31,20 +30,16 @@ export function TaskTable({ tasks }) {
             className="w-full"
             style={{ backgroundColor: task.label.color }}
           >
-            <CardHeader
-              className="ml-5 "
-              style={{
-                backgroundImage:
-                  'linear-gradient(to top, transparent 16.66%, gray 16.66%, gray 83.33%, transparent 83.33%)',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: '4px 100%',
-                backgroundPosition: '0 0',
-              }}
-            >
-              <CardTitle>{task.title}</CardTitle>
-              <CardDescription>
-                {task?.description || 'NO Description'}
-              </CardDescription>
+            <CardHeader className="flex-row ml-5 ">
+              <div>
+                <Separator className="bg-gray-500" orientation="vertical" />
+              </div>
+              <div className="flex flex-col space-y-1.5 p-4">
+                <CardTitle>{task.title}</CardTitle>
+                <CardDescription>
+                  {task?.description || 'NO Description'}
+                </CardDescription>
+              </div>
             </CardHeader>
           </Card>
         </div>
