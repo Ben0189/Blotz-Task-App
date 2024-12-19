@@ -8,7 +8,7 @@ import {
   import { Button } from '@/components/ui/button';
 
 
-  export function DeleteDialog({ isDialogOpen, setDialogOpen }){
+  export function DeleteDialog({ isDialogOpen, setDialogOpen, onClose }){
     
     return(
         <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
@@ -22,14 +22,20 @@ import {
                 <Button 
                   variant="outline" 
                   className="w-full focus:outline-none focus:ring-0 focus:border-black-500"
-                  onClick={() => setDialogOpen(false)}
-                >
+                  onClick={() => {
+                    setDialogOpen(false); 
+                    onClose(); 
+                  }}                
+                  >
                   Cancel
                 </Button>
                 <Button 
                   className="ml-2 w-full"
-                  onClick={() => setDialogOpen(false)}
-                >
+                  onClick={() => {
+                    setDialogOpen(false);
+                    onClose(); 
+                  }}                
+                  >
                   Yes
                 </Button>
               </DialogFooter>
