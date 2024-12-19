@@ -13,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 
 export function TaskCard({ tasks }) {
   return (
-    <div className="flex flex-col h-fit mt-10">
+    <div className="flex flex-col mt-10 w-full">
       {tasks.map((task) => (
         <div key={task.id} className="flex mt-5">
           <Card
@@ -34,7 +34,7 @@ export function TaskCard({ tasks }) {
               <div>
                 <Separator className="bg-gray-500" orientation="vertical" />
               </div>
-              <div className="flex flex-col space-y-1.5 p-4">
+              <div className="flex flex-col space-y-1 p-2">
                 <CardTitle>{task.title}</CardTitle>
                 <CardDescription>
                   {task?.description || 'NO Description'}
