@@ -4,15 +4,23 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-// import { TaskItemDTO } from '@/model/task-Item-dto';
-// import { fetchAllTaskItems } from '@/services/taskService';
 import { Trash } from 'lucide-react';
 import { DeleteDialog } from './components/delete-confirmation-dialog';
 import { H1 } from '@/components/ui/heading-with-anchor';
 
+import { TaskCard } from './components/task-card';
+import { fetchAllTaskItems } from '@/services/taskService';
+import { TaskItemDTO } from '@/model/task-Item-dto';
+
 export default function Page() {
-  // const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
+  const [taskList, setTaskList] = useState<TaskItemDTO[]>([]);
   const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const loadTasks = async () => {
+    const data = await fetchAllTaskItems();
+    setTaskList(data);
+  };
+
   const [isDeleteTriggered, setIsDeleteTriggered] = useState(false);
 
   /**
@@ -21,11 +29,6 @@ export default function Page() {
   useEffect(() => {
     loadTasks();
   }, []); // Runs on the first render using [] parameter and rerun when state changes, e.g add task
-
-  const loadTasks = async () => {
-    // const data = await fetchAllTaskItems();
-    // setTaskList(data);
-  };
 
   const toggleDeleteTrigger = () => {
     setIsDeleteTriggered((prev) => !prev); 
@@ -68,7 +71,8 @@ export default function Page() {
         </div>
 
         <DeleteDialog isDialogOpen={isDialogOpen} setDialogOpen={setDialogOpen} onClose={handleDialogClose}/>
-    
+        <TaskCard tasks={taskList} />
+
       </div>
     );
 }
